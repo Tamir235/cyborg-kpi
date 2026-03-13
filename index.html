@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Cyborg KPI"/>
+<meta name="theme-color" content="#1C1C1E"/>
+<title>Cyborg KPI</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+body{background:#1C1C1E;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#fff;overscroll-behavior:none}
+input,textarea,select{-webkit-user-select:auto;user-select:auto;font-family:inherit}
+::-webkit-scrollbar{display:none}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+select option{background:#2C2C2E}
+#app{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+.hdr{padding:52px 20px 0;flex-shrink:0}
+.back{background:none;border:none;color:#0A84FF;font-size:16px;padding:0 0 6px;cursor:pointer;display:block;font-family:inherit}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start}
+.pg-sub{font-size:12px;color:#636366;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin:0 0 2px}
+.pg-title{font-size:26px;font-weight:700;color:#fff;margin:0 0 4px}
+.add-btn{border:none;border-radius:20px;padding:8px 16px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;margin-top:4px;flex-shrink:0;font-family:inherit}
+.content{flex:1;overflow-y:auto;padding:12px 16px 100px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(28,28,30,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:.5px solid rgba(84,84,88,.5);display:flex;padding:8px 0 28px;z-index:100}
+.nb{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 0;font-family:inherit}
+.ni{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+.nl{font-size:10px;font-weight:500}
+.card{background:#2C2C2E;border-radius:20px;padding:16px;margin-bottom:12px}
+.card22{border-radius:22px;padding:18px}
+.sec{font-size:11px;color:#636366;text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin:0 0 8px 2px}
+.lcard{background:#2C2C2E;border-radius:20px;overflow:hidden;margin-bottom:12px}
+.li{padding:14px 16px;border-bottom:.5px solid rgba(84,84,88,.5);cursor:pointer;display:flex;align-items:center;gap:12px}
+.li:last-child{border-bottom:none}
+.chev{color:#3A3A3C;font-size:18px;flex-shrink:0}
+.bar{background:rgba(84,84,88,.3);border-radius:3px;height:4px;overflow:hidden;margin-top:7px}
+.barf{height:100%;border-radius:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{background:#2C2C2E;border-radius:20px;padding:16px;cursor:pointer}
+.inp{width:100%;background:#3A3A3C;border:none;border-radius:10px;padding:10px 12px;font-size:16px;color:#fff;outline:none}
+.sel{width:100%;background:#3A3A3C;border:none;border-radius:10px;padding:10px 12px;font-size:16px;color:#fff;outline:none;appearance:none;-webkit-appearance:none}
+textarea.inp{resize:none;height:52px;font-size:14px}
+.fld{margin-bottom:10px}
+.lbl{font-size:12px;color:#636366;font-weight:500;margin:0 0 5px;display:block}
+.sbtn{width:100%;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;margin-top:8px;font-family:inherit}
+.tw{background:#3A3A3C;border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.tt{width:46px;height:26px;border-radius:13px;padding:2px;cursor:pointer;flex-shrink:0;transition:background .2s}
+.th{width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;z-index:200}
+.ms{background:#1C1C1E;border-radius:22px 22px 0 0;width:100%;max-width:430px;margin:0 auto;padding:8px 20px 44px;max-height:90dvh;overflow-y:auto}
+.mh{width:36px;height:5px;background:#48484A;border-radius:3px;margin:10px auto 16px}
+.mcl{background:#3A3A3C;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;color:#8E8E93;font-size:16px;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.qb{flex:1;border:none;border-radius:10px;padding:10px 0;font-size:14px;color:#fff;cursor:pointer;font-family:inherit}
+.db{background:rgba(255,59,48,.15);border:none;border-radius:8px;padding:6px 10px;font-size:12px;color:#FF453A;cursor:pointer;font-family:inherit;flex-shrink:0}
+.mt{background:#3A3A3C;border-radius:6px;padding:3px 8px;font-size:11px;color:#8E8E93;display:inline-block;margin:2px}
+.nb2{background:#3A3A3C;border-radius:9px;padding:8px 12px}
+.pbar{display:flex;background:#2C2C2E;border-radius:12px;padding:3px;margin-bottom:10px}
+.pb{flex:1;border:none;border-radius:9px;padding:7px 0;font-size:13px;cursor:pointer;font-family:inherit}
+.tbar{display:flex;background:#2C2C2E;border-radius:12px;padding:3px;margin-bottom:10px}
+.tb{flex:1;border:none;border-radius:9px;padding:8px 0;font-size:14px;cursor:pointer;font-family:inherit}
+.np{background:#2C2C2E;border-radius:14px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.npb{background:none;border:none;font-size:22px;cursor:pointer;padding:0 6px;line-height:1;font-family:inherit}
+.sr{display:grid;grid-template-columns:1fr 80px 80px;padding:9px 12px;align-items:center;border-bottom:.5px solid rgba(84,84,88,.3)}
+.sr:last-child{border-bottom:none}
+.ec{background:#2C2C2E;border-radius:16px;padding:14px;margin-bottom:8px}
+.rw{position:relative;flex-shrink:0}
+.rl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.zi{display:flex;gap:8px;align-items:center}
+.zinp{flex:1;background:#3A3A3C;border:none;border-radius:9px;padding:8px 12px;font-size:16px;color:#fff;outline:none;font-family:inherit}
+.zok{border:none;border-radius:9px;padding:8px 16px;font-size:14px;color:#fff;cursor:pointer;font-weight:600;font-family:inherit}
+.zcl{background:#3A3A3C;border:none;border-radius:9px;padding:8px 12px;font-size:14px;color:#8E8E93;cursor:pointer;font-family:inherit}
+.er{padding:14px 16px;border-bottom:.5px solid rgba(84,84,88,.5);cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.er:last-child{border-bottom:none}
+.fw{display:flex;gap:8px;flex-wrap:wrap}
+.fh{flex:1 1 calc(50% - 4px)}
+
+/* Backup Banner */
+.bkbanner{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:300;padding:12px 16px;background:rgba(28,28,30,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:.5px solid rgba(84,84,88,.4);display:flex;align-items:center;gap:10px;animation:slideDown .3s ease}
+@keyframes slideDown{from{transform:translateX(-50%) translateY(-100%)}to{transform:translateX(-50%) translateY(0)}}
+.bkbanner-txt{flex:1;font-size:13px;color:#8E8E93}
+.bkbanner-btn{background:#0A84FF;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap}
+.bkbanner-cl{background:none;border:none;color:#48484A;font-size:20px;cursor:pointer;padding:0 2px;font-family:inherit;line-height:1}
+
+/* Restore overlay */
+.rsov{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px}
+.rsbox{background:#1C1C1E;border-radius:22px;padding:24px;width:100%;max-width:360px;text-align:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="bkbanner" style="display:none" class="bkbanner">
+  <span style="font-size:18px">☁️</span>
+  <span class="bkbanner-txt">Neuer Eintrag gespeichert – jetzt in iCloud sichern?</span>
+  <button class="bkbanner-btn" id="bkdo">Backup</button>
+  <button class="bkbanner-cl" id="bkcl">×</button>
+</div>
+<input type="file" id="fi" accept=".json" style="display:none"/>
+<script>
+(function(){
+'use strict';
+const COL={kraft:'#FF3B30',engine:'#34C759',peak:'#FF9500',skills:'#BF5AF2',struktur:'#0A84FF',recovery:'#32ADE6'};
+const SM=[{id:'kraft',label:'Kraft',desc:'Relative Strength'},{id:'engine',label:'Engine',desc:'Aerobe Kapazität'},{id:'peak',label:'Peak',desc:'Intervalle'},{id:'skills',label:'Skills',desc:'Nervensystem'},{id:'struktur',label:'Struktur',desc:'Robustheit'},{id:'recovery',label:'Recovery',desc:'Systemstatus'}];
+const KPIS={kraft:[{k:'pullups',label:'Pull-ups',unit:'Reps',target:10,hb:1},{k:'pikeHSPU',label:'Pike / HSPU',unit:'Reps',target:10,hb:1},{k:'pistolL',label:'Pistol Squat L',unit:'Reps',target:5,hb:1},{k:'pistolR',label:'Pistol Squat R',unit:'Reps',target:5,hb:1},{k:'atgL',label:'ATG Split L',unit:'kg×Rep',hb:1},{k:'atgR',label:'ATG Split R',unit:'kg×Rep',hb:1},{k:'revNordic',label:'Reverse Nordic',unit:'Reps',target:5,hb:1}],engine:[{k:'pace',label:'Ø Pace',unit:'min/km',target:5.5,hb:0},{k:'hr',label:'Ø Puls',unit:'bpm',target:140,hb:0},{k:'drift',label:'HF-Drift',unit:'%',target:5,hb:0},{k:'rpe',label:'RPE',unit:'/10',target:6,hb:0}],peak:[{k:'wattAvg',label:'Ø Watt',unit:'W',hb:1},{k:'wattMax',label:'Max Watt',unit:'W',hb:1},{k:'rpe',label:'RPE',unit:'/10',target:8,hb:0}],skills:[{k:'L-Sit',label:'L-Sit',unit:'s',target:60,hb:1},{k:'Handstand',label:'Handstand',unit:'s',target:30,hb:1},{k:'Frog Stand',label:'Frog Stand',unit:'s',target:60,hb:1},{k:'Muscle-up',label:'Muscle-up',unit:'Reps',target:5,hb:1}],struktur:[{k:'hang',label:'Active Dead Hang',unit:'s',target:60,hb:1},{k:'schulter',label:'Schulter-Schmerz',unit:'/10',target:2,hb:0},{k:'knie',label:'Knie-Schmerz',unit:'/10',target:2,hb:0},{k:'ruecken',label:'Rücken-Schmerz',unit:'/10',target:2,hb:0}],recovery:[{k:'hrv',label:'HRV',unit:'ms',target:60,hb:1}]};
+const PERIODS=[['woche','Woche'],['monat','Monat'],['jahr','Jahr'],['all','Alle']];
+const LS='cyborg-v1';
+
+let S={logs:{},targets:{},stack:[{type:'dash'}],modal:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fDeepSquat:false,fMobility:false,showRestore:false};
+
+let bannerTimer=null;
+
+function uid(){return Math.random().toString(36).slice(2,9);}
+function stamp(logs){const o={};for(const[k,v]of Object.entries(logs))o[k]=v.map(e=>e.id?e:{...e,id:uid()});return o;}
+
+function lsLoad(){
+  try{
+    const r=localStorage.getItem(LS);
+    if(!r)return false;
+    const d=JSON.parse(r);
+    S.logs=stamp(d.logs||{});
+    S.targets=d.targets||{};
+    return true;
+  }catch(e){return false;}
+}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify({logs:S.logs,targets:S.targets}));}catch(e){}}
+function totalEntries(){return Object.values(S.logs).reduce((s,a)=>s+a.length,0);}
+
+// ── iCloud Backup via Web Share API ──────────────────────────────
+async function shareBackup(){
+  const json=JSON.stringify({logs:S.logs,targets:S.targets,exportedAt:new Date().toISOString()},null,2);
+  const fname='cyborg-'+todayISO()+'.json';
+  try{
+    if(navigator.share&&navigator.canShare){
+      const file=new File([json],fname,{type:'application/json'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:'Cyborg KPI Backup',text:'Backup '+todayISO()});
+        hideBanner();
+        return;
+      }
+    }
+    // Fallback: normaler Download
+    const blob=new Blob([json],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;a.click();
+    hideBanner();
+  }catch(err){
+    if(err.name!=='AbortError')console.warn(err);
+  }
+}
+
+// ── Backup Banner ─────────────────────────────────────────────────
+function showBanner(){
+  const b=document.getElementById('bkbanner');
+  if(b){b.style.display='flex';}
+  if(bannerTimer)clearTimeout(bannerTimer);
+  bannerTimer=setTimeout(hideBanner,12000);
+}
+function hideBanner(){
+  const b=document.getElementById('bkbanner');
+  if(b){b.style.display='none';}
+  if(bannerTimer)clearTimeout(bannerTimer);
+}
+document.getElementById('bkdo').addEventListener('click',()=>shareBackup());
+document.getElementById('bkcl').addEventListener('click',()=>hideBanner());
+
+// ── Restore Prompt on Startup ─────────────────────────────────────
+function checkRestore(){
+  // Wenn keine Daten → Restore anbieten
+  if(totalEntries()===0){
+    S.showRestore=true;
+  }
+}
+function renderRestoreOverlay(){
+  return `<div class="rsov" id="rsov">
+    <div class="rsbox">
+      <div style="font-size:40px;margin-bottom:12px">☁️</div>
+      <p style="font-size:18px;font-weight:700;color:#fff;margin:0 0 8px">Keine Daten gefunden</p>
+      <p style="font-size:14px;color:#8E8E93;margin:0 0 20px;line-height:1.5">Möchtest du ein iCloud-Backup wiederherstellen?</p>
+      <button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:10px" data-a="restore-pick">Backup laden</button>
+      <button style="width:100%;background:#3A3A3C;border:none;border-radius:14px;padding:13px 0;font-size:16px;color:#8E8E93;cursor:pointer;font-family:inherit" data-a="restore-skip">Neu beginnen</button>
+    </div>
+  </div>`;
+}
+
+const SEED=stamp({kraft:[{date:'2026-02-24',exercise:'pullups',value:3,technik:5,pain:0,notizen:''},{date:'2026-03-02',exercise:'pikeHSPU',value:10,technik:3,pain:0,notizen:'Pike Push-up'},{date:'2026-03-09',exercise:'pullups',value:4,technik:4,pain:0,notizen:'Besser'},{date:'2026-03-12',exercise:'pullups',value:5,technik:4,pain:0,notizen:''}],engine:[{date:'2026-03-05',pace:5.9,hr:148,drift:9,rpe:6,nase:false,notizen:''},{date:'2026-03-12',pace:5.7,hr:145,drift:7,rpe:6,nase:true,notizen:'Nasenatmung durchgehalten'}],peak:[{date:'2026-03-04',wattAvg:180,wattMax:310,rpe:8,notizen:''},{date:'2026-03-11',wattAvg:195,wattMax:325,rpe:8,notizen:'Neuer Rekord'}],skills:[{date:'2026-02-24',skill:'L-Sit',ist:5,qualitaet:'shaky',abbruch:'Trizepskrampf',notizen:'Beine nicht 90°'},{date:'2026-03-03',skill:'L-Sit',ist:8,qualitaet:'shaky',abbruch:'',notizen:''},{date:'2026-03-10',skill:'L-Sit',ist:12,qualitaet:'shaky',abbruch:'',notizen:'Besser'},{date:'2026-03-10',skill:'Frog Stand',ist:40,qualitaet:'ruhig',abbruch:'',notizen:''}],struktur:[{date:'2026-02-24',hang:33,schulter:4,knie:0,ruecken:0,notizen:'Schulter hat nachgegeben'},{date:'2026-03-08',hang:38,schulter:3,knie:0,ruecken:1,notizen:''},{date:'2026-03-12',hang:42,schulter:2,knie:0,ruecken:0,notizen:''}],recovery:[{date:'2026-03-09',hrv:42,notizen:''},{date:'2026-03-11',hrv:48,notizen:''},{date:'2026-03-13',hrv:55,notizen:'Gute Erholung'}]});
+
+function getEnts(sysId,kpiK,logs){
+  const ents=logs[sysId]||[];let res=[];
+  if(sysId==='kraft')res=ents.filter(e=>e.exercise===kpiK).map(e=>({id:e.id,date:e.date,value:e.value,meta:{Technik:(e.technik||'–')+'/5',Schmerz:(e.pain||0)+'/10'},notizen:e.notizen||''}));
+  else if(sysId==='skills')res=ents.filter(e=>e.skill===kpiK).map(e=>({id:e.id,date:e.date,value:e.ist,meta:{Qualität:e.qualitaet,Abbruch:e.abbruch||'–'},notizen:e.notizen||''}));
+  else res=ents.filter(e=>e[kpiK]!=null&&!isNaN(+e[kpiK])).map(e=>({id:e.id,date:e.date,value:parseFloat(e[kpiK]),meta:sysId==='engine'&&kpiK==='pace'?{Nase:e.nase?'Ja':'Nein'}:{},notizen:e.notizen||''}));
+  return res.sort((a,b)=>a.date.localeCompare(b.date));
+}
+function prog(val,kpi,targets,sysId){
+  const t=targets[sysId+'.'+kpi.k]!=null?targets[sysId+'.'+kpi.k]:kpi.target;
+  if(!t||val==null)return null;
+  return kpi.hb?Math.min(val/t,1):val<=t?1:Math.max(0,2-val/t);
+}
+function sysSc(sysId,logs,targets){
+  const ps=(KPIS[sysId]||[]).map(kpi=>{const e=getEnts(sysId,kpi.k,logs);return e.length?prog(e[e.length-1].value,kpi,targets,sysId):null;}).filter(p=>p!=null);
+  return ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:0;
+}
+function gradeOf(s){return s>=0.8?'Cyborg':s>=0.6?'Hybrid-Athlet':s>=0.4?'Im Aufbau':'Anfänger';}
+function todayISO(){return new Date().toISOString().split('T')[0];}
+function fmtD(d){return d.slice(5).replace('-','.');}
+function mLbl(d){const m=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];return m[parseInt(d.slice(5,7))-1]+' '+d.slice(0,4);}
+function getWeek(off){const base=new Date(),dow=base.getDay()||7,mon=new Date(base);mon.setDate(base.getDate()-dow+1+off*7);const sun=new Date(mon);sun.setDate(mon.getDate()+6);const f=d=>d.getDate().toString().padStart(2,'0')+'.'+(d.getMonth()+1).toString().padStart(2,'0');return{start:mon.toISOString().split('T')[0],end:sun.toISOString().split('T')[0],label:f(mon)+' – '+f(sun)};}
+function inR(d,s,e){return d>=s&&d<=e;}
+function mRange(off){const b=new Date();b.setDate(1);b.setMonth(b.getMonth()+off);const s=b.getFullYear()+'-'+(b.getMonth()+1).toString().padStart(2,'0')+'-01';const e=new Date(b.getFullYear(),b.getMonth()+1,0).toISOString().split('T')[0];return{start:s,end:e,label:mLbl(s)};}
+function cutoff(p){const d=new Date();if(p==='woche')d.setDate(d.getDate()-7);else if(p==='monat')d.setMonth(d.getMonth()-1);else if(p==='jahr')d.setFullYear(d.getFullYear()-1);else return null;return d.toISOString().split('T')[0];}
+
+function ring(p,color,size,sw){const r=(size-sw)/2,c=2*Math.PI*r,d=c*Math.min(Math.max(p||0,0),1);return `<svg width="${size}" height="${size}" style="transform:rotate(-90deg);display:block;flex-shrink:0"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(120,120,128,.22)" stroke-width="${sw}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-dasharray="${d.toFixed(2)} ${(c-d).toFixed(2)}" stroke-linecap="round"/></svg>`;}
+function ringWrap(svgStr,inner,size){return `<div class="rw" style="width:${size}px;height:${size}px">${svgStr}<div class="rl">${inner}</div></div>`;}
+
+function chart(data,color,target){
+  const W=320,H=78,pad={t:6,r:8,b:18,l:8};
+  if(data.length<2)return `<div style="height:${H}px;display:flex;align-items:center;justify-content:center"><span style="font-size:12px;color:#3A3A3C">2 Einträge für Chart nötig</span></div>`;
+  const vals=data.map(d=>d.v);let mn=Math.min(...vals),mx=Math.max(...vals);
+  if(target!=null){mn=Math.min(mn,target);mx=Math.max(mx,target);}
+  if(mn===mx){mn-=1;mx+=1;}
+  const rng=mx-mn,cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
+  const px=i=>pad.l+(i/(data.length-1))*cw;
+  const py=v=>pad.t+ch-((v-mn)/rng)*ch;
+  const pts=data.map((d,i)=>`${px(i).toFixed(1)},${py(d.v).toFixed(1)}`).join(' ');
+  const dots=data.map((d,i)=>`<circle cx="${px(i).toFixed(1)}" cy="${py(d.v).toFixed(1)}" r="3" fill="${color}"/>`).join('');
+  const ref=target!=null?`<line x1="${pad.l}" y1="${py(target).toFixed(1)}" x2="${W-pad.r}" y2="${py(target).toFixed(1)}" stroke="#30D158" stroke-dasharray="3,3" stroke-width="1"/>`:'';
+  return `<div style="margin-top:10px"><svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="overflow:visible">${ref}<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${dots}<text x="${pad.l}" y="${H}" font-size="10" fill="#636366">${data[0].d}</text><text x="${W-pad.r}" y="${H}" font-size="10" fill="#636366" text-anchor="end">${data[data.length-1].d}</text></svg></div>`;
+}
+
+function exportJSON(){const blob=new Blob([JSON.stringify({logs:S.logs,targets:S.targets,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cyborg-'+todayISO()+'.json';a.click();}
+function exportCSV(){
+  const rows=[['Datum','System','KPI','Wert','Einheit','Notizen']];
+  for(const[sid,ents]of Object.entries(S.logs)){const kpis=KPIS[sid]||[];for(const e of ents){if(sid==='kraft'){const kpi=kpis.find(k=>k.k===e.exercise);rows.push([e.date,'Kraft',kpi?kpi.label:e.exercise,e.value,kpi?kpi.unit:'',e.notizen||'']);rows.push([e.date,'Kraft',(kpi?kpi.label:e.exercise)+' Technik',e.technik,'1-5','']);rows.push([e.date,'Kraft',(kpi?kpi.label:e.exercise)+' Schmerz',e.pain,'0-10','']);}else if(sid==='skills'){rows.push([e.date,'Skills',e.skill,e.ist,'s/Reps',e.notizen||'']);}else{const sl=SM.find(s=>s.id===sid);for(const kpi of kpis)if(e[kpi.k]!=null)rows.push([e.date,sl?sl.label:sid,kpi.label,e[kpi.k],kpi.unit,e.notizen||'']);}}}
+  const csv=rows.map(r=>r.map(c=>'"'+String(c||'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cyborg-'+todayISO()+'.csv';a.click();
+}
+
+function fld(l,inp,half){return `<div class="fld${half?' fh':''}"${half?' style="flex:1 1 calc(50% - 4px)"':''}><label class="lbl">${l}</label>${inp}</div>`;}
+function ni(k,ph,tp){return `<input class="inp" type="${tp||'number'}" data-fk="${k}" placeholder="${ph}"/>`;}
+function selEl(k,opts,val){return `<select class="sel" data-fk="${k}">${opts.map(([v,l])=>`<option value="${v}"${v===val?' selected':''}>${l}</option>`).join('')}</select>`;}
+function togEl(label,key){const on=S[key];return `<div class="tw"><span style="font-size:14px;color:#fff">${label}</span><div class="tt" style="background:${on?'#30D158':'#48484A'}" data-a="tog" data-key="${key}"><div class="th" style="transform:${on?'translateX(20px)':'translateX(0)'}"></div></div></div>`;}
+function sbtn(action,col){return `<button class="sbtn" style="background:${col}" data-a="${action}">Speichern</button>`;}
+
+function vDash(){
+  const ov=SM.reduce((s,sys)=>s+sysSc(sys.id,S.logs,S.targets),0)/6;
+  const bigR=ring(ov,'#0A84FF',90,9);
+  let h=`<div class="card card22" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:18px">${ringWrap(bigR,`<span style="font-size:21px;font-weight:800;color:#0A84FF;line-height:1">${Math.round(ov*100)}</span><br><span style="font-size:9px;color:#0A84FF">%</span>`,90)}<div><p style="font-size:11px;color:#636366;margin:0 0 2px;font-weight:500">Cyborg Score</p><p style="font-size:26px;font-weight:700;color:#fff;margin:0 0 5px">${gradeOf(ov)}</p><p style="font-size:11px;color:#3A3A3C;margin:0;font-style:italic">Outrun the lifters. Outlift the runners.</p></div></div></div><p class="sec">Systeme</p><div class="g2">`;
+  for(const s of SM){const sc=sysSc(s.id,S.logs,S.targets),col=COL[s.id];const ents=S.logs[s.id]||[];const lat=ents.length?[...ents].sort((a,b)=>b.date.localeCompare(a.date))[0]:null;const mr=ring(sc,col,44,4.5);h+=`<div class="sc" data-a="nav-sys" data-sys="${s.id}"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px"><div style="width:38px;height:38px;border-radius:10px;background:${col}22;display:flex;align-items:center;justify-content:center"><div style="width:14px;height:14px;border-radius:3px;background:${col}"></div></div>${ringWrap(mr,`<span style="font-size:9px;font-weight:700;color:${col}">${Math.round(sc*100)}</span>`,44)}</div><p style="font-size:16px;font-weight:600;color:#fff;margin:0 0 2px">${s.label}</p><p style="font-size:11px;color:#48484A;margin:0 0 7px">${s.desc}</p><p style="font-size:10px;color:#3A3A3C;margin:0">${lat?lat.date:'Keine Daten'}</p></div>`;}
+  return h+'</div>';
+}
+
+function vSys(sysId){
+  const s=SM.find(x=>x.id===sysId),col=COL[sysId],sc=sysSc(sysId,S.logs,S.targets),kpis=KPIS[sysId]||[];
+  const bigR=ring(sc,col,80,8);
+  let h=`<div class="card card22" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:16px">${ringWrap(bigR,`<span style="font-size:18px;font-weight:800;color:${col};line-height:1">${Math.round(sc*100)}</span><br><span style="font-size:9px;color:${col}">%</span>`,80)}<div><p style="font-size:11px;color:#636366;margin:0 0 2px">${s?s.desc:''}</p><p style="font-size:24px;font-weight:700;color:#fff;margin:0">${s?s.label:''}</p></div></div></div><p class="sec">KPIs</p><div class="lcard">`;
+  for(let i=0;i<kpis.length;i++){const kpi=kpis[i];const ents=getEnts(sysId,kpi.k,S.logs);const lat=ents[ents.length-1],prev=ents[ents.length-2];const p=lat?prog(lat.value,kpi,S.targets,sysId):null;const raw=lat&&prev?lat.value-prev.value:null;const pos=raw==null?null:(kpi.hb?raw:-raw);const t=S.targets[sysId+'.'+kpi.k]!=null?S.targets[sysId+'.'+kpi.k]:kpi.target;const arr=pos==null?'':`<span style="font-size:11px;font-weight:700;color:${pos>0?'#30D158':pos<0?'#FF453A':'#636366'}">${pos>0?'▲':pos<0?'▼':'→'}</span>`;const barH=p!=null?`<div class="bar"><div class="barf" style="width:${Math.round(Math.min(p,1)*100)}%;background:${p>=1?'#30D158':col}"></div></div>`:'';h+=`<div class="li" data-a="nav-kpi" data-sys="${sysId}" data-kpi="${kpi.k}" style="${i===kpis.length-1?'border-bottom:none':''}"><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><p style="font-size:15px;font-weight:500;color:#fff;margin:0">${kpi.label}</p>${arr}</div>${barH}</div><div style="text-align:right;flex-shrink:0"><p style="font-size:19px;font-weight:700;color:${lat?'#fff':'#3A3A3C'};margin:0">${lat?lat.value:'–'}</p><p style="font-size:11px;color:#48484A;margin:2px 0 0">${kpi.unit}${t?' / '+t:''}</p></div><span class="chev">›</span></div>`;}
+  return h+'</div>';
+}
+
+function vKPI(sysId,kpiK){
+  const kpiDef=KPIS[sysId]&&KPIS[sysId].find(k=>k.k===kpiK),col=COL[sysId];
+  const t=S.targets[sysId+'.'+kpiK]!=null?S.targets[sysId+'.'+kpiK]:(kpiDef&&kpiDef.target);
+  const allE=getEnts(sysId,kpiK,S.logs);
+  const cut2=cutoff(S.period);
+  const ents=cut2?allE.filter(e=>e.date>=cut2):allE;
+  const lat=ents[ents.length-1],prev=ents[ents.length-2];
+  const p=lat&&kpiDef?prog(lat.value,kpiDef,S.targets,sysId):null;
+  const cd=ents.map(e=>({d:fmtD(e.date),v:e.value}));
+  const raw=lat&&prev?lat.value-prev.value:null;
+  const pos=raw==null?null:(kpiDef&&kpiDef.hb?raw:-raw);
+  const bigR=p!=null?`<div class="rw" style="width:64px;height:64px">${ring(p,col,64,6.5)}<div class="rl"><span style="font-size:13px;font-weight:700;color:${col}">${Math.round(p*100)}</span></div></div>`:'';
+  const trendH=pos!=null?`<p style="font-size:13px;color:${pos>0?'#30D158':pos<0?'#FF453A':'#636366'};margin:5px 0 0;font-weight:600">${pos>0?'▲':pos<0?'▼':'→'} ${Math.abs(raw).toFixed(1)} zum Voreintrag</p>`:'';
+  const targetRow=S.editTarget
+    ?`<div class="zi"><input class="zinp" type="number" id="ti" value="${t||''}"/><button class="zok" style="background:${col}" data-a="save-target">OK</button><button class="zcl" data-a="cancel-target">×</button></div>`
+    :`<div style="display:flex;justify-content:space-between;align-items:center"><p style="font-size:13px;color:#636366;margin:0">Ziel: <span style="color:#30D158;font-weight:500">${t?t+' '+(kpiDef?kpiDef.unit:''):'nicht gesetzt'}</span></p><button class="zcl" data-a="edit-target">Ziel anpassen</button></div>`;
+  const pbtns=PERIODS.map(([pk,pl])=>`<button class="pb" style="background:${S.period===pk?'#3A3A3C':'transparent'};color:${S.period===pk?'#fff':'#636366'};font-weight:${S.period===pk?500:400}" data-a="set-period" data-period="${pk}">${pl}</button>`).join('');
+  let eH=ents.length===0?`<p style="font-size:14px;color:#48484A;text-align:center;padding:24px 0">Keine Einträge in diesem Zeitraum</p>`:'';
+  for(const e of [...ents].reverse()){const metaH=Object.keys(e.meta).length?`<div style="margin-bottom:${e.notizen?'8px':'0'}">${Object.entries(e.meta).map(([mk,mv])=>`<span class="mt">${mk}: <span style="color:#ebebf5">${mv}</span></span>`).join('')}</div>`:'';const notH=e.notizen?`<div class="nb2"><p style="font-size:12px;color:#8E8E93;margin:0 0 1px;font-weight:500">Notiz</p><p style="font-size:13px;color:#ebebf5;margin:0">${e.notizen}</p></div>`:'';eH+=`<div class="ec"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${metaH||notH?'10px':'0'}"><div><p style="font-size:16px;font-weight:700;color:#fff;margin:0 0 2px">${e.value} <span style="font-size:13px;font-weight:400;color:#636366">${kpiDef?kpiDef.unit:''}</span></p><p style="font-size:12px;color:#48484A;margin:0">${e.date}</p></div><button class="db" data-a="del-entry" data-sys="${sysId}" data-eid="${e.id}">Löschen</button></div>${metaH}${notH}</div>`;}
+  return `<div class="card card22" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px"><div><p style="font-size:11px;color:#636366;margin:0 0 4px">Aktueller Wert</p><div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:38px;font-weight:700;color:#fff;line-height:1">${lat?lat.value:'–'}</span><span style="font-size:16px;color:#636366">${kpiDef?kpiDef.unit:''}</span></div>${trendH}</div>${bigR}</div><div style="border-top:.5px solid rgba(84,84,88,.4);padding-top:10px">${targetRow}</div>${chart(cd,col,t)}</div><div class="pbar">${pbtns}</div><p class="sec">Einträge (${ents.length})</p>${eH}`;
+}
+
+function vStats(){
+  const ov=SM.reduce((s,sys)=>s+sysSc(sys.id,S.logs,S.targets),0)/6;
+  const scoreData=[];
+  for(let wi=-7;wi<=0;wi++){const wk=getWeek(wi);const fl={};for(const sid of Object.keys(S.logs))fl[sid]=(S.logs[sid]||[]).filter(e=>e.date<=wk.end);if(Object.values(fl).some(a=>a.length>0)){const sc=SM.reduce((s,sys)=>s+sysSc(sys.id,fl,S.targets),0)/6;scoreData.push({d:fmtD(wk.end),v:Math.round(sc*100)});}}
+  const period=S.statsTab==='woche'?getWeek(S.statsOff):mRange(S.statsOff);
+  const prevP=S.statsTab==='woche'?getWeek(S.statsOff-1):mRange(S.statsOff-1);
+  const sr=ring(ov,'#0A84FF',52,5.5);
+  let h=`<div class="card" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">${ringWrap(sr,`<span style="font-size:11px;font-weight:800;color:#0A84FF">${Math.round(ov*100)}</span>`,52)}<div><p style="font-size:11px;color:#636366;margin:0 0 2px">Cyborg Score</p><p style="font-size:18px;font-weight:700;color:#fff;margin:0">${gradeOf(ov)}</p></div></div>${scoreData.length>=2?chart(scoreData,'#0A84FF',null):`<p style="font-size:12px;color:#3A3A3C;text-align:center;padding:12px 0">Score-Verlauf erscheint ab 2 Wochen</p>`}</div>`;
+  h+=`<div class="tbar">${[['woche','Woche'],['monat','Monat']].map(([t,l])=>`<button class="tb" style="background:${S.statsTab===t?'#3A3A3C':'transparent'};color:${S.statsTab===t?'#fff':'#636366'};font-weight:${S.statsTab===t?500:400}" data-a="stats-tab" data-tab="${t}">${l}</button>`).join('')}</div>`;
+  h+=`<div class="np"><button class="npb" style="color:#0A84FF" data-a="stats-off" data-dir="-1">‹</button><div style="text-align:center"><p style="font-size:13px;font-weight:600;color:#fff;margin:0 0 1px">${period.label}</p><p style="font-size:11px;color:#48484A;margin:0">vs. ${prevP.label}</p></div><button class="npb" style="color:${S.statsOff<0?'#0A84FF':'#3A3A3C'}" data-a="stats-off" data-dir="1">›</button></div>`;
+  for(const s of SM){const col=COL[s.id];const sc=sysSc(s.id,S.logs,S.targets);const rows=(KPIS[s.id]||[]).map(kpi=>{const all=getEnts(s.id,kpi.k,S.logs);const cur=all.filter(e=>inR(e.date,period.start,period.end));const prv=all.filter(e=>inR(e.date,prevP.start,prevP.end));const cv=cur.length?cur[cur.length-1].value:null;const pv=prv.length?prv[prv.length-1].value:null;if(cv==null&&pv==null)return null;const delta=(cv!=null&&pv!=null)?cv-pv:null;const pos=delta==null?null:(kpi.hb?delta:-delta);return{kpi,cv,pv,delta,pos};}).filter(Boolean);if(!rows.length){h+=`<div class="ec" style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="dot" style="background:${col}"></div><p style="font-size:15px;font-weight:600;color:#fff;margin:0">${s.label}</p><p style="font-size:12px;color:#3A3A3C;margin:0 0 0 auto;font-style:italic">Keine Daten</p></div>`;continue;}h+=`<div class="ec" style="margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div class="dot" style="background:${col}"></div><p style="font-size:15px;font-weight:600;color:#fff;margin:0;flex:1">${s.label}</p><span style="font-size:12px;color:${col};font-weight:600">${Math.round(sc*100)}%</span></div><div style="background:#3A3A3C;border-radius:12px;overflow:hidden"><div style="display:grid;grid-template-columns:1fr 80px 80px;padding:7px 12px;border-bottom:.5px solid rgba(84,84,88,.5)"><span style="font-size:10px;color:#636366;font-weight:600;text-transform:uppercase;letter-spacing:.4px">KPI</span><span style="font-size:10px;color:#636366;font-weight:600;text-transform:uppercase;letter-spacing:.4px;text-align:right">Jetzt</span><span style="font-size:10px;color:#636366;font-weight:600;text-transform:uppercase;letter-spacing:.4px;text-align:right">Vorher</span></div>${rows.map(({kpi,cv,pv,pos,delta})=>`<div class="sr"><span style="font-size:13px;color:#ebebf5">${kpi.label}</span><span style="font-size:14px;font-weight:700;color:${cv!=null?'#fff':'#48484A'};text-align:right">${cv!=null?cv:'–'}${cv!=null&&pos!=null?`<span style="font-size:10px;margin-left:3px;color:${pos>0?'#30D158':pos<0?'#FF453A':'#636366'};font-weight:600">${pos>0?'▲':pos<0?'▼':'→'}</span>`:''}</span><span style="font-size:13px;color:#636366;text-align:right">${pv!=null?pv+' '+kpi.unit:'–'}</span></div>`).join('')}</div></div>`;}
+  return h;
+}
+
+function vDaten(){
+  const total=totalEntries();
+  return `<div class="card" style="margin-bottom:12px"><p class="sec">Übersicht</p><p style="font-size:28px;font-weight:700;color:#fff;margin:0 0 2px">${total}</p><p style="font-size:13px;color:#48484A;margin:0 0 10px">Einträge gespeichert</p><div style="border-top:.5px solid rgba(84,84,88,.4);padding-top:10px">${SM.map(s=>{const n=(S.logs[s.id]||[]).length;return `<div style="display:flex;justify-content:space-between;padding:4px 0"><span style="font-size:13px;color:#8E8E93">${s.label}</span><span style="font-size:13px;color:${n?'#fff':'#48484A'};font-weight:${n?500:400}">${n} Eintr.</span></div>`;}).join('')}</div></div>
+  <p class="sec">☁️ iCloud Backup</p>
+  <div class="card" style="margin-bottom:12px">
+    <p style="font-size:13px;color:#8E8E93;margin:0 0 12px;line-height:1.5">Backup sichern: Teilen-Dialog öffnet sich → „In Dateien sichern" → iCloud Drive wählen.</p>
+    <button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  Jetzt in iCloud sichern</button>
+    <button style="width:100%;background:#3A3A3C;border:none;border-radius:14px;padding:13px 0;font-size:15px;color:#8E8E93;cursor:pointer;font-family:inherit" data-a="imp-json">📂  Backup wiederherstellen</button>
+    ${S.importMsg?`<p style="font-size:13px;color:${S.importMsg.startsWith('✓')?'#30D158':'#FF453A'};margin:10px 0 0;text-align:center">${S.importMsg}</p>`:''}
+  </div>
+  <p class="sec">Export</p><div class="lcard" style="margin-bottom:12px"><div class="er" data-a="exp-json"><span style="font-size:15px;font-weight:500;color:#0A84FF">JSON exportieren (Backup)</span><span style="font-size:18px;color:#48484A">↓</span></div><div class="er" data-a="exp-csv"><span style="font-size:15px;font-weight:500;color:#34C759">CSV exportieren (Excel/Numbers)</span><span style="font-size:18px;color:#48484A">↓</span></div></div>
+  <p style="font-size:11px;color:#3A3A3C;text-align:center;line-height:1.5">Daten lokal im Browser gespeichert.<br>Regelmäßig in iCloud sichern.</p>`;
+}
+
+function fKraft(col){const opts=KPIS.kraft.map(o=>[o.k,o.label]);const kd=KPIS.kraft.find(o=>o.k===S.fEx)||KPIS.kraft[0];return `${fld('Übung',selEl('fEx',opts,S.fEx))}<div class="fw">${fld(kd.label+' ('+kd.unit+')',ni('value','0'),true)}${fld('Technik (1–5)',ni('technik','3'),true)}</div>${fld('Schmerz (0–10) bei '+kd.label,ni('pain','0'))}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-kraft',col)}`;}
+function fEngine(col){return `<div class="fw">${fld('Ø Pace (min/km)',ni('pace','5.5'),true)}${fld('Ø Puls (bpm)',ni('hr','140'),true)}${fld('HF-Drift (%)',ni('drift','5'),true)}${fld('RPE (1–10)',ni('rpe','6'),true)}</div>${togEl('Nasenatmung','fNase')}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-engine',col)}`;}
+function fPeak(col){return `<div class="fw">${fld('Ø Watt',ni('wattAvg','200'),true)}${fld('Max Watt',ni('wattMax','350'),true)}</div>${fld('RPE (1–10)',ni('rpe','8'))}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-peak',col)}`;}
+function fSkills(col){const opts=KPIS.skills.map(o=>[o.k,o.label]);const kd=KPIS.skills.find(o=>o.k===S.fSkill)||KPIS.skills[0];return `${fld('Skill',selEl('fSkill',opts,S.fSkill))}${fld(`Ist (${kd.unit}) — Ziel: ${kd.target}`,ni('ist','0'))}${fld('Qualität',`<div style="display:flex;gap:8px">${['ruhig','shaky'].map(q=>`<button class="qb" style="background:${S.fQual===q?col:'#3A3A3C'};font-weight:${S.fQual===q?600:400}" data-a="set-qual" data-qual="${q}">${q}</button>`).join('')}</div>`)}${fld('Abbruchgrund',ni('abbruch','z.B. Erschöpfung','text'))}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-skills',col)}`;}
+function fStruktur(col){return `${fld('Active Dead Hang (s)',ni('hang','33'))}<div class="fw">${fld('Schulter (0–10)',ni('schulter','0'),true)}${fld('Knie (0–10)',ni('knie','0'),true)}</div>${fld('Rücken (0–10)',ni('ruecken','0'))}${togEl('Deep Squat 2 min','fDeepSquat')}${togEl('Mobility erledigt','fMobility')}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-struktur',col)}`;}
+function fRecovery(col){return `${fld('HRV (ms) — Ziel: mind. 60 ms',ni('hrv','60'))}${fld('Notizen',`<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>`)}${sbtn('save-recovery',col)}`;}
+const FORMS={kraft:fKraft,engine:fEngine,peak:fPeak,skills:fSkills,struktur:fStruktur,recovery:fRecovery};
+
+function renderModal(){
+  if(S.modal==='pick')return `<h2 style="font-size:20px;font-weight:700;color:#fff;margin:0 0 14px">System wählen</h2>${SM.map(s=>`<button style="width:100%;background:#2C2C2E;border:none;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" data-a="modal-sys" data-sys="${s.id}"><div style="width:9px;height:9px;border-radius:50%;background:${COL[s.id]};flex-shrink:0"></div><span style="font-size:16px;font-weight:500;color:#fff;flex:1;text-align:left">${s.label}</span><span style="font-size:13px;color:#636366">${s.desc}</span><span style="font-size:18px;color:#48484A">›</span></button>`).join('')}`;
+  const sysId=S.modal,s=SM.find(x=>x.id===sysId),col=COL[sysId];
+  const formFn=FORMS[sysId];
+  return `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div>${s?`<p style="font-size:11px;color:#636366;margin:0 0 2px">${s.desc}</p>`:''}<h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">${s?s.label:''}</h2></div><button class="mcl" data-a="close-modal">×</button></div>${formFn?formFn(col):''}`;
+}
+
+function getVals(){const v={};document.querySelectorAll('[data-fk]').forEach(el=>{v[el.dataset.fk]=el.value;});return v;}
+function saveInps(){const v={};document.querySelectorAll('.ms [data-fk]').forEach(el=>{v[el.dataset.fk]=el.value;});return v;}
+function restoreInps(v){document.querySelectorAll('.ms [data-fk]').forEach(el=>{if(v[el.dataset.fk]!=null)el.value=v[el.dataset.fk];});}
+function rerenderMs(){const v=saveInps();const ms=document.querySelector('.ms');if(ms){ms.innerHTML=`<div class="mh"></div>${renderModal()}`;}restoreInps(v);}
+
+function render(){
+  const cur=S.stack[S.stack.length-1];
+  const showBack=S.stack.length>1;
+  const curSys=cur.sysId?SM.find(s=>s.id===cur.sysId):null;
+  const curKpi=cur.kpiK&&KPIS[cur.sysId]?KPIS[cur.sysId].find(k=>k.k===cur.kpiK):null;
+  const title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='daten'?'Daten':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
+  const sub=cur.type==='sys'&&curSys?curSys.desc:cur.type==='kpi'&&curSys?curSys.label:'';
+  const showAdd=(cur.type==='sys'||cur.type==='kpi')&&cur.sysId;
+  const addCol=cur.sysId?COL[cur.sysId]:'#0A84FF';
+  let view='';
+  if(cur.type==='dash')view=vDash();
+  else if(cur.type==='sys')view=vSys(cur.sysId);
+  else if(cur.type==='kpi')view=vKPI(cur.sysId,cur.kpiK);
+  else if(cur.type==='stats')view=vStats();
+  else if(cur.type==='daten')view=vDaten();
+  const TABS=[{id:'dash',icon:'⊞',l:'Dashboard'},{id:'add',icon:'+',l:'Eintrag'},{id:'stats',icon:'◎',l:'Statistik'},{id:'daten',icon:'↕',l:'Daten'}];
+  document.getElementById('app').innerHTML=`
+    <div class="hdr">
+      ${showBack?`<button class="back" data-a="back">‹ Zurück</button>`:''}
+      <div class="hdr-row">
+        <div>${sub?`<p class="pg-sub">${sub}</p>`:''}<h1 class="pg-title">${title}</h1></div>
+        ${showAdd?`<button class="add-btn" style="background:${addCol}" data-a="open-modal" data-sys="${cur.sysId}">+ Eintrag</button>`:''}
+      </div>
+    </div>
+    <div class="content">${view}</div>
+    <div class="nav">${TABS.map(t=>{const active=(t.id==='dash'&&cur.type==='dash')||(t.id==='stats'&&cur.type==='stats')||(t.id==='daten'&&cur.type==='daten');return `<button class="nb" data-a="nav-tab" data-tab="${t.id}"><div class="ni" style="background:${active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)'};font-size:${t.id==='add'?'20px':'14px'}">${t.icon}</div><span class="nl" style="color:${active?'#0A84FF':'#636366'}">${t.l}</span></button>`;}).join('')}</div>
+    ${S.modal?`<div class="ov" id="ov"><div class="ms"><div class="mh"></div>${renderModal()}</div></div>`:''}
+    ${S.showRestore?renderRestoreOverlay():''}
+  `;
+}
+
+function addEntry(sysId,entry){
+  if(!S.logs[sysId])S.logs[sysId]=[];
+  S.logs[sysId].push({...entry,id:uid()});
+  lsSave();
+  S.modal=null;
+  render();
+  // Backup-Banner nach jedem Eintrag zeigen
+  setTimeout(showBanner,400);
+}
+function delEntry(sysId,eid){if(!S.logs[sysId])return;S.logs[sysId]=S.logs[sysId].filter(e=>e.id!==eid);lsSave();render();}
+
+// File import handler
+function setupFileImport(cb){
+  const fi=document.getElementById('fi');
+  fi.onchange=null;
+  fi.value='';
+  fi.onchange=function(){
+    const f=fi.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=function(ev){
+      try{
+        const d=JSON.parse(ev.target.result);
+        if(!d.logs)throw new Error('Ungültiges Format');
+        S.logs=stamp(d.logs||{});
+        S.targets=d.targets||{};
+        lsSave();
+        S.showRestore=false;
+        if(cb)cb(true);
+      }catch(err){if(cb)cb(false);}
+    };
+    r.readAsText(f);
+  };
+  fi.click();
+}
+
+document.getElementById('app').addEventListener('click',function(e){
+  if(e.target.id==='ov'){S.modal=null;render();return;}
+  if(e.target.id==='rsov'||e.target.closest('#rsov')&&!e.target.closest('.rsbox')){return;}
+  const el=e.target.closest('[data-a]');if(!el)return;
+  const a=el.dataset.a;
+  if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;render();return;}
+  if(a==='nav-tab'){const tab=el.dataset.tab;if(tab==='add'){S.modal='pick';S.fNase=false;S.fDeepSquat=false;S.fMobility=false;S.fQual='ruhig';render();}else{S.stack=[{type:tab}];render();}return;}
+  if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
+  if(a==='nav-kpi'){S.stack.push({type:'kpi',sysId:el.dataset.sys,kpiK:el.dataset.kpi});S.period='all';S.editTarget=false;render();return;}
+  if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fDeepSquat=false;S.fMobility=false;S.fQual='ruhig';render();return;}
+  if(a==='close-modal'){S.modal=null;render();return;}
+  if(a==='modal-sys'){S.modal=el.dataset.sys;rerenderMs();return;}
+  if(a==='tog'){S[el.dataset.key]=!S[el.dataset.key];rerenderMs();return;}
+  if(a==='set-qual'){S.fQual=el.dataset.qual;rerenderMs();return;}
+  if(a==='set-period'){S.period=el.dataset.period;render();return;}
+  if(a==='stats-tab'){S.statsTab=el.dataset.tab;S.statsOff=0;render();return;}
+  if(a==='stats-off'){const d=parseInt(el.dataset.dir);if(S.statsOff+d<=0)S.statsOff+=d;render();return;}
+  if(a==='edit-target'){S.editTarget=true;render();return;}
+  if(a==='cancel-target'){S.editTarget=false;render();return;}
+  if(a==='save-target'){const cur=S.stack[S.stack.length-1];const v=parseFloat(document.getElementById('ti').value);if(!isNaN(v)){S.targets[cur.sysId+'.'+cur.kpiK]=v;lsSave();}S.editTarget=false;render();return;}
+  if(a==='del-entry'){if(confirm('Eintrag löschen?'))delEntry(el.dataset.sys,el.dataset.eid);return;}
+  if(a==='exp-json'){exportJSON();return;}
+  if(a==='exp-csv'){exportCSV();return;}
+  if(a==='share-backup'){shareBackup();return;}
+  if(a==='imp-json'){
+    setupFileImport(ok=>{
+      S.importMsg=ok?'✓ Backup erfolgreich geladen':'✗ Fehler beim Laden';
+      render();
+      setTimeout(()=>{S.importMsg='';render();},3000);
+    });return;}
+  if(a==='restore-pick'){
+    setupFileImport(ok=>{
+      if(ok){S.showRestore=false;render();}
+      else{alert('Fehler beim Laden der Datei.');}
+    });return;}
+  if(a==='restore-skip'){
+    // Seed-Daten laden für Demo
+    S.logs=JSON.parse(JSON.stringify(SEED));
+    lsSave();
+    S.showRestore=false;
+    render();return;}
+
+  // Save actions
+  const v=getVals();
+  if(a==='save-kraft'){const kd=KPIS.kraft.find(o=>o.k===v.fEx)||KPIS.kraft[0];addEntry('kraft',{date:todayISO(),exercise:v.fEx||'pullups',value:parseFloat(v.value)||0,technik:parseFloat(v.technik)||3,pain:parseFloat(v.pain)||0,notizen:v.notizen||''});S.fEx=v.fEx||'pullups';return;}
+  if(a==='save-engine'){addEntry('engine',{date:todayISO(),pace:parseFloat(v.pace)||0,hr:parseFloat(v.hr)||0,drift:parseFloat(v.drift)||0,rpe:parseFloat(v.rpe)||0,nase:S.fNase,notizen:v.notizen||''});return;}
+  if(a==='save-peak'){addEntry('peak',{date:todayISO(),wattAvg:parseFloat(v.wattAvg)||0,wattMax:parseFloat(v.wattMax)||0,rpe:parseFloat(v.rpe)||0,notizen:v.notizen||''});return;}
+  if(a==='save-skills'){addEntry('skills',{date:todayISO(),skill:v.fSkill||'L-Sit',ist:parseFloat(v.ist)||0,qualitaet:S.fQual,abbruch:v.abbruch||'',notizen:v.notizen||''});S.fSkill=v.fSkill||'L-Sit';return;}
+  if(a==='save-struktur'){addEntry('struktur',{date:todayISO(),hang:parseFloat(v.hang)||0,schulter:parseFloat(v.schulter)||0,knie:parseFloat(v.knie)||0,ruecken:parseFloat(v.ruecken)||0,deepSquat:S.fDeepSquat,mobility:S.fMobility,notizen:v.notizen||''});return;}
+  if(a==='save-recovery'){addEntry('recovery',{date:todayISO(),hrv:parseFloat(v.hrv)||0,notizen:v.notizen||''});return;}
+});
+
+// Persistent storage anfordern
+async function reqPersist(){
+  if(navigator.storage&&navigator.storage.persist){
+    await navigator.storage.persist();
+  }
+}
+
+// Init
+reqPersist();
+const hasData=lsLoad();
+if(!hasData||totalEntries()===0){
+  checkRestore();
+  if(!S.showRestore){
+    // Erster Start mit Seed-Daten
+    S.logs=JSON.parse(JSON.stringify(SEED));
+    lsSave();
+  }
+}
+render();
+})();
+</script>
+</body>
+</html>
