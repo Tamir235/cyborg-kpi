@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Cyborg KPI"/>
 <meta name="theme-color" content="#1C1C1E"/>
+<link rel="apple-touch-icon" href="icon.png"/>
 <title>Cyborg KPI</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
@@ -429,9 +430,6 @@ document.getElementById('app').addEventListener('click',function(e){
       else{alert('Fehler beim Laden der Datei.');}
     });return;}
   if(a==='restore-skip'){
-    // Seed-Daten laden für Demo
-    S.logs=JSON.parse(JSON.stringify(SEED));
-    lsSave();
     S.showRestore=false;
     render();return;}
 
@@ -457,11 +455,6 @@ reqPersist();
 const hasData=lsLoad();
 if(!hasData||totalEntries()===0){
   checkRestore();
-  if(!S.showRestore){
-    // Erster Start mit Seed-Daten
-    S.logs=JSON.parse(JSON.stringify(SEED));
-    lsSave();
-  }
 }
 render();
 })();
