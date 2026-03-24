@@ -178,7 +178,7 @@ document.getElementById('bkdo').addEventListener('click',function(){shareBackup(
 document.getElementById('bkcl').addEventListener('click',function(){hideBanner();});
 
 function todayISO(){return new Date().toISOString().split('T')[0];}
-function fmtD(d){return d.slice(5).replace('-','.');}
+function fmtD(d){return d.slice(8,10)+'.'+d.slice(5,7)+'.'+d.slice(2,4);}
 function mLbl(d){var m=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];return m[parseInt(d.slice(5,7))-1]+' '+d.slice(0,4);}
 function getWeek(off){var base=new Date(),dow=base.getDay()||7,mon=new Date(base);mon.setDate(base.getDate()-dow+1+off*7);var sun=new Date(mon);sun.setDate(mon.getDate()+6);var f=function(d){return d.getDate().toString().padStart(2,'0')+'.'+(d.getMonth()+1).toString().padStart(2,'0');};return{start:mon.toISOString().split('T')[0],end:sun.toISOString().split('T')[0],label:f(mon)+' – '+f(sun)};}
 function inR(d,s,e){return d>=s&&d<=e;}
