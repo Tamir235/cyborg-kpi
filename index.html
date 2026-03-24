@@ -631,16 +631,7 @@ async function reqPersist(){if(navigator.storage&&navigator.storage.persist)awai
 reqPersist();
 lsLoad();
 secLoad();
-if(SEC.logs.length===0){
-  SEC.logs=[
-    {id:'s1',date:'2023-08-11',bpsfl:175,bpel:160,nbel:145,mseg:120,beg:115,notizen:''},
-    {id:'s2',date:'2023-09-09',bpsfl:189,bpel:175,nbel:147,mseg:121,beg:117,notizen:''},
-    {id:'s3',date:'2023-09-26',bpsfl:190,bpel:181,nbel:148,mseg:122,beg:118,notizen:''},
-    {id:'s4',date:'2024-12-12',bpsfl:186,bpel:178,nbel:147,mseg:121,beg:116,notizen:''},
-    {id:'s5',date:'2025-01-02',bpel:177,nbel:147,mseg:123,beg:117,notizen:''},
-    {id:'s6',date:'2025-11-11',bpsfl:176,bpel:167,nbel:145,mseg:122,beg:115,notizen:''},
-  ];
-}
+
 if(totalEntries()===0)S.showRestore=true;
 render();
 })();
