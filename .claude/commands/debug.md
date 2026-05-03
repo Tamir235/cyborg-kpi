@@ -47,7 +47,6 @@ Migration failed:     _migrated Flag nicht gesetzt
 JSON.parse(localStorage.getItem('cyborg-v1'))
 // → Zeigt alle gespeicherten Daten
 
-// State live checken:
-// In index.html am Ende der IIFE hinzufügen:
+// State live checken (am Ende der IIFE hinzufügen):
 window.S = S; // dann in Konsole: S.logs
 ```

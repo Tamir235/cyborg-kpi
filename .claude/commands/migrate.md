@@ -51,8 +51,6 @@ Test mit Backup-Daten:
 ## Migrations-Regeln
 ```javascript
 // Alle Migrationen MÜSSEN idempotent sein:
-// (mehrfaches Ausführen = gleiches Ergebnis)
-
 function migrateX() {
   if (S.logs.x?.[0]?._migrated) return; // bereits migriert
   // ... migration code ...

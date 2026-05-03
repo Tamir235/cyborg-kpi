@@ -41,7 +41,6 @@ Akzeptierte Bestätigungen: "ja", "ok", "mach es", "go", "✓"
 - Erkläre kurz was geändert wurde
 
 ### Schritt 6 – Testing-Hinweis
-Gib konkrete Test-Schritte aus:
 ```
 Teste jetzt:
 □ [Spezifischer Test 1]

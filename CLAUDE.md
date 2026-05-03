@@ -3,7 +3,25 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 2.6
+> Stand: Mai 2026 | Version: 2.7
+
+---
+
+## 🔜 Nächste Session – ERSTER TASK
+
+**Skills auf neue Struktur migrieren:**
+
+`.claude/commands/start-session.md` → `.claude/skills/start-session/SKILL.md`
+
+Alle 20 Commands in `.claude/commands/` müssen in die neue empfohlene Struktur
+`.claude/skills/<name>/SKILL.md` verschoben werden. Diese unterstützt YAML Frontmatter
+und Supporting Files. Bei gleichnamigen Einträgen gewinnt immer `skills/` über `commands/`.
+
+```bash
+# Für jeden Command:
+mkdir -p .claude/skills/<name>
+mv .claude/commands/<name>.md .claude/skills/<name>/SKILL.md
+```
 
 ---
 

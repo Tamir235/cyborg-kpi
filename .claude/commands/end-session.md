@@ -8,21 +8,13 @@ Führe diese Schritte aus am Ende jeder Session:
 - Versionshistorie ergänzen
 - Module-Status aktualisieren
 
-## Schritt 2 – ARCHITECTURE.md aktualisieren
-Nur wenn sich Datenstrukturen oder Architektur geändert haben.
-
-## Schritt 3 – DESIGN.md aktualisieren
+## Schritt 2 – DESIGN.md aktualisieren
 Nur wenn Design-Entscheidungen getroffen wurden.
 
-## Schritt 4 – Git Push
-Führe `/git-push` aus:
-```bash
-git add .
-git commit -m "[generierte Message basierend auf Session]"
-git push
-```
+## Schritt 3 – Git Push
+Führe `/git-push` aus.
 
-## Schritt 5 – Zusammenfassung
+## Schritt 4 – Zusammenfassung
 
 ```
 ╔══════════════════════════════════════╗
@@ -38,7 +30,6 @@ Neu im Backlog:
 
 Docs:
   CLAUDE.md       ✅
-  ARCHITECTURE.md [✅ / ⏭ nicht nötig]
   DESIGN.md       [✅ / ⏭ nicht nötig]
 
 GitHub:

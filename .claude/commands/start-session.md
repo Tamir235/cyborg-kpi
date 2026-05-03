@@ -5,8 +5,8 @@ Führe diese Schritte aus wenn eine neue Session beginnt:
 ## 1. Alle Docs lesen
 Lies diese Dateien vollständig in dieser Reihenfolge:
 - `CLAUDE.md` – Vision, Backlog, Regeln
-- `ARCHITECTURE.md` – Technische Struktur, Datenmodelle
 - `DESIGN.md` – Design System, Komponenten
+- `SKILLS.md` – verfügbare Slash Commands
 
 ## 2. Code-Stand erfassen
 - Öffne `index.html` und verschaffe dir einen groben Überblick

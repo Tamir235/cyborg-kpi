@@ -7,7 +7,6 @@ Erkläre eine Funktion oder einen Code-Bereich in einfachem Deutsch.
 /explain sysSc
 /explain getRecommendation
 /explain isUnlocked
-/explain calcDrift
 /explain render
 ```
 

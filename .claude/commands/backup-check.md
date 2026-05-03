@@ -24,14 +24,11 @@ Status: [✅ Aktuell / ⚠️ Veraltet / 🔴 Kein Backup!]
 Wenn Backup nötig:
 ```
 So machst du ein Backup:
-1. index.html kopieren:
-   cp index.html backups/index-[datum].html
-
-2. In der App:
+1. In der App:
    Home → Avatar → Daten → JSON exportieren
    → In backups/ speichern
 
-3. Fertig ✓
+2. Fertig ✓
 ```
 
 ## Wann ist ein Backup nötig?
