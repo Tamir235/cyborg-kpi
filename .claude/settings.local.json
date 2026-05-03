@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp /Users/tamir/Desktop/cyborg-kpi/start-session.md /Users/tamir/Desktop/cyborg-kpi/.claude/commands/start-session.md)",
+      "Bash(cp /Users/tamir/Desktop/cyborg-kpi/end-session.md /Users/tamir/Desktop/cyborg-kpi/.claude/commands/end-session.md)",
+      "Bash(cp /Users/tamir/Desktop/cyborg-kpi/status.md /Users/tamir/Desktop/cyborg-kpi/.claude/commands/status.md)",
+      "Bash(cp /Users/tamir/Desktop/cyborg-kpi/implement.md /Users/tamir/Desktop/cyborg-kpi/.claude/commands/implement.md)",
+      "Bash(cp /Users/tamir/Desktop/cyborg-kpi/review.md /Users/tamir/Desktop/cyborg-kpi/.claude/commands/review.md)",
+      "Bash(gh auth *)",
+      "Bash(git --version)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

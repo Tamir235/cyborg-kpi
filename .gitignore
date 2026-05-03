@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# App-Daten (persönliche Trainings-Daten – nie in Git!)
+backups/*.json
+backups/*.database
+
+# HTML-Backups (groß, redundant)
+backups/index*.html
+backups/Text*.txt
