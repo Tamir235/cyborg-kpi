@@ -14,7 +14,10 @@
       "Bash(git stash *)",
       "Bash(git pull *)",
       "Bash(git push *)",
-      "Bash(git commit -m 'fix: convert index.html from RTF to clean HTML *)"
+      "Bash(git commit -m 'fix: convert index.html from RTF to clean HTML *)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

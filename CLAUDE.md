@@ -3,24 +3,14 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 2.8
+> Stand: Mai 2026 | Version: 2.9
 
 ---
 
-## 🔜 Nächste Session – ERSTER TASK
+## ✅ Skills-Migration abgeschlossen (04. Mai 2026)
 
-**Restliche 19 Commands auf neue Struktur migrieren:**
-
-`start-session` ✅ bereits migriert → `.claude/skills/start-session/SKILL.md`
-
-Alle weiteren Commands in `.claude/commands/` in die neue Struktur verschieben:
-`.claude/skills/<name>/SKILL.md`
-
-```bash
-# Für jeden der 19 verbleibenden Commands:
-mkdir -p .claude/skills/<name>
-mv .claude/commands/<name>.md .claude/skills/<name>/SKILL.md
-```
+Alle 20 Commands nach `.claude/skills/<name>/SKILL.md` migriert.
+Originale in `.claude/commands/` bleiben als Backup erhalten.
 
 ---
 
@@ -28,15 +18,9 @@ mv .claude/commands/<name>.md .claude/skills/<name>/SKILL.md
 
 ---
 
-## Kritisch: index.html ist RTF-kodiert
+## index.html – sauberes HTML (Stand: Mai 2026)
 
-`index.html` liegt als **RTF-Datei** vor (beginnt mit `{\rtf1\ansi...`). Der HTML-Inhalt ist darin eingebettet.
-
-Konsequenzen beim Bearbeiten:
-- `{` und `}` im Code müssen als `\{` und `\}` geschrieben werden
-- Umlaute und Sonderzeichen als RTF Hex-Escape: `\'fc` = ü, `\'e4` = ä, `\'f6` = ö, `\'d7` = ×, `\'96` = –, `\'b7` = ·
-- Zeilenenden im Script-Block mit `\` abschließen (RTF Zeilenfortsetzung)
-- **Niemals** die Datei als normales HTML bearbeiten – das zerstört die RTF-Kodierung
+`index.html` ist **normales HTML** (648 Zeilen). Das RTF-Original liegt als Backup unter `backups/index-rtf-original.html`.
 
 Entwicklung testen:
 ```
@@ -403,7 +387,6 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 ## Häufige Fallstricke
 
 ```
-⚠️  index.html ist RTF-kodiert – beim Bearbeiten RTF-Escaping beachten
 ⚠️  Quick Log Sheet ersetzt S.modal='pick'
 ⚠️  S.sheet = 'quicklog'|'recovery'|null (neues State-Feld)
 ⚠️  Recovery nicht in Nav – nur Sheet nach Training-Log
@@ -446,3 +429,5 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 2.4 | Mai 2026 | React Native, Flutter, Vibe-Coding Pfad |
 | 2.5 | Mai 2026 | Fokus: persönliches Tool · PWA first · Phase 3 offen |
 | 2.6 | Mai 2026 | RTF-Kodierung dokumentiert, technische Architektur ergänzt |
+| 2.7–2.8 | Mai 2026 | (intern, nicht dokumentiert) |
+| 2.9 | Mai 2026 | Skills-Migration abgeschlossen (20/20), PreCompact auto-save Hook, RTF-Warnung bereinigt |
