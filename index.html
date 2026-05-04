@@ -152,15 +152,20 @@ const LS='cyborg-v1';
 const LS_SEC='cyborg-sec-v1';
 const DEFAULT_PW_HASH='afc71cb8';
 
+function escHtml(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
 let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
 let SEC={unlocked:false,pwHash:DEFAULT_PW_HASH,logs:[],showPwPrompt:false,pwErr:'',secModal:null,editId:null,peView:'charts'};
 let bannerTimer=null,secretTaps=0,secretTimer=null;
+let quotaWarn=false;
+let formErr='';
+async function checkQuota(){if(!navigator.storage||!navigator.storage.estimate)return;try{var est=await navigator.storage.estimate();var w=est.usage/est.quota>0.8;if(w!==quotaWarn){quotaWarn=w;render();}}catch(e){}}
 
 function uid(){return Math.random().toString(36).slice(2,9);}
 function stamp(logs){var o={};for(var k in logs)o[k]=logs[k].map(function(e){return e.id?e:Object.assign({},e,{id:uid()});});return o;}
 function hashPw(s){var h=0;for(var i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return(h>>>0).toString(16);}
 function lsLoad(){try{var r=localStorage.getItem(LS);if(!r)return false;var d=JSON.parse(r);S.logs=stamp(d.logs||{});S.targets=d.targets||{};S.kpiOrder=d.kpiOrder||{};S.theme=d.theme||'dark';return true;}catch(e){return false;}}
-function lsSave(){try{localStorage.setItem(LS,JSON.stringify({logs:S.logs,targets:S.targets,kpiOrder:S.kpiOrder,theme:S.theme}));}catch(e){}}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify({logs:S.logs,targets:S.targets,kpiOrder:S.kpiOrder,theme:S.theme}));}catch(e){quotaWarn=true;}checkQuota();}
 function secLoad(){try{var r=localStorage.getItem(LS_SEC);if(!r)return false;var d=JSON.parse(r);SEC.pwHash=d.pwHash||DEFAULT_PW_HASH;SEC.logs=(d.logs||[]).map(function(e){return e.id?e:Object.assign({},e,{id:uid()});});return true;}catch(e){return false;}}
 function secSave(){try{localStorage.setItem(LS_SEC,JSON.stringify({pwHash:SEC.pwHash,logs:SEC.logs}));}catch(e){}}
 function totalEntries(){return Object.values(S.logs).reduce(function(s,a){return s+a.length;},0);}
@@ -257,7 +262,7 @@ function selEl(k,opts,val){return '<select class="sel" data-fk="'+k+'">'+opts.ma
 function togEl(label,key){var on=S[key];return '<div class="tw"><span style="font-size:14px;color:var(--txt)">'+label+'</span>'+
   '<div class="tt" style="background:'+(on?'#30D158':'var(--card3)')+'" data-a="tog" data-key="'+key+'">'+
   '<div class="th" style="transform:'+(on?'translateX(20px)':'translateX(0)')+'"></div></div></div>';}
-function sbtn(a,col){return '<button class="sbtn" style="background:'+col+'" data-a="'+a+'">Speichern</button>';}
+function sbtn(a,col){return (formErr?'<p style="font-size:13px;color:#FF453A;margin:0 0 6px;text-align:center">'+escHtml(formErr)+'</p>':'')+'<button class="sbtn" style="background:'+col+'" data-a="'+a+'">Speichern</button>';}
 
 // ── Drag sort ───────────────────────────────────────────────────
 function setupDragSort(sysId){
@@ -316,7 +321,7 @@ function vPE(){
   var tbl='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px"><table class="pe-tbl"><thead><tr><th>Datum</th>';
   PE_FIELDS.forEach(function(f){tbl+='<th style="color:'+SEC_COL[f.k]+'">'+f.label+'</th>';});
   tbl+='<th></th></tr></thead><tbody>';
-  logs.forEach(function(e){tbl+='<tr data-a="pe-edit" data-eid="'+e.id+'" style="cursor:pointer"><td>'+fmtD(e.date)+'</td>';PE_FIELDS.forEach(function(f){tbl+='<td style="color:'+(e[f.k]!=null?'var(--txt)':'var(--card3)')+';font-weight:'+(e[f.k]!=null?600:400)+'">'+(e[f.k]!=null?e[f.k]:'–')+'</td>';});tbl+='<td style="color:#5E5CE6;font-size:16px">›</td></tr>';if(e.notizen)tbl+='<tr class="note-row"><td colspan="7">'+e.notizen+'</td></tr>';});
+  logs.forEach(function(e){tbl+='<tr data-a="pe-edit" data-eid="'+e.id+'" style="cursor:pointer"><td>'+fmtD(e.date)+'</td>';PE_FIELDS.forEach(function(f){tbl+='<td style="color:'+(e[f.k]!=null?'var(--txt)':'var(--card3)')+';font-weight:'+(e[f.k]!=null?600:400)+'">'+(e[f.k]!=null?e[f.k]:'–')+'</td>';});tbl+='<td style="color:#5E5CE6;font-size:16px">›</td></tr>';if(e.notizen)tbl+='<tr class="note-row"><td colspan="7">'+escHtml(e.notizen)+'</td></tr>';});
   tbl+='</tbody></table></div>';
   var sorted=SEC.logs.slice().sort(function(a,b){return a.date.localeCompare(b.date);});
   var dH='<p class="sec">Gesamt-Fortschritt ('+fmtD(sorted[0].date)+' → '+fmtD(sorted[sorted.length-1].date)+')</p><div class="card" style="margin-bottom:10px">';
@@ -411,8 +416,8 @@ function vKPI(sysId,kpiK){
   ents.slice().reverse().forEach(function(e){
     // PR check
     var idx=allE.indexOf(e),isPR=idx>0&&(function(){var prev2=allE.slice(0,idx).map(function(x){return x.value;});return kpiDef&&(kpiDef.hb?e.value>Math.max.apply(null,prev2):e.value<Math.min.apply(null,prev2));})();
-    var mH=Object.keys(e.meta).length?'<div style="margin-bottom:'+(e.notizen?'8px':'0')+'">'+Object.entries(e.meta).map(function(kv){return '<span class="mt">'+kv[0]+': <span style="color:var(--txt2)">'+kv[1]+'</span></span>';}).join('')+'</div>':'';
-    var nH=e.notizen?'<div class="nb2"><p style="font-size:12px;color:var(--sub2);margin:0 0 1px;font-weight:500">Notiz</p><p style="font-size:13px;color:var(--txt2);margin:0">'+e.notizen+'</p></div>':'';
+    var mH=Object.keys(e.meta).length?'<div style="margin-bottom:'+(e.notizen?'8px':'0')+'">'+Object.entries(e.meta).map(function(kv){return '<span class="mt">'+kv[0]+': <span style="color:var(--txt2)">'+escHtml(String(kv[1]))+'</span></span>';}).join('')+'</div>':'';
+    var nH=e.notizen?'<div class="nb2"><p style="font-size:12px;color:var(--sub2);margin:0 0 1px;font-weight:500">Notiz</p><p style="font-size:13px;color:var(--txt2);margin:0">'+escHtml(e.notizen)+'</p></div>':'';
     eH+='<div class="ec"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:'+(mH||nH?'10px':'0')+'">'+
       '<div><div style="display:flex;align-items:center;gap:6px"><p style="font-size:16px;font-weight:700;color:var(--txt);margin:0">'+e.value+' <span style="font-size:13px;font-weight:400;color:var(--sub)">'+(kpiDef?kpiDef.unit:'')+'</span></p>'+(isPR?'<span style="font-size:10px;background:linear-gradient(135deg,#FF9500,#FF6B00);color:#fff;border-radius:6px;padding:2px 5px;font-weight:700">🏆 PR</span>':'')+'</div>'+
       '<p style="font-size:12px;color:var(--card3);margin:0">'+fmtD(e.date)+'</p></div>'+
@@ -494,12 +499,12 @@ function vDaten(){
 }
 
 // ── Forms ───────────────────────────────────────────────────────
-function fKraft(col){var opts=KPIS.kraft.map(function(o){return[o.k,o.label];});var kd=KPIS.kraft.find(function(o){return o.k===S.fEx;})||KPIS.kraft[0];return fld('Übung',selEl('fEx',opts,S.fEx))+'<div class="fw">'+fld(kd.label+' ('+kd.unit+')',ni('value','0'),true)+fld('Technik (1–5)',ni('technik','3'),true)+'</div>'+fld('Schmerz (0–10)',ni('pain','0'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-kraft',col);}
-function fEngine(col){var dm=S.driftMethod||'haelfte';var mbar='<div style="display:flex;background:var(--card);border-radius:10px;padding:3px;margin-bottom:10px">'+[['haelfte','½ + ½'],['startend','Start / End']].map(function(t){return '<button class="pb" style="background:'+(dm===t[0]?'var(--card2)':'transparent')+';color:'+(dm===t[0]?'var(--txt)':'var(--sub)')+'" data-a="drift-method" data-method="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';var dinp=dm==='haelfte'?'<div class="fw">'+fld('Puls 1. Hälfte (bpm)',ni('hr1','138'),true)+fld('Puls 2. Hälfte (bpm)',ni('hr2','152'),true)+'</div>':'<div class="fw">'+fld('Startpuls (bpm)',ni('hr1','130'),true)+fld('Endpuls (bpm)',ni('hr2','155'),true)+'</div>';var dprev='<div style="background:var(--card2);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--sub2)">HF-Drift: <span id="driftVal" style="color:var(--txt);font-weight:600">– %</span></div>';return '<div class="fw">'+fld('Ø Pace (min/km)',ni('pace','5.5'),true)+fld('Ø Puls (bpm)',ni('hr','140'),true)+'</div><div class="fld"><label class="lbl">HF-Drift '+ib('drift')+'</label>'+mbar+dinp+dprev+'</div>'+fldI('RPE (1–10)','rpe',ni('rpe','6'))+togEl('Nasenatmung','fNase')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-engine',col);}
-function fPeak(col){return '<div class="fw">'+fld('Ø Watt',ni('wattAvg','200'),true)+fld('Max Watt',ni('wattMax','350'),true)+'</div>'+fldI('RPE (1–10)','rpe',ni('rpe','8'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-peak',col);}
-function fSkills(col){var opts=KPIS.skills.map(function(o){return[o.k,o.label];});var kd=KPIS.skills.find(function(o){return o.k===S.fSkill;})||KPIS.skills[0];var imap={'Front Lever':'frontlever','Back Lever':'backlever','Dragon Flag':'dragonflag','V-Sit':'vsit','Planche Hold':'planche'};var ik=imap[S.fSkill];return fld('Skill',selEl('fSkill',opts,S.fSkill))+'<div class="fld"><label class="lbl">'+kd.label+' ('+kd.unit+') — Ziel: '+kd.target+(ik?' '+ib(ik):'')+'</label>'+ni('ist','0')+'</div>'+fld('Qualität','<div style="display:flex;gap:8px">'+['ruhig','shaky'].map(function(q){return '<button class="qb" style="background:'+(S.fQual===q?col:'var(--card2)')+';font-weight:'+(S.fQual===q?600:400)+'" data-a="set-qual" data-qual="'+q+'">'+q+'</button>';}).join('')+'</div>')+fld('Abbruchgrund',ni('abbruch','z.B. Erschöpfung','text'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-skills',col);}
-function fStruktur(col){return fldI('Active Dead Hang (s)','hang',ni('hang','0'))+'<div class="fw">'+fld('Deep Squat Hold (s)',ni('deepSquat','0'),true)+fld('Schmerz Schulter',ni('schulter','0'),true)+'</div><div class="fw">'+fld('Schmerz Knie',ni('knie','0'),true)+fld('Schmerz Rücken',ni('ruecken','0'),true)+'</div>'+togEl('Mobility erledigt','fMobility')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-struktur',col);}
-function fRecovery(col){return fldI('HRV (ms) — Ziel: mind. 60 ms','hrv',ni('hrv','60'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-recovery',col);}
+function fKraft(col){var opts=KPIS.kraft.map(function(o){return[o.k,o.label];});var kd=KPIS.kraft.find(function(o){return o.k===S.fEx;})||KPIS.kraft[0];return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fld('Übung',selEl('fEx',opts,S.fEx))+'<div class="fw">'+fld(kd.label+' ('+kd.unit+')',ni('value','0'),true)+fld('Technik (1–5)',ni('technik','3'),true)+'</div>'+fld('Schmerz (0–10)',ni('pain','0'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-kraft',col);}
+function fEngine(col){var dm=S.driftMethod||'haelfte';var mbar='<div style="display:flex;background:var(--card);border-radius:10px;padding:3px;margin-bottom:10px">'+[['haelfte','½ + ½'],['startend','Start / End']].map(function(t){return '<button class="pb" style="background:'+(dm===t[0]?'var(--card2)':'transparent')+';color:'+(dm===t[0]?'var(--txt)':'var(--sub)')+'" data-a="drift-method" data-method="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';var dinp=dm==='haelfte'?'<div class="fw">'+fld('Puls 1. Hälfte (bpm)',ni('hr1','138'),true)+fld('Puls 2. Hälfte (bpm)',ni('hr2','152'),true)+'</div>':'<div class="fw">'+fld('Startpuls (bpm)',ni('hr1','130'),true)+fld('Endpuls (bpm)',ni('hr2','155'),true)+'</div>';var dprev='<div style="background:var(--card2);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--sub2)">HF-Drift: <span id="driftVal" style="color:var(--txt);font-weight:600">– %</span></div>';return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+'<div class="fw">'+fld('Ø Pace (min/km)',ni('pace','5.5'),true)+fld('Ø Puls (bpm)',ni('hr','140'),true)+'</div><div class="fld"><label class="lbl">HF-Drift '+ib('drift')+'</label>'+mbar+dinp+dprev+'</div>'+fldI('RPE (1–10)','rpe',ni('rpe','6'))+togEl('Nasenatmung','fNase')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-engine',col);}
+function fPeak(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+'<div class="fw">'+fld('Ø Watt',ni('wattAvg','200'),true)+fld('Max Watt',ni('wattMax','350'),true)+'</div>'+fldI('RPE (1–10)','rpe',ni('rpe','8'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-peak',col);}
+function fSkills(col){var opts=KPIS.skills.map(function(o){return[o.k,o.label];});var kd=KPIS.skills.find(function(o){return o.k===S.fSkill;})||KPIS.skills[0];var imap={'Front Lever':'frontlever','Back Lever':'backlever','Dragon Flag':'dragonflag','V-Sit':'vsit','Planche Hold':'planche'};var ik=imap[S.fSkill];return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fld('Skill',selEl('fSkill',opts,S.fSkill))+'<div class="fld"><label class="lbl">'+kd.label+' ('+kd.unit+') — Ziel: '+kd.target+(ik?' '+ib(ik):'')+'</label>'+ni('ist','0')+'</div>'+fld('Qualität','<div style="display:flex;gap:8px">'+['ruhig','shaky'].map(function(q){return '<button class="qb" style="background:'+(S.fQual===q?col:'var(--card2)')+';font-weight:'+(S.fQual===q?600:400)+'" data-a="set-qual" data-qual="'+q+'">'+q+'</button>';}).join('')+'</div>')+fld('Abbruchgrund',ni('abbruch','z.B. Erschöpfung','text'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-skills',col);}
+function fStruktur(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fldI('Active Dead Hang (s)','hang',ni('hang','0'))+'<div class="fw">'+fld('Deep Squat Hold (s)',ni('deepSquat','0'),true)+fld('Schmerz Schulter',ni('schulter','0'),true)+'</div><div class="fw">'+fld('Schmerz Knie',ni('knie','0'),true)+fld('Schmerz Rücken',ni('ruecken','0'),true)+'</div>'+togEl('Mobility erledigt','fMobility')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-struktur',col);}
+function fRecovery(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fldI('HRV (ms) — Ziel: mind. 60 ms','hrv',ni('hrv','60'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-recovery',col);}
 var FORMS={kraft:fKraft,engine:fEngine,peak:fPeak,skills:fSkills,struktur:fStruktur,recovery:fRecovery};
 
 function renderModal(){
@@ -528,7 +533,7 @@ function render(){
   var addCol=isPrivate?'#5E5CE6':(cur.sysId?COL[cur.sysId]:'#0A84FF');
   var showAdd=isPrivate||(cur.type==='sys'||cur.type==='kpi')&&cur.sysId;
   var addAction=isPrivate?'pe-add-open':'open-modal';
-  var addSys=isPrivate?'':'data-sys="'+cur.sysId+'"';
+  var addSys=isPrivate?'':'data-sys="'+cur.sysId+'"'+(cur.kpiK?' data-kpi="'+cur.kpiK+'"':'');
   var backColor=isPrivate?'#5E5CE6':'#0A84FF';
   var view='';
   if(cur.type==='dash')view=vDash();
@@ -547,6 +552,7 @@ function render(){
     '</div></div>'+
     '<div class="content">'+view+'</div>'+
     '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='stats'&&cur.type==='stats')||(t.id==='daten'&&cur.type==='daten');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
+    (quotaWarn?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">⚠️</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1;line-height:1.4">Speicher fast voll &middot; <span style="color:#FF9500;font-weight:600">Backup erstellen</span></p><button style="background:none;border:none;font-size:20px;color:var(--sub2);cursor:pointer;padding:0;line-height:1;font-family:inherit" data-a="quota-dismiss">×</button></div>':'')+
     (isPrivate?'<div style="position:fixed;bottom:115px;right:16px;left:auto;display:flex;gap:8px;z-index:101">'+
       '<button style="background:var(--card);border:none;border-radius:12px;padding:8px 14px;font-size:11px;color:var(--sub);cursor:pointer;font-family:inherit;backdrop-filter:blur(10px)" data-a="sec-change-pw">🔑 Passwort</button>'+
       '<button style="background:var(--card);border:none;border-radius:12px;padding:8px 14px;font-size:11px;color:var(--sub);cursor:pointer;font-family:inherit;backdrop-filter:blur(10px)" data-a="sec-lock">🔒 Sperren</button></div>':'')+
@@ -591,6 +597,7 @@ document.getElementById('app').addEventListener('click',function(e){
   var a=el.dataset.a;
   if(a==='secret-tap'){handleSecretTap();return;}
   if(a==='toggle-theme'){S.theme=S.theme==='dark'?'light':'dark';lsSave();render();return;}
+  if(a==='quota-dismiss'){quotaWarn=false;render();return;}
   if(a==='sec-pw-close'){SEC.showPwPrompt=false;render();return;}
   if(a==='sec-unlock'){var pw=document.getElementById('pwInput');if(pw&&hashPw(pw.value)===SEC.pwHash){SEC.unlocked=true;SEC.showPwPrompt=false;S.stack.push({type:'private'});render();}else{SEC.pwErr='Falsches Passwort';render();}return;}
   if(a==='sec-lock'){SEC.unlocked=false;if(S.stack[S.stack.length-1].type==='private')S.stack.pop();render();return;}
@@ -605,12 +612,12 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='show-info'){S.infoKey=el.dataset.info;render();return;}
   if(a==='close-info'){S.infoKey=null;render();return;}
   if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;render();return;}
-  if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.modal='pick';S.fNase=false;S.fMobility=false;S.fQual='ruhig';render();}else{S.stack=[{type:tab}];render();}return;}
+  if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.modal='pick';S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
   if(a==='nav-kpi'){S.stack.push({type:'kpi',sysId:el.dataset.sys,kpiK:el.dataset.kpi});S.period='all';S.editTarget=false;render();return;}
-  if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';render();return;}
+  if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';if(el.dataset.kpi){if(el.dataset.sys==='kraft')S.fEx=el.dataset.kpi;else if(el.dataset.sys==='skills')S.fSkill=el.dataset.kpi;}render();return;}
   if(a==='close-modal'){S.modal=null;render();return;}
-  if(a==='modal-sys'){S.modal=el.dataset.sys;rerenderMs();return;}
+  if(a==='modal-sys'){S.modal=el.dataset.sys;formErr='';rerenderMs();return;}
   if(a==='tog'){S[el.dataset.key]=!S[el.dataset.key];rerenderMs();setTimeout(setupDriftCalc,50);return;}
   if(a==='drift-method'){S.driftMethod=el.dataset.method;rerenderMs();setTimeout(setupDriftCalc,50);return;}
   if(a==='set-qual'){S.fQual=el.dataset.qual;rerenderMs();return;}
@@ -628,12 +635,12 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='restore-pick'){setupFileImport(function(ok){if(ok){S.showRestore=false;render();}else alert('Fehler beim Laden.');});return;}
   if(a==='restore-skip'){S.showRestore=false;render();return;}
   var v=getVals();
-  if(a==='save-kraft'){addEntry('kraft',{date:todayISO(),exercise:v.fEx||'pullups',value:parseFloat(v.value)||0,technik:parseFloat(v.technik)||3,pain:parseFloat(v.pain)||0,notizen:v.notizen||''});S.fEx=v.fEx||'pullups';return;}
-  if(a==='save-engine'){var h1v=parseFloat(v.hr1)||0,h2v=parseFloat(v.hr2)||0;var drift=h1v>0?parseFloat(((h2v-h1v)/h1v*100).toFixed(1)):0;addEntry('engine',{date:todayISO(),pace:parseFloat(v.pace)||0,hr:parseFloat(v.hr)||0,drift:drift,rpe:parseFloat(v.rpe)||0,nase:S.fNase,notizen:v.notizen||''});return;}
-  if(a==='save-peak'){addEntry('peak',{date:todayISO(),wattAvg:parseFloat(v.wattAvg)||0,wattMax:parseFloat(v.wattMax)||0,rpe:parseFloat(v.rpe)||0,notizen:v.notizen||''});return;}
-  if(a==='save-skills'){addEntry('skills',{date:todayISO(),skill:v.fSkill||'L-Sit',ist:parseFloat(v.ist)||0,qualitaet:S.fQual,abbruch:v.abbruch||'',notizen:v.notizen||''});S.fSkill=v.fSkill||'L-Sit';return;}
-  if(a==='save-struktur'){addEntry('struktur',{date:todayISO(),hang:parseFloat(v.hang)||0,deepSquat:parseFloat(v.deepSquat)||0,schulter:parseFloat(v.schulter)||0,knie:parseFloat(v.knie)||0,ruecken:parseFloat(v.ruecken)||0,mobility:S.fMobility,notizen:v.notizen||''});return;}
-  if(a==='save-recovery'){addEntry('recovery',{date:todayISO(),hrv:parseFloat(v.hrv)||0,notizen:v.notizen||''});return;}
+  if(a==='save-kraft'){if(!(parseFloat(v.value)>0)){formErr='Bitte einen Wert > 0 eingeben';rerenderMs();return;}formErr='';addEntry('kraft',{date:v.date||todayISO(),exercise:v.fEx||'pullups',value:parseFloat(v.value)||0,technik:parseFloat(v.technik)||3,pain:parseFloat(v.pain)||0,notizen:v.notizen||''});S.fEx=v.fEx||'pullups';return;}
+  if(a==='save-engine'){if(!(parseFloat(v.pace)>0&&parseFloat(v.hr)>0)){formErr='Pace und Puls müssen > 0 sein';rerenderMs();return;}formErr='';var h1v=parseFloat(v.hr1)||0,h2v=parseFloat(v.hr2)||0;var drift=h1v>0?parseFloat(((h2v-h1v)/h1v*100).toFixed(1)):0;addEntry('engine',{date:v.date||todayISO(),pace:parseFloat(v.pace)||0,hr:parseFloat(v.hr)||0,drift:drift,rpe:parseFloat(v.rpe)||0,nase:S.fNase,notizen:v.notizen||''});return;}
+  if(a==='save-peak'){if(!(parseFloat(v.wattAvg)>0)){formErr='Bitte einen Wert > 0 eingeben';rerenderMs();return;}formErr='';addEntry('peak',{date:v.date||todayISO(),wattAvg:parseFloat(v.wattAvg)||0,wattMax:parseFloat(v.wattMax)||0,rpe:parseFloat(v.rpe)||0,notizen:v.notizen||''});return;}
+  if(a==='save-skills'){if(!(parseFloat(v.ist)>0)){formErr='Bitte einen Wert > 0 eingeben';rerenderMs();return;}formErr='';addEntry('skills',{date:v.date||todayISO(),skill:v.fSkill||'L-Sit',ist:parseFloat(v.ist)||0,qualitaet:S.fQual,abbruch:v.abbruch||'',notizen:v.notizen||''});S.fSkill=v.fSkill||'L-Sit';return;}
+  if(a==='save-struktur'){addEntry('struktur',{date:v.date||todayISO(),hang:parseFloat(v.hang)||0,deepSquat:parseFloat(v.deepSquat)||0,schulter:parseFloat(v.schulter)||0,knie:parseFloat(v.knie)||0,ruecken:parseFloat(v.ruecken)||0,mobility:S.fMobility,notizen:v.notizen||''});return;}
+  if(a==='save-recovery'){if(!(parseFloat(v.hrv)>0)){formErr='Bitte HRV > 0 eingeben';rerenderMs();return;}formErr='';addEntry('recovery',{date:v.date||todayISO(),hrv:parseFloat(v.hrv)||0,notizen:v.notizen||''});return;}
 });
 
 async function reqPersist(){if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist();}
