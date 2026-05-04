@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 2.9
+> Stand: Mai 2026 | Version: 3.0
 
 ---
 
@@ -267,13 +267,13 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 ## Backlog – Implementierungs-Reihenfolge
 
 ### 🔴 P1 – JETZT STARTEN (Safety)
-- [ ] **P1-1: XSS-Escaping** ← ERSTER TASK
-- [ ] **P1-2: Datum-Feld** – Date-Picker in allen Forms
-- [ ] **P1-3: localStorage Quota** – Warning-Banner
+- [x] **P1-1: XSS-Escaping** – escHtml() + alle Freitext-Felder gesichert
+- [x] **P1-2: Datum-Feld** – Date-Picker in allen 6 Forms
+- [x] **P1-3: localStorage Quota** – Warning-Banner bei >80%
 
 ### 🟡 P2 – Core UX & Bugs
-- [ ] **P2-1: Bug Modal** – falsche Übung beim Öffnen aus KPI
-- [ ] **P2-2: Input-Validierung** – Fehlermeldung bei 0-Werten
+- [x] **P2-1: Bug Modal** – open-modal setzt fEx/fSkill aus KPI-Kontext
+- [x] **P2-2: Input-Validierung** – Fehlermeldung bei 0-Werten
 - [ ] **P2-3: PR-Marker** – ▲ im Chart
 - [ ] **P2-4: Touch-Targets** – min. 44×44pt
 - [ ] **P2-5: Streak-Counter** – Dashboard
@@ -431,3 +431,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 2.6 | Mai 2026 | RTF-Kodierung dokumentiert, technische Architektur ergänzt |
 | 2.7–2.8 | Mai 2026 | (intern, nicht dokumentiert) |
 | 2.9 | Mai 2026 | Skills-Migration abgeschlossen (20/20), PreCompact auto-save Hook, RTF-Warnung bereinigt |
+| 3.0 | Mai 2026 | P1 Safety komplett (XSS, Date-Picker, Quota), P2-1 Modal-Bug, P2-2 Input-Validierung |
