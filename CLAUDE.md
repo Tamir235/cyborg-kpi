@@ -277,7 +277,8 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] **P2-3: PR-Marker** – ▲ in Orange im Chart
 - [x] **P2-4: Touch-Targets** – ibtn/mcl/db auf 44×44pt
 - [x] **P2-5: Streak-Counter** – 🔥 Dashboard + Analyse
-- [ ] **P2-6: Löschen-Schutz** – Löschen-Button nicht direkt erreichbar; Swipe oder Long-Press statt direktem Tap; verhindert versehentliches Löschen von Einträgen
+- [ ] **P2-6: Eintrag-Schutz** – Verhindert versehentliches Speichern; z.B. kurzes Halten des Speichern-Buttons oder Bestätigung bei unveränderten Default-Werten (z.B. Wert = 0 nach Abbruch)
+- [ ] **P2-7: Weighted Dips Ansicht** – Wiederholungen (wdReps) im Fokus als Hauptwert; kg klar erkennbar als Sekundärinfo + im Vergleich zu vorherigen Einträgen; Chart zeigt Reps, kg in Meta/Label sichtbar
 
 ### 🟠 P3 – Navigation & UI Overhaul
 - [x] **NAV-1:** Tabs → Home · Log · Profil · Analyse
