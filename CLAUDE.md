@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 3.1
+> Stand: Mai 2026 | Version: 3.2
 
 ---
 
@@ -289,16 +289,16 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 ### 🟠 P4 – Modul-Überarbeitung
 
 #### Kraft ✅ Review
-- [ ] K-1: Weighted Dips kg+Reps + Migration
-- [ ] K-2: ATG Split kg+Reps
-- [ ] K-3: Neue KPIs (Australian Rows, Archer, HBH, Nordic, One-Arm Hang)
+- [x] K-1: Weighted Dips kg+Reps (wdReps in Meta)
+- [x] K-2: ATG Split kg+Reps (atgReps in Meta)
+- [x] K-3: Neue KPIs (Australian Rows, Archer, HBH, Nordic Curl, One-Arm Hang)
 - [ ] K-4: Progressive Unlock UI (B+E)
-- [ ] K-5: Schmerz-Felder pro Übung
-- [ ] K-6: Pistol → Skills migrieren
+- [x] K-5: Schmerz-Labels pro Übung (PAIN_LABELS Map)
+- [x] K-6: Pistol → Skills migriert (Migration + KPIS.skills)
 
 #### Struktur ✅ Review
-- [ ] S-1: Dead Hang + Deep Squat + Mobility als separate KPIs
-- [ ] S-2: Migration 5 bestehende Einträge
+- [x] S-1: Mobility als separater KPI hinzugefügt
+- [x] S-2: Migration boolean→numeric erledigt
 
 #### Skills ✅ Review
 - [ ] SK-1: Focus Mode (C) + Skill Tree (A)
@@ -307,16 +307,16 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [ ] SK-4: Milestone-Banner 80%
 
 #### Engine ✅ Review
-- [ ] E-1: Formular (Lauftyp, Distanz, Dauer, Pace auto, Kadenz, Temp)
-- [ ] E-2: Neue KPIs
+- [x] E-1: Formular (Lauftyp, Distanz, Dauer, Pace auto, Kadenz)
+- [x] E-2: Distanz + Kadenz als neue Engine-KPIs
 - [ ] E-3: Stats-Filter Lauftyp
-- [ ] E-4: Migration (1 Eintrag → lauftyp:'zone2')
+- [x] E-4: Migration lauftyp:'zone2' für alte Einträge
 
 #### Peak ✅ Review
-- [ ] PK-1: Formular (Protokoll Freitext, Dauer, Watt optional, RPE)
+- [x] PK-1: Formular (Protokoll Freitext, Dauer, Watt optional, RPE required)
 
 #### Recovery ✅ Review
-- [ ] R-1: Stress + Muskelkater + Notizen (nur manuell)
+- [x] R-1: Stress + Muskelkater als KPIs (Recovery Sheet speichert bereits)
 - [ ] R-2 Phase 2: Health-API via Shortcuts/Export
 
 ### 🎮 P5 – Neue Features
@@ -433,3 +433,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 2.9 | Mai 2026 | Skills-Migration abgeschlossen (20/20), PreCompact auto-save Hook, RTF-Warnung bereinigt |
 | 3.0 | Mai 2026 | P1 Safety komplett (XSS, Date-Picker, Quota), P2-1 Modal-Bug, P2-2 Input-Validierung |
 | 3.1 | Mai 2026 | P2 komplett (PR-Marker, Touch-Targets, Streak), NAV komplett (NAV-1 bis NAV-6) |
+| 3.2 | Mai 2026 | P4 Modul-Überarbeitung: K/S/E/PK/R alle Items außer K-4 + SK erledigt |
