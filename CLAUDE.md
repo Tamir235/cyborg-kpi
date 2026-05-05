@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 3.2
+> Stand: Mai 2026 | Version: 3.3
 
 ---
 
@@ -277,8 +277,8 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] **P2-3: PR-Marker** – ▲ in Orange im Chart
 - [x] **P2-4: Touch-Targets** – ibtn/mcl/db auf 44×44pt
 - [x] **P2-5: Streak-Counter** – 🔥 Dashboard + Analyse
-- [ ] **P2-6: Eintrag-Schutz** – Verhindert versehentliches Speichern; z.B. kurzes Halten des Speichern-Buttons oder Bestätigung bei unveränderten Default-Werten (z.B. Wert = 0 nach Abbruch)
-- [ ] **P2-7: Weighted Dips Ansicht** – Wiederholungen (wdReps) im Fokus als Hauptwert; kg klar erkennbar als Sekundärinfo + im Vergleich zu vorherigen Einträgen; Chart zeigt Reps, kg in Meta/Label sichtbar; Ziel auf zwei Werte (kg-Ziel + Reps-Ziel) anpassbar
+- [x] **P2-6: Eintrag-Schutz** – Grüner Undo-Toast 4s nach jedem Eintrag mit Rückgängig-Button
+- [x] **P2-7: Weighted Dips Ansicht** – Reps als Hauptwert, kg als '@ Xkg' sekundär, Dual-Ziel (Reps + kg)
 
 ### 🟠 P3 – Navigation & UI Overhaul
 - [x] **NAV-1:** Tabs → Home · Log · Profil · Analyse
@@ -311,7 +311,7 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 #### Engine ✅ Review
 - [x] E-1: Formular (Lauftyp, Distanz, Dauer, Pace auto, Kadenz)
 - [x] E-2: Distanz + Kadenz als neue Engine-KPIs
-- [ ] E-3: Stats-Filter Lauftyp
+- [x] E-3: Lauftyp-Filter in Engine KPI-Ansicht
 - [x] E-4: Migration lauftyp:'zone2' für alte Einträge
 
 #### Peak ✅ Review
@@ -436,3 +436,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.0 | Mai 2026 | P1 Safety komplett (XSS, Date-Picker, Quota), P2-1 Modal-Bug, P2-2 Input-Validierung |
 | 3.1 | Mai 2026 | P2 komplett (PR-Marker, Touch-Targets, Streak), NAV komplett (NAV-1 bis NAV-6) |
 | 3.2 | Mai 2026 | P4 Modul-Überarbeitung: K/S/E/PK/R alle Items außer K-4 + SK erledigt |
+| 3.3 | Mai 2026 | P2-6 Undo-Toast, P2-7 WD Dual-Ansicht+Ziel, E-3 Lauftyp-Filter, HBH=Hollow Body Hold |
