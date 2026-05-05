@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 3.0
+> Stand: Mai 2026 | Version: 3.1
 
 ---
 
@@ -274,17 +274,17 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 ### 🟡 P2 – Core UX & Bugs
 - [x] **P2-1: Bug Modal** – open-modal setzt fEx/fSkill aus KPI-Kontext
 - [x] **P2-2: Input-Validierung** – Fehlermeldung bei 0-Werten
-- [ ] **P2-3: PR-Marker** – ▲ im Chart
-- [ ] **P2-4: Touch-Targets** – min. 44×44pt
-- [ ] **P2-5: Streak-Counter** – Dashboard
+- [x] **P2-3: PR-Marker** – ▲ in Orange im Chart
+- [x] **P2-4: Touch-Targets** – ibtn/mcl/db auf 44×44pt
+- [x] **P2-5: Streak-Counter** – 🔥 Dashboard + Analyse
 
 ### 🟠 P3 – Navigation & UI Overhaul
-- [ ] **NAV-1:** Nav Bar auf 4 Items umbauen
-- [ ] **NAV-2:** Quick Log Sheet (6 Kacheln)
-- [ ] **NAV-3:** Profil-Avatar oben rechts
-- [ ] **NAV-4:** Recovery Sheet nach Training-Log
-- [ ] **NAV-5:** Profil-Screen (Badges + PRs + Score-History)
-- [ ] **NAV-6:** Analyse-Screen (Challenge + Radar + Streak)
+- [x] **NAV-1:** Tabs → Home · Log · Profil · Analyse
+- [x] **NAV-2:** Quick Log Sheet (S.sheet='quicklog', 6 Kacheln)
+- [x] **NAV-3:** 👤 Avatar im Dashboard-Header
+- [x] **NAV-4:** Recovery Sheet nach Training-Log (500ms, 10s auto-dismiss)
+- [x] **NAV-5:** vProfil() – Score-History + PRs + Backup/Export
+- [x] **NAV-6:** vAnalyse() – Radar-Chart + Streak-Grid + Skills-Progress
 
 ### 🟠 P4 – Modul-Überarbeitung
 
@@ -432,3 +432,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 2.7–2.8 | Mai 2026 | (intern, nicht dokumentiert) |
 | 2.9 | Mai 2026 | Skills-Migration abgeschlossen (20/20), PreCompact auto-save Hook, RTF-Warnung bereinigt |
 | 3.0 | Mai 2026 | P1 Safety komplett (XSS, Date-Picker, Quota), P2-1 Modal-Bug, P2-2 Input-Validierung |
+| 3.1 | Mai 2026 | P2 komplett (PR-Marker, Touch-Targets, Streak), NAV komplett (NAV-1 bis NAV-6) |

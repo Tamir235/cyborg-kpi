@@ -473,6 +473,39 @@ function vStats(){
   return h;
 }
 
+function vAnalyse(){
+  var scores=SM.map(function(s){return sysSc(s.id,S.logs,S.targets);});
+  var W=220,cx=110,cy=115,r=80,n=6;
+  var rings='';
+  [0.25,0.5,0.75,1.0].forEach(function(pct){
+    var pts=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;return (cx+r*pct*Math.cos(a)).toFixed(1)+','+(cy+r*pct*Math.sin(a)).toFixed(1);}).join(' ');
+    rings+='<polygon points="'+pts+'" fill="none" stroke="rgba(120,120,128,.12)" stroke-width="1"/>';
+  });
+  var axes=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" stroke="rgba(120,120,128,.12)" stroke-width="1"/>';}).join('');
+  var dataPts=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;return (cx+r*scores[i]*Math.cos(a)).toFixed(1)+','+(cy+r*scores[i]*Math.sin(a)).toFixed(1);}).join(' ');
+  var dataCircles=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;var px=(cx+r*scores[i]*Math.cos(a)).toFixed(1),py=(cy+r*scores[i]*Math.sin(a)).toFixed(1);return '<circle cx="'+px+'" cy="'+py+'" r="3.5" fill="'+COL[s.id]+'"/>';}).join('');
+  var labels=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;var lx=(cx+(r+20)*Math.cos(a)).toFixed(1),ly=((cy+(r+20)*Math.sin(a))+4).toFixed(1);var anchor=Math.cos(a)>0.15?'start':Math.cos(a)<-0.15?'end':'middle';return '<text x="'+lx+'" y="'+ly+'" font-size="10" fill="'+COL[s.id]+'" text-anchor="'+anchor+'" font-weight="700">'+s.label+'</text>';}).join('');
+  var radar='<svg viewBox="0 0 '+W+' 232" width="100%" height="232">'+rings+axes+'<polygon points="'+dataPts+'" fill="rgba(10,132,255,.12)" stroke="#0A84FF" stroke-width="2" stroke-linejoin="round"/>'+dataCircles+labels+'</svg>';
+  var trainDates=new Set();
+  Object.values(S.logs).forEach(function(ents){ents.forEach(function(e){trainDates.add(e.date);});});
+  var today2=new Date(),dow2=(today2.getDay()||7)-1;
+  var start=new Date(today2);start.setDate(today2.getDate()-dow2-7*7);
+  var dayLbls=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  var calHead=dayLbls.map(function(l){return '<div style="font-size:9px;color:var(--sub);text-align:center;font-weight:600">'+l+'</div>';}).join('');
+  var calCells='';
+  for(var i=0;i<56;i++){var d2=new Date(start);d2.setDate(start.getDate()+i);var ds=d2.toISOString().split('T')[0];var isFut=d2>today2;var hasLog=trainDates.has(ds);calCells+='<div style="aspect-ratio:1;border-radius:3px;background:'+(isFut?'transparent':hasLog?'#0A84FF':'var(--card2)')+'"></div>';}
+  var cal='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">'+calHead+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">'+calCells+'</div>';
+  var streak=calcStreak();
+  var skillBars=KPIS.skills.map(function(kpi){var ents=getEnts('skills',kpi.k,S.logs);var lat=ents.length?ents[ents.length-1]:null;var p=lat?Math.min(prog(lat.value,kpi,S.targets,'skills')||0,1):0;var pct=Math.round(p*100);return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><span style="font-size:12px;color:var(--txt2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+kpi.label+'</span><div style="flex:1.5;background:var(--card2);border-radius:3px;height:4px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+(p>=1?'#30D158':'#BF5AF2')+';border-radius:3px"></div></div><span style="font-size:11px;color:var(--sub);width:28px;text-align:right;flex-shrink:0">'+pct+'%</span></div>';}).join('');
+  return '<p class="sec">Performance Radar</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+radar+'</div>'+
+    '<p class="sec">Konsistenz · 8 Wochen</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+
+    (streak>0?'<p style="font-size:13px;color:var(--sub);margin:0 0 10px">🔥 '+streak+' '+(streak===1?'Tag':'Tage')+' aktiv</p>':'')+cal+'</div>'+
+    '<p class="sec">Skills · Fortschritt</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+skillBars+'</div>';
+}
+
 function vDaten(){
   var total=totalEntries();
   var isDark=S.theme==='dark';
@@ -609,7 +642,7 @@ function render(){
   var curSys=cur.sysId?SM.find(function(s){return s.id===cur.sysId;}):null;
   var curKpi=cur.kpiK&&KPIS[cur.sysId]?KPIS[cur.sysId].find(function(k){return k.k===cur.kpiK;}):null;
   var isPrivate=cur.type==='private';
-  var title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='daten'?'Daten':cur.type==='profil'?'Profil':isPrivate?'Privat':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
+  var title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='analyse'?'Analyse':cur.type==='daten'?'Daten':cur.type==='profil'?'Profil':isPrivate?'Privat':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
   var sub=cur.type==='sys'&&curSys?curSys.desc:cur.type==='kpi'&&curSys?curSys.label:'';
   var addCol=isPrivate?'#5E5CE6':(cur.sysId?COL[cur.sysId]:'#0A84FF');
   var showAdd=isPrivate||(cur.type==='sys'||cur.type==='kpi')&&cur.sysId;
@@ -623,8 +656,9 @@ function render(){
   else if(cur.type==='stats')view=vStats();
   else if(cur.type==='daten')view=vDaten();
   else if(cur.type==='profil')view=vProfil();
+  else if(cur.type==='analyse')view=vAnalyse();
   else if(isPrivate)view=vPE();
-  var TABS=[{id:'dash',icon:'⊞',l:'Home'},{id:'add',icon:'+',l:'Log'},{id:'profil',icon:'👤',l:'Profil'},{id:'stats',icon:'◎',l:'Statistik'}];
+  var TABS=[{id:'dash',icon:'⊞',l:'Home'},{id:'add',icon:'+',l:'Log'},{id:'profil',icon:'👤',l:'Profil'},{id:'analyse',icon:'◎',l:'Analyse'}];
   document.getElementById('app').innerHTML=
     '<div class="hdr">'+
     (showBack?'<button class="back" style="color:'+backColor+'" data-a="back">‹ Zurück</button>':'')+
@@ -634,7 +668,7 @@ function render(){
     (showAdd?'<button class="add-btn" style="background:'+addCol+'" data-a="'+addAction+'" '+addSys+'>+ Eintrag</button>':'')+
     '</div></div>'+
     '<div class="content">'+view+'</div>'+
-    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='stats'&&cur.type==='stats')||(t.id==='profil'&&cur.type==='profil');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
+    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='analyse'&&cur.type==='analyse')||(t.id==='profil'&&cur.type==='profil');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
     (quotaWarn?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">⚠️</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1;line-height:1.4">Speicher fast voll &middot; <span style="color:#FF9500;font-weight:600">Backup erstellen</span></p><button style="background:none;border:none;font-size:20px;color:var(--sub2);cursor:pointer;padding:0;line-height:1;font-family:inherit" data-a="quota-dismiss">×</button></div>':'')+
     (isPrivate?'<div style="position:fixed;bottom:115px;right:16px;left:auto;display:flex;gap:8px;z-index:101">'+
       '<button style="background:var(--card);border:none;border-radius:12px;padding:8px 14px;font-size:11px;color:var(--sub);cursor:pointer;font-family:inherit;backdrop-filter:blur(10px)" data-a="sec-change-pw">🔑 Passwort</button>'+
