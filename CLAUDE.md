@@ -395,7 +395,7 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 ⚠️  Challenge: Dashboard + Analyse (beide!)
 ⚠️  Unlock-Status NIE in State cachen
 ⚠️  V-Sit = Cross-Unlock → Manna-Kette
-⚠️  HBH in Kraft UND Dragon Flag Basis
+⚠️  HBH = Hollow Body Hold (s) – in Kraft UND Dragon Flag Basis
 ⚠️  Pistol: K-6 vor SK-2 implementieren
 ⚠️  Engine: Pace auto-berechnet (nie manuell eingeben)
 ⚠️  Badges: nie doppelt vergeben (ID-Check vor awardBadge)
