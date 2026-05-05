@@ -155,9 +155,9 @@ const DEFAULT_PW_HASH='afc71cb8';
 
 function escHtml(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,sheet:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,fLauftyp:'zone2',showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
+let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,sheet:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,fLauftyp:'zone2',lauftypFilter:null,lastEntry:null,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
 let SEC={unlocked:false,pwHash:DEFAULT_PW_HASH,logs:[],showPwPrompt:false,pwErr:'',secModal:null,editId:null,peView:'charts'};
-let bannerTimer=null,secretTaps=0,secretTimer=null,recovTimer=null;
+let bannerTimer=null,secretTaps=0,secretTimer=null,recovTimer=null,undoTimer=null;
 let quotaWarn=false;
 let formErr='';
 async function checkQuota(){if(!navigator.storage||!navigator.storage.estimate)return;try{var est=await navigator.storage.estimate();var w=est.usage/est.quota>0.8;if(w!==quotaWarn){quotaWarn=w;render();}}catch(e){}}
@@ -209,7 +209,7 @@ function inR(d,s,e){return d>=s&&d<=e;}
 function mRange(off){var b=new Date();b.setDate(1);b.setMonth(b.getMonth()+off);var s=b.getFullYear()+'-'+(b.getMonth()+1).toString().padStart(2,'0')+'-01';var e=new Date(b.getFullYear(),b.getMonth()+1,0).toISOString().split('T')[0];return{start:s,end:e,label:mLbl(s)};}
 function cutoff(p){var d=new Date();if(p==='woche')d.setDate(d.getDate()-7);else if(p==='monat')d.setMonth(d.getMonth()-1);else if(p==='jahr')d.setFullYear(d.getFullYear()-1);else return null;return d.toISOString().split('T')[0];}
 function getKPIs(sysId){var kpis=KPIS[sysId]||[];var ord=S.kpiOrder[sysId];if(!ord||!ord.length)return kpis;return ord.map(function(k){return kpis.find(function(kpi){return kpi.k===k;});}).filter(Boolean).concat(kpis.filter(function(kpi){return!ord.includes(kpi.k);}));}
-function getEnts(sysId,kpiK,logs){var ents=logs[sysId]||[];var res=[];if(sysId==='kraft')res=ents.filter(function(e){return e.exercise===kpiK;}).map(function(e){var m={Technik:(e.technik||'–')+'/5',Schmerz:(e.pain||0)+'/10'};if(e.wdReps>0)m['Reps']=e.wdReps;if(e.atgReps>0)m['Reps']=e.atgReps;return{id:e.id,date:e.date,value:e.value,meta:m,notizen:e.notizen||''};});else if(sysId==='skills')res=ents.filter(function(e){return e.skill===kpiK;}).map(function(e){return{id:e.id,date:e.date,value:e.ist,meta:{Qualität:e.qualitaet,Abbruch:e.abbruch||'–'},notizen:e.notizen||''};});else res=ents.filter(function(e){return e[kpiK]!=null&&!isNaN(+e[kpiK]);}).map(function(e){return{id:e.id,date:e.date,value:parseFloat(e[kpiK]),meta:sysId==='engine'&&kpiK==='pace'?Object.assign({Nase:e.nase?'Ja':'Nein'},e.lauftyp?{Typ:e.lauftyp}:{},e.distanz?{Distanz:e.distanz+'km'}:{}):sysId==='engine'&&kpiK==='distanz'&&e.lauftyp?{Typ:e.lauftyp}:{},notizen:e.notizen||''};});return res.sort(function(a,b){return a.date.localeCompare(b.date);});}
+function getEnts(sysId,kpiK,logs){var ents=logs[sysId]||[];var res=[];if(sysId==='kraft')res=ents.filter(function(e){return e.exercise===kpiK;}).map(function(e){var m={Technik:(e.technik||'–')+'/5',Schmerz:(e.pain||0)+'/10'};var val=e.value;if(kpiK==='weightedDips'&&e.wdReps>0){val=e.wdReps;m['Gewicht']=e.value+'kg';}else if(e.wdReps>0)m['Reps']=e.wdReps;if(e.atgReps>0)m['Reps']=e.atgReps;return{id:e.id,date:e.date,value:val,meta:m,notizen:e.notizen||''};});else if(sysId==='skills')res=ents.filter(function(e){return e.skill===kpiK;}).map(function(e){return{id:e.id,date:e.date,value:e.ist,meta:{Qualität:e.qualitaet,Abbruch:e.abbruch||'–'},notizen:e.notizen||''};});else res=ents.filter(function(e){return e[kpiK]!=null&&!isNaN(+e[kpiK]);}).map(function(e){return{id:e.id,date:e.date,value:parseFloat(e[kpiK]),meta:sysId==='engine'&&kpiK==='pace'?Object.assign({Nase:e.nase?'Ja':'Nein'},e.lauftyp?{Typ:e.lauftyp}:{},e.distanz?{Distanz:e.distanz+'km'}:{}):sysId==='engine'&&kpiK==='distanz'&&e.lauftyp?{Typ:e.lauftyp}:{},notizen:e.notizen||''};});return res.sort(function(a,b){return a.date.localeCompare(b.date);});}
 function prog(val,kpi,targets,sysId){var t=targets[sysId+'.'+kpi.k]!=null?targets[sysId+'.'+kpi.k]:kpi.target;if(!t||val==null)return null;return kpi.hb?Math.min(val/t,1):val<=t?1:Math.max(0,2-val/t);}
 function sysSc(sysId,logs,targets){var ps=(KPIS[sysId]||[]).map(function(kpi){var e=getEnts(sysId,kpi.k,logs);return e.length?prog(e[e.length-1].value,kpi,targets,sysId):null;}).filter(function(p){return p!=null;});return ps.length?ps.reduce(function(a,b){return a+b;},0)/ps.length:0;}
 function gradeOf(s){return s>=0.8?'Cyborg':s>=0.6?'Hybrid-Athlet':s>=0.4?'Im Aufbau':'Anfänger';}
@@ -405,7 +405,12 @@ function vSys(sysId){
 function vKPI(sysId,kpiK){
   var kpiDef=KPIS[sysId]&&KPIS[sysId].find(function(k){return k.k===kpiK;}),col=COL[sysId];
   var t=S.targets[sysId+'.'+kpiK]!=null?S.targets[sysId+'.'+kpiK]:(kpiDef&&kpiDef.target);
-  var allE=getEnts(sysId,kpiK,S.logs),cut2=cutoff(S.period);
+  var isWD=sysId==='kraft'&&kpiK==='weightedDips';
+  var isEngine=sysId==='engine';
+  var tKg=isWD&&S.targets['kraft.weightedDips.kg']!=null?S.targets['kraft.weightedDips.kg']:null;
+  var allRaw=getEnts(sysId,kpiK,S.logs);
+  var allE=isEngine&&S.lauftypFilter?allRaw.filter(function(e){var orig=S.logs.engine&&S.logs.engine.find(function(x){return x.id===e.id;});return orig&&orig.lauftyp===S.lauftypFilter;}):allRaw;
+  var cut2=cutoff(S.period);
   var ents=cut2?allE.filter(function(e){return e.date>=cut2;}):allE;
   var lat=ents[ents.length-1],prev=ents[ents.length-2];
   var p=lat&&kpiDef?prog(lat.value,kpiDef,S.targets,sysId):null;
@@ -415,8 +420,13 @@ function vKPI(sysId,kpiK){
   var pos=raw==null?null:(kpiDef&&kpiDef.hb?raw:-raw);
   var bigR=p!=null?'<div class="rw" style="width:64px;height:64px">'+ring(p,col,64,6.5)+'<div class="rl"><span style="font-size:13px;font-weight:700;color:'+col+'">'+Math.round(p*100)+'</span></div></div>':'';
   var trendH=pos!=null?'<p style="font-size:13px;color:'+(pos>0?'#30D158':pos<0?'#FF453A':'var(--sub)')+';margin:5px 0 0;font-weight:600">'+(pos>0?'▲':pos<0?'▼':'→')+' '+Math.abs(raw).toFixed(1)+' zum Voreintrag</p>':'';
-  var targetRow=S.editTarget?'<div class="zi"><input class="zinp" type="number" id="ti" value="'+(t||'')+'"/><button class="zok" style="background:'+col+'" data-a="save-target">OK</button><button class="zcl" data-a="cancel-target">×</button></div>':'<div style="display:flex;justify-content:space-between;align-items:center"><p style="font-size:13px;color:var(--sub);margin:0">Ziel: <span style="color:#30D158;font-weight:500">'+(t?t+' '+(kpiDef?kpiDef.unit:''):'nicht gesetzt')+'</span></p><button class="zcl" data-a="edit-target">Ziel anpassen</button></div>';
+  var targetRow=S.editTarget?
+    (isWD?'<div class="fw">'+fld('Reps-Ziel','<input class="zinp" type="number" id="ti" value="'+(t||'')+'"/>',true)+fld('Gewicht-Ziel (kg)','<input class="zinp" type="number" id="ti-kg" value="'+(tKg||'')+'"/>',true)+'</div><div style="display:flex;gap:8px;margin-top:6px"><button class="zok" style="background:'+col+';flex:1" data-a="save-target">OK</button><button class="zcl" data-a="cancel-target">×</button></div>':
+    '<div class="zi"><input class="zinp" type="number" id="ti" value="'+(t||'')+'"/><button class="zok" style="background:'+col+'" data-a="save-target">OK</button><button class="zcl" data-a="cancel-target">×</button></div>'):
+    (isWD?'<div style="display:flex;justify-content:space-between;align-items:center"><p style="font-size:13px;color:var(--sub);margin:0">Ziel: <span style="color:#30D158;font-weight:500">'+(t?t+' Reps':'–')+' @ '+(tKg?tKg+' kg':'? kg')+'</span></p><button class="zcl" data-a="edit-target">Ziel anpassen</button></div>':
+    '<div style="display:flex;justify-content:space-between;align-items:center"><p style="font-size:13px;color:var(--sub);margin:0">Ziel: <span style="color:#30D158;font-weight:500">'+(t?t+' '+(kpiDef?kpiDef.unit:''):'nicht gesetzt')+'</span></p><button class="zcl" data-a="edit-target">Ziel anpassen</button></div>');
   var pbtns=PERIODS.map(function(pk){return '<button class="pb" style="background:'+(S.period===pk[0]?'var(--card2)':'transparent')+';color:'+(S.period===pk[0]?'var(--txt)':'var(--sub)')+';font-weight:'+(S.period===pk[0]?500:400)+'" data-a="set-period" data-period="'+pk[0]+'">'+pk[1]+'</button>';}).join('');
+  var lfBar=isEngine?'<div class="pbar" style="margin-bottom:10px">'+'<button class="pb" style="background:'+(S.lauftypFilter===null?'var(--card2)':'transparent')+';color:'+(S.lauftypFilter===null?'var(--txt)':'var(--sub)')+'" data-a="set-lauftyp-filter" data-lt="">Alle</button>'+[['zone2','Zone 2'],['tempo','Tempo'],['intervall','Intervall'],['easy','Easy'],['wettkampf','Wettkampf']].map(function(lt){return '<button class="pb" style="background:'+(S.lauftypFilter===lt[0]?'var(--card2)':'transparent')+';color:'+(S.lauftypFilter===lt[0]?'var(--txt)':'var(--sub)')+'" data-a="set-lauftyp-filter" data-lt="'+lt[0]+'">'+lt[1]+'</button>';}).join('')+'</div>':'';
   var eH=ents.length===0?'<p style="font-size:14px;color:var(--card3);text-align:center;padding:24px 0">Keine Einträge</p>':'';
   ents.slice().reverse().forEach(function(e){
     // PR check
@@ -432,9 +442,10 @@ function vKPI(sysId,kpiK){
     '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">'+
     '<div><p style="font-size:11px;color:var(--sub);margin:0 0 4px">Aktueller Wert</p>'+
     '<div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:38px;font-weight:700;color:var(--txt);line-height:1">'+(lat?lat.value:'–')+'</span>'+
-    '<span style="font-size:16px;color:var(--sub)">'+(kpiDef?kpiDef.unit:'')+'</span></div>'+trendH+'</div>'+bigR+'</div>'+
+    '<span style="font-size:16px;color:var(--sub)">'+(isWD&&lat&&lat.meta&&lat.meta['Gewicht']?'Reps':(kpiDef?kpiDef.unit:''))+'</span></div>'+
+    (isWD&&lat&&lat.meta&&lat.meta['Gewicht']?'<p style="font-size:13px;color:var(--sub);margin:3px 0 0">@ '+escHtml(lat.meta['Gewicht'])+'</p>':'')+trendH+'</div>'+bigR+'</div>'+
     '<div style="border-top:.5px solid var(--brd3);padding-top:10px">'+targetRow+'</div>'+
-    chart(cd,col,t,prVal)+'</div><div class="pbar">'+pbtns+'</div>'+
+    chart(cd,col,t,prVal)+'</div><div class="pbar">'+pbtns+'</div>'+lfBar+
     '<p class="sec">Einträge ('+ents.length+')</p>'+eH;
 }
 
@@ -691,6 +702,7 @@ function render(){
     '</div></div>'+
     '<div class="content">'+view+'</div>'+
     '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='analyse'&&cur.type==='analyse')||(t.id==='profil'&&cur.type==='profil');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
+    (S.lastEntry?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">✓</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1">Eintrag gespeichert</p><button style="background:none;border:none;font-size:13px;color:#FF453A;cursor:pointer;font-family:inherit;font-weight:600;padding:4px 8px;border-radius:8px;background:rgba(255,69,58,.12)" data-a="undo-entry">Rückgängig</button></div>':'')+
     (quotaWarn?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">⚠️</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1;line-height:1.4">Speicher fast voll &middot; <span style="color:#FF9500;font-weight:600">Backup erstellen</span></p><button style="background:none;border:none;font-size:20px;color:var(--sub2);cursor:pointer;padding:0;line-height:1;font-family:inherit" data-a="quota-dismiss">×</button></div>':'')+
     (isPrivate?'<div style="position:fixed;bottom:115px;right:16px;left:auto;display:flex;gap:8px;z-index:101">'+
       '<button style="background:var(--card);border:none;border-radius:12px;padding:8px 14px;font-size:11px;color:var(--sub);cursor:pointer;font-family:inherit;backdrop-filter:blur(10px)" data-a="sec-change-pw">🔑 Passwort</button>'+
@@ -718,7 +730,11 @@ function addEntry(sysId,entry){
   }
   if(!S.logs[sysId])S.logs[sysId]=[];
   S.logs[sysId].push(Object.assign({},entry,{id:uid()}));
-  lsSave();S.modal=null;render();
+  lsSave();S.modal=null;
+  S.lastEntry={sysId:sysId,id:S.logs[sysId][S.logs[sysId].length-1].id};
+  if(undoTimer)clearTimeout(undoTimer);
+  undoTimer=setTimeout(function(){S.lastEntry=null;render();},4000);
+  render();
   setTimeout(showBanner,400);
   if(sysId!=='recovery'){if(recovTimer)clearTimeout(recovTimer);setTimeout(function(){S.sheet='recovery';render();recovTimer=setTimeout(function(){S.sheet=null;render();},10000);},500);}
   if(isPR){
@@ -745,6 +761,8 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='recovery-sheet-save'){var rs=parseInt(document.getElementById('recStress')?.value)||5;var rm=parseInt(document.getElementById('recMk')?.value)||3;var rn=document.getElementById('recNotizen')?.value||'';S.sheet=null;if(recovTimer){clearTimeout(recovTimer);recovTimer=null;}if(!S.logs.recovery)S.logs.recovery=[];S.logs.recovery.push({id:uid(),date:todayISO(),hrv:0,stress:rs,muskelkater:rm,notizen:rn});lsSave();render();return;}
   if(a==='toggle-theme'){S.theme=S.theme==='dark'?'light':'dark';lsSave();render();return;}
   if(a==='quota-dismiss'){quotaWarn=false;render();return;}
+  if(a==='undo-entry'){if(S.lastEntry){var le=S.lastEntry;if(S.logs[le.sysId])S.logs[le.sysId]=S.logs[le.sysId].filter(function(e){return e.id!==le.id;});lsSave();}S.lastEntry=null;if(undoTimer){clearTimeout(undoTimer);undoTimer=null;}render();return;}
+  if(a==='set-lauftyp-filter'){S.lauftypFilter=el.dataset.lt||null;render();return;}
   if(a==='sec-pw-close'){SEC.showPwPrompt=false;render();return;}
   if(a==='sec-unlock'){var pw=document.getElementById('pwInput');if(pw&&hashPw(pw.value)===SEC.pwHash){SEC.unlocked=true;SEC.showPwPrompt=false;S.stack.push({type:'private'});render();}else{SEC.pwErr='Falsches Passwort';render();}return;}
   if(a==='sec-lock'){SEC.unlocked=false;if(S.stack[S.stack.length-1].type==='private')S.stack.pop();render();return;}
@@ -758,7 +776,7 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='pe-delete'){if(confirm('Eintrag löschen?')){SEC.logs=SEC.logs.filter(function(x){return x.id!==el.dataset.eid;});secSave();SEC.secModal=null;render();}return;}
   if(a==='show-info'){S.infoKey=el.dataset.info;render();return;}
   if(a==='close-info'){S.infoKey=null;render();return;}
-  if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;render();return;}
+  if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;S.lauftypFilter=null;render();return;}
   if(a==='nav-profil'){S.stack.push({type:'profil'});render();return;}
   if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.sheet='quicklog';S.modal=null;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
@@ -775,7 +793,7 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='stats-off'){var dir=parseInt(el.dataset.dir);if(S.statsOff+dir<=0)S.statsOff+=dir;render();return;}
   if(a==='edit-target'){S.editTarget=true;render();return;}
   if(a==='cancel-target'){S.editTarget=false;render();return;}
-  if(a==='save-target'){var cur2=S.stack[S.stack.length-1];var tv=parseFloat(document.getElementById('ti').value);if(!isNaN(tv)){S.targets[cur2.sysId+'.'+cur2.kpiK]=tv;lsSave();}S.editTarget=false;render();return;}
+  if(a==='save-target'){var cur2=S.stack[S.stack.length-1];var tv=parseFloat(document.getElementById('ti').value);if(!isNaN(tv))S.targets[cur2.sysId+'.'+cur2.kpiK]=tv;if(cur2.sysId==='kraft'&&cur2.kpiK==='weightedDips'){var tvKg=parseFloat(document.getElementById('ti-kg')?.value);if(!isNaN(tvKg)&&tvKg>0)S.targets['kraft.weightedDips.kg']=tvKg;}lsSave();S.editTarget=false;render();return;}
   if(a==='del-entry'){if(confirm('Eintrag löschen?'))delEntry(el.dataset.sys,el.dataset.eid);return;}
   if(a==='exp-json'){exportJSON();return;}
   if(a==='exp-csv'){exportCSV();return;}
