@@ -154,9 +154,9 @@ const DEFAULT_PW_HASH='afc71cb8';
 
 function escHtml(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
+let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,sheet:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
 let SEC={unlocked:false,pwHash:DEFAULT_PW_HASH,logs:[],showPwPrompt:false,pwErr:'',secModal:null,editId:null,peView:'charts'};
-let bannerTimer=null,secretTaps=0,secretTimer=null;
+let bannerTimer=null,secretTaps=0,secretTimer=null,recovTimer=null;
 let quotaWarn=false;
 let formErr='';
 async function checkQuota(){if(!navigator.storage||!navigator.storage.estimate)return;try{var est=await navigator.storage.estimate();var w=est.usage/est.quota>0.8;if(w!==quotaWarn){quotaWarn=w;render();}}catch(e){}}
@@ -502,6 +502,53 @@ function vDaten(){
     '<p style="font-size:11px;color:var(--card3);text-align:center;line-height:1.5">Daten lokal gespeichert. Regelmäßig sichern.</p>';
 }
 
+function getPRs(){var prs=[];SM.forEach(function(s){(KPIS[s.id]||[]).forEach(function(kpi){var ents=getEnts(s.id,kpi.k,S.logs);if(!ents.length)return;var vals=ents.map(function(e){return e.value;});var prVal=kpi.hb?Math.max.apply(null,vals):Math.min.apply(null,vals);var prEntry=ents.slice().reverse().find(function(e){return e.value===prVal;});prs.push({sys:s.label,col:COL[s.id],kpi:kpi.label,unit:kpi.unit,val:prVal,date:prEntry?prEntry.date:''});});});return prs;}
+
+function vProfil(){
+  var ov=SM.reduce(function(s,sys){return s+sysSc(sys.id,S.logs,S.targets);},0)/6;
+  var scoreData=getScoreHistory(16);
+  var prs=getPRs();
+  var isDark=S.theme==='dark';
+  var h='<p class="sec">Score Verlauf</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+
+    '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">'+
+    '<span style="font-size:32px;font-weight:700;color:#0A84FF">'+Math.round(ov*100)+'%</span>'+
+    '<span style="font-size:14px;color:var(--sub)">'+gradeOf(ov)+'</span></div>'+
+    (scoreData.length>=2?chart(scoreData,'#0A84FF',null):'<p style="font-size:13px;color:var(--card3);text-align:center;padding:16px 0">Noch zu wenig Daten</p>')+
+    '</div>';
+  h+='<p class="sec">Persönliche Rekorde</p>'+
+    '<div class="lcard anim" style="margin-bottom:12px">';
+  if(prs.length){
+    prs.forEach(function(pr,i){
+      h+='<div class="sr"'+(i===prs.length-1?' style="border-bottom:none"':'')+'>'+
+        '<span style="font-size:13px;color:var(--sub2)"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+pr.col+';margin-right:6px;vertical-align:middle"></span>'+pr.kpi+'</span>'+
+        '<span style="font-size:14px;font-weight:700;color:var(--txt);text-align:right">'+pr.val+' <span style="font-size:11px;color:var(--sub);font-weight:400">'+pr.unit+'</span></span>'+
+        '<span style="font-size:11px;color:var(--card3);text-align:right">'+(pr.date?fmtD(pr.date):'–')+'</span>'+
+        '</div>';
+    });
+  }else{h+='<p style="font-size:14px;color:var(--card3);text-align:center;padding:20px 0">Noch keine Einträge</p>';}
+  h+='</div>';
+  h+='<p class="sec">Darstellung</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center">'+
+    '<div><p style="font-size:15px;font-weight:500;color:var(--txt);margin:0 0 2px">'+(isDark?'🌙 Dark Mode':'☀️ Light Mode')+'</p>'+
+    '<p style="font-size:12px;color:var(--sub);margin:0">Erscheinungsbild der App</p></div>'+
+    '<div class="tt" style="background:'+(isDark?'#5E5CE6':'#E5E5EA')+'" data-a="toggle-theme">'+
+    '<div class="th" style="transform:'+(isDark?'translateX(20px)':'translateX(0)')+'"></div></div></div></div>'+
+    '<p class="sec">☁️ Backup & Export</p>'+
+    '<div class="card anim" style="margin-bottom:12px">'+
+    '<button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  In iCloud sichern</button>'+
+    '<button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:15px;color:var(--sub);cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="imp-json">📂  Backup laden</button>'+
+    '<div style="display:flex;gap:8px">'+
+    '<button style="flex:1;background:var(--card2);border:none;border-radius:12px;padding:11px 0;font-size:13px;font-weight:500;color:#0A84FF;cursor:pointer;font-family:inherit" data-a="exp-json">JSON ↓</button>'+
+    '<button style="flex:1;background:var(--card2);border:none;border-radius:12px;padding:11px 0;font-size:13px;font-weight:500;color:#34C759;cursor:pointer;font-family:inherit" data-a="exp-csv">CSV ↓</button>'+
+    '</div>'+
+    (S.importMsg?'<p style="font-size:13px;color:'+(S.importMsg.startsWith('✓')?'#30D158':'#FF453A')+';margin:10px 0 0;text-align:center">'+S.importMsg+'</p>':'')+
+    '</div>'+
+    '<p style="font-size:11px;color:var(--card3);text-align:center;line-height:1.5">Daten lokal gespeichert. Regelmäßig sichern.</p>';
+  return h;
+}
+
 // ── Forms ───────────────────────────────────────────────────────
 function fKraft(col){var opts=KPIS.kraft.map(function(o){return[o.k,o.label];});var kd=KPIS.kraft.find(function(o){return o.k===S.fEx;})||KPIS.kraft[0];return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fld('Übung',selEl('fEx',opts,S.fEx))+'<div class="fw">'+fld(kd.label+' ('+kd.unit+')',ni('value','0'),true)+fld('Technik (1–5)',ni('technik','3'),true)+'</div>'+fld('Schmerz (0–10)',ni('pain','0'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-kraft',col);}
 function fEngine(col){var dm=S.driftMethod||'haelfte';var mbar='<div style="display:flex;background:var(--card);border-radius:10px;padding:3px;margin-bottom:10px">'+[['haelfte','½ + ½'],['startend','Start / End']].map(function(t){return '<button class="pb" style="background:'+(dm===t[0]?'var(--card2)':'transparent')+';color:'+(dm===t[0]?'var(--txt)':'var(--sub)')+'" data-a="drift-method" data-method="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';var dinp=dm==='haelfte'?'<div class="fw">'+fld('Puls 1. Hälfte (bpm)',ni('hr1','138'),true)+fld('Puls 2. Hälfte (bpm)',ni('hr2','152'),true)+'</div>':'<div class="fw">'+fld('Startpuls (bpm)',ni('hr1','130'),true)+fld('Endpuls (bpm)',ni('hr2','155'),true)+'</div>';var dprev='<div style="background:var(--card2);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--sub2)">HF-Drift: <span id="driftVal" style="color:var(--txt);font-weight:600">– %</span></div>';return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+'<div class="fw">'+fld('Ø Pace (min/km)',ni('pace','5.5'),true)+fld('Ø Puls (bpm)',ni('hr','140'),true)+'</div><div class="fld"><label class="lbl">HF-Drift '+ib('drift')+'</label>'+mbar+dinp+dprev+'</div>'+fldI('RPE (1–10)','rpe',ni('rpe','6'))+togEl('Nasenatmung','fNase')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-engine',col);}
@@ -515,6 +562,36 @@ function renderModal(){
   if(S.modal==='pick')return '<h2 style="font-size:20px;font-weight:700;color:var(--txt);margin:0 0 14px">System wählen</h2>'+SM.map(function(s){return '<button style="width:100%;background:var(--card);border:none;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" data-a="modal-sys" data-sys="'+s.id+'"><div style="width:9px;height:9px;border-radius:50%;background:'+COL[s.id]+';flex-shrink:0"></div><span style="font-size:16px;font-weight:500;color:var(--txt);flex:1;text-align:left">'+s.label+'</span><span style="font-size:13px;color:var(--sub)">'+s.desc+'</span><span style="font-size:18px;color:var(--card3)">›</span></button>';}).join('');
   var sysId=S.modal,s=SM.find(function(x){return x.id===sysId;}),col=COL[sysId];
   return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div>'+(s?'<p style="font-size:11px;color:var(--sub);margin:0 0 2px">'+s.desc+'</p>':'')+'<h2 style="font-size:20px;font-weight:700;color:var(--txt);margin:0">'+(s?s.label:'')+'</h2></div><button class="mcl" data-a="close-modal">×</button></div>'+(FORMS[sysId]?FORMS[sysId](col):'');
+}
+function renderSheet(){
+  var icons={kraft:'💪',engine:'🏃',peak:'⚡',skills:'✦',struktur:'🏗',recovery:'◎'};
+  if(S.sheet==='quicklog'){
+    return '<div class="ov" id="sheet-ov"><div class="ms"><div class="mh"></div>'+
+      '<p style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin:0 0 14px">Was trainierst du?</p>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">'+
+      SM.map(function(s){return '<button style="background:'+COL[s.id]+'22;border:1px solid '+COL[s.id]+'40;border-radius:16px;padding:16px 8px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%" data-a="sheet-log" data-sys="'+s.id+'">'+
+        '<span style="font-size:24px">'+icons[s.id]+'</span>'+
+        '<span style="font-size:10px;color:'+COL[s.id]+';font-weight:700;text-transform:uppercase;letter-spacing:.5px">'+s.label+'</span>'+
+        '</button>';}).join('')+
+      '</div>'+
+      '<button style="width:100%;background:none;border:none;padding:14px 0 0;font-size:14px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="sheet-dismiss">Abbrechen</button>'+
+      '</div></div>';
+  }
+  if(S.sheet==='recovery'){
+    return '<div class="ov" id="sheet-ov"><div class="ms" style="border-top:2px solid '+COL.recovery+'50"><div class="mh"></div>'+
+      '<p style="font-size:16px;font-weight:700;color:var(--txt);margin:0 0 4px">Training gespeichert 💪</p>'+
+      '<p style="font-size:13px;color:var(--sub);margin:0 0 16px">Wie fühlst du dich?</p>'+
+      '<div class="fld"><label class="lbl">Stress&nbsp;<span id="stressVal" style="color:var(--txt);font-weight:600">5</span>/10</label>'+
+      '<input type="range" min="1" max="10" value="5" style="width:100%;accent-color:'+COL.recovery+';height:28px" id="recStress"/></div>'+
+      '<div class="fld"><label class="lbl">Muskelkater&nbsp;<span id="mkVal" style="color:var(--txt);font-weight:600">3</span>/10</label>'+
+      '<input type="range" min="1" max="10" value="3" style="width:100%;accent-color:'+COL.recovery+';height:28px" id="recMk"/></div>'+
+      fld('Notizen (optional)','<textarea class="inp" id="recNotizen" placeholder="..."></textarea>')+
+      '<div style="display:flex;gap:8px;margin-top:4px">'+
+      '<button class="sbtn" style="background:'+COL.recovery+';flex:1;margin-top:0" data-a="recovery-sheet-save">Speichern</button>'+
+      '<button style="flex:1;border:none;border-radius:14px;padding:14px 0;font-size:15px;color:var(--sub);background:var(--card2);cursor:pointer;font-family:inherit" data-a="sheet-dismiss">Überspringen →</button>'+
+      '</div></div></div>';
+  }
+  return '';
 }
 function renderRestoreOverlay(){return '<div class="rsov"><div class="rsbox"><div style="font-size:40px;margin-bottom:12px">☁️</div><p style="font-size:18px;font-weight:700;color:var(--txt);margin:0 0 8px">Keine Daten gefunden</p><p style="font-size:14px;color:var(--sub2);margin:0 0 20px;line-height:1.5">Möchtest du ein iCloud-Backup wiederherstellen?</p><button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:10px" data-a="restore-pick">Backup laden</button><button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:16px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="restore-skip">Neu beginnen</button></div></div>';}
 function renderInfoOverlay(){var info=INFO[S.infoKey];if(!info)return '';return '<div class="infov" id="infov"><div class="infobox"><h3>'+info.title+'</h3><p>'+info.text+'</p><button class="infocl" data-a="close-info">Verstanden</button></div></div>';}
@@ -532,7 +609,7 @@ function render(){
   var curSys=cur.sysId?SM.find(function(s){return s.id===cur.sysId;}):null;
   var curKpi=cur.kpiK&&KPIS[cur.sysId]?KPIS[cur.sysId].find(function(k){return k.k===cur.kpiK;}):null;
   var isPrivate=cur.type==='private';
-  var title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='daten'?'Daten':isPrivate?'Privat':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
+  var title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='daten'?'Daten':cur.type==='profil'?'Profil':isPrivate?'Privat':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
   var sub=cur.type==='sys'&&curSys?curSys.desc:cur.type==='kpi'&&curSys?curSys.label:'';
   var addCol=isPrivate?'#5E5CE6':(cur.sysId?COL[cur.sysId]:'#0A84FF');
   var showAdd=isPrivate||(cur.type==='sys'||cur.type==='kpi')&&cur.sysId;
@@ -545,17 +622,19 @@ function render(){
   else if(cur.type==='kpi')view=vKPI(cur.sysId,cur.kpiK);
   else if(cur.type==='stats')view=vStats();
   else if(cur.type==='daten')view=vDaten();
+  else if(cur.type==='profil')view=vProfil();
   else if(isPrivate)view=vPE();
-  var TABS=[{id:'dash',icon:'⊞',l:'Dashboard'},{id:'add',icon:'+',l:'Eintrag'},{id:'stats',icon:'◎',l:'Statistik'},{id:'daten',icon:'↕',l:'Daten'}];
+  var TABS=[{id:'dash',icon:'⊞',l:'Home'},{id:'add',icon:'+',l:'Log'},{id:'profil',icon:'👤',l:'Profil'},{id:'stats',icon:'◎',l:'Statistik'}];
   document.getElementById('app').innerHTML=
     '<div class="hdr">'+
     (showBack?'<button class="back" style="color:'+backColor+'" data-a="back">‹ Zurück</button>':'')+
     '<div class="hdr-row"><div>'+(sub?'<p class="pg-sub">'+sub+'</p>':'')+
     '<h1 class="pg-title">'+title+'</h1></div>'+
+    (cur.type==='dash'?'<button style="width:36px;height:36px;background:var(--card2);border:none;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px" data-a="nav-profil">👤</button>':'')+
     (showAdd?'<button class="add-btn" style="background:'+addCol+'" data-a="'+addAction+'" '+addSys+'>+ Eintrag</button>':'')+
     '</div></div>'+
     '<div class="content">'+view+'</div>'+
-    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='stats'&&cur.type==='stats')||(t.id==='daten'&&cur.type==='daten');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
+    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='stats'&&cur.type==='stats')||(t.id==='profil'&&cur.type==='profil');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
     (quotaWarn?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">⚠️</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1;line-height:1.4">Speicher fast voll &middot; <span style="color:#FF9500;font-weight:600">Backup erstellen</span></p><button style="background:none;border:none;font-size:20px;color:var(--sub2);cursor:pointer;padding:0;line-height:1;font-family:inherit" data-a="quota-dismiss">×</button></div>':'')+
     (isPrivate?'<div style="position:fixed;bottom:115px;right:16px;left:auto;display:flex;gap:8px;z-index:101">'+
       '<button style="background:var(--card);border:none;border-radius:12px;padding:8px 14px;font-size:11px;color:var(--sub);cursor:pointer;font-family:inherit;backdrop-filter:blur(10px)" data-a="sec-change-pw">🔑 Passwort</button>'+
@@ -564,8 +643,10 @@ function render(){
     (S.showRestore?renderRestoreOverlay():'')+
     (S.infoKey?renderInfoOverlay():'')+
     (SEC.showPwPrompt?renderPwPrompt():'')+
-    renderSecModal();
+    renderSecModal()+
+    (S.sheet?renderSheet():'');
   if(cur.type==='sys')setTimeout(function(){setupDragSort(cur.sysId);},50);
+  if(S.sheet==='recovery')setTimeout(function(){var rs=document.getElementById('recStress'),rm=document.getElementById('recMk'),sv=document.getElementById('stressVal'),mv=document.getElementById('mkVal');if(rs&&sv){rs.oninput=function(){sv.textContent=rs.value;};}if(rm&&mv){rm.oninput=function(){mv.textContent=rm.value;};}},50);
   if(SEC.showPwPrompt)setTimeout(function(){var p=document.getElementById('pwInput');if(p)p.focus();},100);
 }
 
@@ -582,6 +663,7 @@ function addEntry(sysId,entry){
   S.logs[sysId].push(Object.assign({},entry,{id:uid()}));
   lsSave();S.modal=null;render();
   setTimeout(showBanner,400);
+  if(sysId!=='recovery'){if(recovTimer)clearTimeout(recovTimer);setTimeout(function(){S.sheet='recovery';render();recovTimer=setTimeout(function(){S.sheet=null;render();},10000);},500);}
   if(isPR){
     var kpiDef=KPIS[sysId]&&KPIS[sysId].find(function(k){return k.k===kpiK;});
     setTimeout(function(){showPRToast(kpiDef?kpiDef.label:kpiK);},500);
@@ -596,10 +678,14 @@ function setupFileImport(cb){
 
 document.getElementById('app').addEventListener('click',function(e){
   if(e.target.id==='ov'){S.modal=null;render();return;}
+  if(e.target.id==='sheet-ov'){S.sheet=null;render();return;}
   if(e.target.id==='infov'){S.infoKey=null;render();return;}
   var el=e.target.closest('[data-a]');if(!el)return;
   var a=el.dataset.a;
   if(a==='secret-tap'){handleSecretTap();return;}
+  if(a==='sheet-dismiss'){S.sheet=null;if(recovTimer){clearTimeout(recovTimer);recovTimer=null;}render();return;}
+  if(a==='sheet-log'){S.sheet=null;S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';render();return;}
+  if(a==='recovery-sheet-save'){var rs=parseInt(document.getElementById('recStress')?.value)||5;var rm=parseInt(document.getElementById('recMk')?.value)||3;var rn=document.getElementById('recNotizen')?.value||'';S.sheet=null;if(recovTimer){clearTimeout(recovTimer);recovTimer=null;}if(!S.logs.recovery)S.logs.recovery=[];S.logs.recovery.push({id:uid(),date:todayISO(),hrv:0,stress:rs,muskelkater:rm,notizen:rn});lsSave();render();return;}
   if(a==='toggle-theme'){S.theme=S.theme==='dark'?'light':'dark';lsSave();render();return;}
   if(a==='quota-dismiss'){quotaWarn=false;render();return;}
   if(a==='sec-pw-close'){SEC.showPwPrompt=false;render();return;}
@@ -616,7 +702,8 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='show-info'){S.infoKey=el.dataset.info;render();return;}
   if(a==='close-info'){S.infoKey=null;render();return;}
   if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;render();return;}
-  if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.modal='pick';S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
+  if(a==='nav-profil'){S.stack.push({type:'profil'});render();return;}
+  if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.sheet='quicklog';S.modal=null;S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
   if(a==='nav-kpi'){S.stack.push({type:'kpi',sysId:el.dataset.sys,kpiK:el.dataset.kpi});S.period='all';S.editTarget=false;render();return;}
   if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';if(el.dataset.kpi){if(el.dataset.sys==='kraft')S.fEx=el.dataset.kpi;else if(el.dataset.sys==='skills')S.fSkill=el.dataset.kpi;}render();return;}
