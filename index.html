@@ -148,20 +148,22 @@ const KPIS={
 const SKILL_CHAINS=[
   {id:'static',name:'Core Compression',nodes:[
     {k:'Frog Stand',req:null},
-    {k:'L-Sit',req:'Frog Stand',reqMin:0.4},
-    {k:'V-Sit',req:'L-Sit',reqMin:0.5},
-    {k:'Planche Hold',req:'V-Sit',reqMin:0.5}
+    {k:'L-Sit',req:'Frog Stand',reqMin:0.5},
+    {k:'V-Sit',req:'L-Sit',reqMin:0.5}
   ]},
   {id:'hs',name:'Handstand',nodes:[
     {k:'Handstand',req:null}
   ]},
+  {id:'planche',name:'Planche',nodes:[
+    {k:'Planche Hold',req:null}
+  ]},
   {id:'pull',name:'Pull / Lever',nodes:[
     {k:'Muscle-up',req:null},
-    {k:'Front Lever',req:'Muscle-up',reqMin:0.4},
-    {k:'Back Lever',req:'Muscle-up',reqMin:0.3}
+    {k:'Front Lever',req:null},
+    {k:'Back Lever',req:null}
   ]},
   {id:'core',name:'Core Dynamic',nodes:[
-    {k:'Dragon Flag',req:null}
+    {k:'Dragon Flag',req:null,crossReq:{sys:'kraft',kpi:'hbh',minVal:30,label:'Hollow Body Hold 30s'}}
   ]},
   {id:'legs',name:'Beine',nodes:[
     {k:'Pistol Squat L',req:null},
@@ -398,7 +400,9 @@ function vDash(){
 function vSkillsHome(){
   var col=COL.skills;
   function sp(k){var kd=KPIS.skills.find(function(x){return x.k===k;});if(!kd)return 0;var e=getEnts('skills',k,S.logs);if(!e.length)return 0;return Math.min(prog(e[e.length-1].value,kd,S.targets,'skills')||0,1);}
-  function isUnl(nd){return !nd.req||sp(nd.req)>=(nd.reqMin||0);}
+  function crThreshold(cr){var crKd=KPIS[cr.sys]&&KPIS[cr.sys].find(function(x){return x.k===cr.kpi;});return Math.max(cr.minVal,S.targets[cr.sys+'.'+cr.kpi]!=null?S.targets[cr.sys+'.'+cr.kpi]:(crKd&&crKd.target)||cr.minVal);}
+  function isUnl(nd){if(nd.req&&sp(nd.req)<(nd.reqMin||0))return false;if(nd.crossReq){var ce=getEnts(nd.crossReq.sys,nd.crossReq.kpi,S.logs);if(!ce.length||Math.max.apply(null,ce.map(function(e){return e.value;}))<crThreshold(nd.crossReq))return false;}return true;}
+  function lockReason(nd){if(nd.crossReq&&(!nd.req||sp(nd.req)>=(nd.reqMin||0))){var t=crThreshold(nd.crossReq);return nd.crossReq.label+' ('+t+'s)';}if(nd.req){var kd=KPIS.skills.find(function(x){return x.k===nd.req;});return (kd?kd.label:nd.req)+' '+Math.round((nd.reqMin||0)*100)+'%';}return 'gesperrt';}
   var focusK=null,focusP=-1;
   SKILL_CHAINS.forEach(function(ch){ch.nodes.forEach(function(nd){if(!isUnl(nd))return;var p=sp(nd.k);if(p<1&&p>focusP){focusP=p;focusK=nd.k;}});});
   if(focusK===null)SKILL_CHAINS.some(function(ch){return ch.nodes.some(function(nd){if(isUnl(nd)){focusK=nd.k;focusP=0;return true;}return false;});});
@@ -430,8 +434,8 @@ function vSkillsHome(){
       if(locked){
         h+='<div class="li" style="opacity:0.35;'+borderSt+'">'+
           '<div style="width:28px;height:28px;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px">🔒</div>'+
-          '<div style="flex:1"><p style="font-size:15px;color:var(--card3);margin:0">'+escHtml(lbl)+'</p></div>'+
-          '<span style="font-size:11px;color:var(--card3)">gesperrt</span></div>';
+          '<div style="flex:1;min-width:0"><p style="font-size:15px;color:var(--card3);margin:0">'+escHtml(lbl)+'</p>'+
+          '<p style="font-size:11px;color:var(--card3);margin:2px 0 0">'+escHtml(lockReason(nd))+'</p></div></div>';
       }else{
         h+='<div class="li" data-a="nav-kpi" data-sys="skills" data-kpi="'+escHtml(nd.k)+'" style="'+borderSt+'">'+
           '<div style="width:28px;height:28px;border-radius:8px;background:'+(done?col+'33':p>0?col+'18':'var(--card2)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:'+col+';font-weight:700">'+(done?'✓':'●')+'</div>'+
