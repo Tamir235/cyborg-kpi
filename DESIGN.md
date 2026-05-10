@@ -327,10 +327,25 @@ border-color: rgba(34,197,94,.25);
 @keyframes cardIn      { opacity + translateY 0.35s }
 @keyframes fadeUp      { PR/Badge/Unlock Toast }
 @keyframes unlockPop   { scale bounce – Skill Unlock }
-@keyframes pulse       { Readiness-Dot }
+@keyframes dotPulse    { Readiness-Dot: opacity + scale 2s infinite }
 @keyframes badgeFlash  { Grüner Glow bei Challenge-Abschluss }
 @keyframes sheetIn     { translateY(100%) → 0 – Bottom Sheet }
 @keyframes sheetOut    { 0 → translateY(100%) }
+```
+
+---
+
+## Haptic Feedback
+
+```
+haptic('light')   → 10ms           – Eintrag gespeichert
+haptic('medium')  → 30ms           – Drag & Drop aktiviert
+haptic('pr')      → 15 · 40 · 60ms – Neuer PR (doppelter Punch)
+haptic('unlock')  → 20·30·20·30·80 – Skill Unlock (bereit für Badge-System)
+haptic('badge')   → 30 · 20 · 70ms – Badge vergeben
+
+Hinweis: Web Vibration API – funktioniert auf Android Chrome.
+iOS Safari unterstützt die API nicht (kein Workaround ohne native App).
 ```
 
 ---
@@ -344,7 +359,7 @@ border-color: rgba(34,197,94,.25);
 
 ### 🟡 UX
 - Datum immer heute
-- Y-Achse in Charts fehlt
+- ~~Y-Achse in Charts fehlt~~ → ✅ implementiert (min/mid/max + Grid-Lines)
 - PR-Marker im Chart fehlt
 - Onboarding fehlt
 
@@ -357,3 +372,4 @@ border-color: rgba(34,197,94,.25);
 | 1.0–1.6 | Mai 2026 | Schrittweise Entwicklung |
 | 2.0 | Mai 2026 | Premium-Redesign, neue Typo, alle Screens |
 | 2.1 | Mai 2026 | Navigation final, Quick Log Sheet, Recovery Sheet, alle Component-Classes |
+| 2.2 | Mai 2026 | Haptic Patterns dokumentiert, Y-Achse erledigt, dotPulse Animation |
