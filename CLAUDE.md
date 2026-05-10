@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 3.3
+> Stand: Mai 2026 | Version: 3.4
 
 ---
 
@@ -303,10 +303,10 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] S-2: Migration boolean→numeric erledigt
 
 #### Skills ✅ Review
-- [ ] SK-1: Focus Mode (C) + Skill Tree (A)
-- [ ] SK-2: Alle 11 Gruppen
-- [ ] SK-3: Cross-Unlocks (VSit→Manna, HBH→DF, HS→HSPU)
-- [ ] SK-4: Milestone-Banner 80%
+- [x] SK-1: Focus Mode + Skill Tree (vSkillsHome, 6 Ketten, Fortschrittsbalken)
+- [ ] SK-2: Alle 11 Gruppen (inhaltliche Entscheidung nötig)
+- [x] SK-3: Cross-Unlock HBH→Dragon Flag (crossReq, crThreshold mit User-Ziel + minVal-Boden)
+- [x] SK-4: Milestone-Banner 80% (inline in SK-1)
 
 #### Engine ✅ Review
 - [x] E-1: Formular (Lauftyp, Distanz, Dauer, Pace auto, Kadenz)
@@ -437,3 +437,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.1 | Mai 2026 | P2 komplett (PR-Marker, Touch-Targets, Streak), NAV komplett (NAV-1 bis NAV-6) |
 | 3.2 | Mai 2026 | P4 Modul-Überarbeitung: K/S/E/PK/R alle Items außer K-4 + SK erledigt |
 | 3.3 | Mai 2026 | P2-6 Undo-Toast, P2-7 WD Dual-Ansicht+Ziel, E-3 Lauftyp-Filter, HBH=Hollow Body Hold |
+| 3.4 | Mai 2026 | SK-1 Focus Mode + Skill Tree, SK-3 Cross-Unlock HBH→Dragon Flag, SK-4 Milestone-Banner, /research Skill + calisthenics-wiki.md |
