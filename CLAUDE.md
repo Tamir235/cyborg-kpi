@@ -293,8 +293,8 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 #### Kraft ✅ Review
 - [x] K-1: Weighted Dips kg+Reps (wdReps in Meta)
 - [x] K-2: ATG Split kg+Reps (atgReps in Meta)
-- [x] K-3: Neue KPIs (Australian Rows, Archer, HBH, Nordic Curl, One-Arm Hang)
-- [ ] K-4: Progressive Unlock UI (B+E)
+- [x] K-3: Neue KPIs (Australian Rows, Archer, HBH, Nordic Curl, One-Arm Hang, Chest-to-Bar)
+- [x] K-4: Progressive Unlock UI (KRAFT_UNLOCKS: archerRows/weightedDips/chestToBar/oneArmHang)
 - [x] K-5: Schmerz-Labels pro Übung (PAIN_LABELS Map)
 - [x] K-6: Pistol → Skills migriert (Migration + KPIS.skills)
 
@@ -304,7 +304,7 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 
 #### Skills ✅ Review
 - [x] SK-1: Focus Mode + Skill Tree (vSkillsHome, 6 Ketten, Fortschrittsbalken)
-- [ ] SK-2: Alle 11 Gruppen (inhaltliche Entscheidung nötig)
+- [x] SK-2: 8 Ketten (Core Compression, Handstand, Planche, Pulling, Lever, Core Dynamic, Beine, Grip/Ring) + crossReqs + neue Skills chestToBar/falseGrip
 - [x] SK-3: Cross-Unlock HBH→Dragon Flag (crossReq, crThreshold mit User-Ziel + minVal-Boden)
 - [x] SK-4: Milestone-Banner 80% (inline in SK-1)
 
@@ -322,17 +322,18 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [ ] R-2 Phase 2: Health-API via Shortcuts/Export
 
 ### 🎮 P5 – Neue Features
-- [ ] AD-1/2/3: Adaptive Empfehlung (regelbasiert via AIProvider)
-- [ ] WC-1/2/3/4: Weekly Challenge (Impact-Berechnung, Badge)
+- [x] AD-1/2/3: Adaptive Empfehlung (regelbasiert, 3 Zustände, pulsierender Dot, klickbar)
+- [ ] AD-4: Empfehlung-Schwellenwerte prüfen nach echter Nutzung (Bereit: stress≤4/mkat≤4, Moderat: >4, Erholen: stress>7/mkat>6, Pause >3d)
+- [x] WC-1/2/3/4: Weekly Challenge (schlechtestes System, 3 Sessions/Woche, Dashboard + Analyse)
 - [ ] DNA-1/2: Skill DNA Blocker-Anzeige
 - [ ] PRO-1/2: Badge-System + Profil-Screen
 - [ ] AN-1/2/3/4: Analyse-Screen (Radar, Unlocks, Streak, Filter)
 
 ### 🟢 P6 – Polish & Design
-- [ ] P6-1: Typografie (Bebas Neue + JetBrains Mono + DM Sans)
-- [ ] P6-2: Y-Achse in Charts
+- [x] P6-1: Typografie (Bebas Neue Display, JetBrains Mono Data, DM Sans Body)
+- [x] P6-2: Y-Achse in Charts (min/mid/max Labels + Grid-Lines, JetBrains Mono)
 - [ ] P6-3: Long-Press für Private Section
-- [ ] P6-4: Haptic Feedback (PR + Unlock + Badge)
+- [x] P6-4: Haptic Feedback – haptic() helper + Save (light) + PR (double-buzz) + Drag (medium)
 - [ ] P6-5: Empty-State / Onboarding
 
 ### ⚪ Phase 2 (Hetzner)
@@ -438,3 +439,7 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.2 | Mai 2026 | P4 Modul-Überarbeitung: K/S/E/PK/R alle Items außer K-4 + SK erledigt |
 | 3.3 | Mai 2026 | P2-6 Undo-Toast, P2-7 WD Dual-Ansicht+Ziel, E-3 Lauftyp-Filter, HBH=Hollow Body Hold |
 | 3.4 | Mai 2026 | SK-1 Focus Mode + Skill Tree, SK-3 Cross-Unlock HBH→Dragon Flag, SK-4 Milestone-Banner, /research Skill + calisthenics-wiki.md |
+| 3.5 | Mai 2026 | SK-2 Skill Tree 8 Ketten + crossReqs, K-4 Progressive Unlock (KRAFT_UNLOCKS), chestToBar + False Grip KPIs, /research erweitert (Ernährung/Recovery/Kraft), wiki: Muscle-up + C2B + False Grip |
+| 3.6 | Mai 2026 | AD-1/2/3 Adaptive Empfehlung (3 Zustände + pulsierender Dot), P6-1 Typografie (Bebas Neue + JetBrains Mono + DM Sans) |
+| 3.7 | Mai 2026 | P6-2 Y-Achse in Charts (min/mid/max + Grid-Lines) |
+| 3.8 | Mai 2026 | P6-4 Haptic Feedback (haptic() helper, Save/PR/Drag), WC-1/2/3/4 Weekly Challenge (Dashboard + Analyse) |

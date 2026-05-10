@@ -7,6 +7,7 @@ Lies diese Dateien vollständig in dieser Reihenfolge:
 - `CLAUDE.md` – Vision, Backlog, Regeln
 - `DESIGN.md` – Design System, Komponenten
 - `SKILLS.md` – verfügbare Slash Commands
+- `calisthenics-wiki.md` – verifizierte Skill-Progressionen, Cross-Unlocks, Schwellen
 
 ## 2. Code-Stand erfassen
 - Öffne `index.html` und verschaffe dir einen groben Überblick

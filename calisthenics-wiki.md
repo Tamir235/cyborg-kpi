@@ -29,6 +29,11 @@
 | Dead Hang | 60s two-arm | One-Arm Hang | ✅ | T-Nation, Setforset, Calisthenics Corner |
 | Dead Hang | 120s two-arm | Shawarma Drill | ✅ | Ido Portal (spezifisch für sein Protokoll) |
 | Muscle-up (3 Reps) | 3 Reps | Front + Back Lever | ❌ | TMA listet Muscle-up NICHT als Voraussetzung |
+| Chest-to-Bar Pull-up | 5 explosive Reps | Muscle-Up Entry | ✅ | BWTA (explizit), Calisthenics Corner (Readiness-Test) |
+| Pull-ups | 10 strikte Reps | Muscle-Up | ✅ | Calisthenics Corner, BWTA |
+| Frog Stand | 30s (50% von 60s Ziel) | Planche Hold | ✅ | GymnasticBodies, GMB |
+| Hollow Body Hold | 60s | Front Lever | ⚠️ | TMA (impliziert, kein explizites Hard Gate) |
+| False Grip Hang | 10–30s | Bar/Ring Muscle-Up | ✅ (Ring) / ⚠️ (Bar) | GMB (Ring: obligatorisch), BWTA (Bar: empfohlen) |
 
 ---
 
@@ -192,29 +197,108 @@ Ziel: 1 Minute akkumulierter Hold pro Stufe vor Weitergehen.
 
 ---
 
-### Muscle-Up
+### Chest-to-Bar Pull-Up (C2B)
 
-**Was es ist:** Pull-from-Hang Bewegung die von einem tiefen Pull-up durch eine Stangen-Transition in einen Dip übergeht. Drei Phasen: Pull, Transition, Push.
+**Was es ist:** Pull-up Variation wo das Sternum/die Brust die Stange berührt, statt nur das Kinn darüber zu heben. Erfordert stärkere Lats-Aktivierung und höhere Zuglänge als Standard Pull-up.
 
-**Primäre Muskeln:** Pull: Lats, Bizeps, Unterarme. Transition: Lats, Pectorals, Trizeps. Push: Trizeps, Pectorals, anteriore Deltoids.
+**Primäre Muskeln:** Latissimus dorsi (stärker als Standard), Teres major, Rhomboiden, Bizeps
+
+**Status als Progressionsschritt:** ✅ Eigenständiger Skill (bestätigt durch ≥2 Primärquellen)
+> BWTA Strict Bar Muscle-Up Progression (Step 3): *"Moving from the hang to pulling your chest to the bar is essential to the muscle-up."*
+> Calisthenics Corner Muscle-Up Guide: *"Explosive pull-up test: Try to bring your chest to the bar in one explosive pull-up"* – als Mindestvoraussetzung für Muscle-Up Entry.
 
 **Mindestvoraussetzung:**
-- 10 strikte Pull-ups (volles ROM)
-- 15–20 strikte Dips
+- 10 strikte Chin-over-Bar Pull-ups (Calisthenics Corner) ✅
+- 5+ strikte Pull-ups mit Explosivität (GMB) ⚠️
+- Empfohlen: 6–10 strikte Pull-ups bevor C2B-Training beginnt
+
+**Muscle-Up Voraussetzung:** ✅ Verifiziert als Muscle-Up Prerequisite
+> BWTA: *"aim to complete at least five strict chest-to-bar pull-ups to prepare for the muscle-up"*
+> Calisthenics Corner: C2B ist expliziter Explosivitätstest vor Muscle-Up Einstieg
+
+**Häufige Fehler:**
+- Kinn als Höhenziel verwenden statt Sternum
+- Schultern hochziehen statt deprimieren
+
+**Quellen:** [BWTA – Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/strict-bar-muscle-up-progression/), [Calisthenics Corner – Muscle-Up](https://www.calisthenics-corner.com/skills/muscle-up/)
+
+---
+
+### False Grip
+
+**Was es ist:** Grifftechnik wo die Hand so um die Stange/Ringe gelegt wird, dass das Handgelenk über dem Gerät liegt (≈90° Handgelenksbeugung), statt klassisch mit der Handfläche. Ermöglicht nahtlose Transition von Pull in Dip ohne Griffwechsel.
+
+**Primäre Muskeln/Strukturen:** Unterarmflexoren, Handgelenks-Flexoren, Pronator teres; sekundär: Brachioradialis
+
+**Kategorie:** Skills / Grip-Training (Kombination aus Kraft und Technik, nicht reine Struktur/Mobilität)
+
+**Prerequisite für Bar vs. Ring Muscle-Up:**
+- ✅ **Ring Muscle-Up:** False Grip ist obligatorisch
+  > GMB Fitness (rings muscle-up): *"For the strict muscle-up, we'll be using the false grip."*
+  > GymnasticBodies: *"A properly performed muscle-up requires false-grip strength in the transition."* (Kontext: Ringe)
+- ⚠️ **Bar Muscle-Up:** Empfohlen, aber nicht absolut obligatorisch
+  > GMB: *"You can use the principles we teach here to help your performance on the bar muscle-up, but there are nuances on the technique that require a bit of a different approach."*
+  > BWTA Bar Muscle-Up Guide: *"False grip: Train yourself to hold the bar with this specific grip to make the transition easier."* – als Hilfsmittel, kein hartes Gate
+
+**Als Standalone Hold trainierbar (Sekunden):** ✅ Ja
+- Anfänger: 3 Sets × 10–15s, 2min Pause
+- Progression: bis 30–60s kontinuierlicher False Grip Hang
+- BWTA: 10–30s False Grip Hang als Progressionsschritt
+
+**Voraussetzungen für False Grip:**
+- Grundlegende Dead Hang Kraft (kein definierter Sekundenwert in Primärquellen) ⚠️
+- Handgelenk-Mobilität: ≈90° passive Flexion ohne Schmerz ⚠️
+- GMB/GymnasticBodies implizieren: 5 strikte Pull-ups + 5 Dips als Muscle-Up Basis (False Grip ist Teil dieser Phase)
+
+**Häufige Fehler / Verletzungsrisiken:**
+- Unzureichende Handgelenks-Konditionierung vor False Grip Training
+- Griff zu weit außen an der Handfläche (statt Handgelenkscrease)
+- Unterarme zu früh ausbelastet (brauchen 2–3 Wochen Adaption)
+
+**Timeline:** 2–3 Wochen für erste Stabilität; 4–6 Wochen für belastbaren False Grip Hold
+
+**Quellen:** [GMB – Ring Muscle-Up](https://gmb.io/muscle-up/), [GymnasticBodies – False Grip](https://www.gymnasticbodies.com/want-a-muscle-up-remember-your-false-grip/), [BWTA – Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/strict-bar-muscle-up-progression/)
+
+---
+
+### Bar Muscle-Up (Strict)
+
+**Was es ist:** Pull-from-Hang Bewegung die von einem tiefen Pull-up durch eine Stangenübergabe in einen Dip übergeht — ohne Schwung oder Kip. Drei Phasen: Pull (Brust zur Stange), Transition (Ellbogen über die Stange), Push (Dip nach oben). Der strikte Stil unterscheidet sich fundamental vom kippenden Muscle-Up durch vollständige Kraftkontrolle in allen Phasen.
+
+**Primäre Muskeln:** Lats, Bizeps, Unterarme (Pull-Phase) · Pectorals, Trizeps, Lats (Transition) · Trizeps, anteriore Deltoids, Pectorals (Push-Phase)
+
+**Mindestvoraussetzungen:**
+- **Pull-ups:** 10 strikte Pull-ups (volles ROM) ✅
+  > Calisthenics Corner: *"Ability to perform at least 10 strict pull-ups with good form"*
+  > GMB (Rings, übertragbar): *"being able to do 5 snappy full range of motion pull-ups"* ⚠️ (niedrigere Schwelle, Rings-Kontext)
+- **Dips:** 15–20 strikte Dips auf Parallettes ✅
+  > Calisthenics Corner: *"Ability to complete 15 to 20 dips on parallel bars"*
+  > GMB: 5 Dips als Minimum ⚠️ (Rings-Kontext, niedrigere Schwelle)
+- **Chest-to-Bar Pull-up:** 5 strikte Reps ✅
+  > BWTA: *"aim to complete at least five strict chest-to-bar pull-ups to prepare for the muscle-up"*
+  > Calisthenics Corner: explosiver C2B als Readiness-Test (*"Try to bring your chest to the bar in one explosive pull-up"*)
+- **Schultermobilität:** Ellbogen können hinter die Stange geführt werden ⚠️ (Calisthenics Corner, kein Messwert)
+- **False Grip:** Empfohlen aber kein hartes Gate für Bar (im Gegensatz zu Ring Muscle-Up) ⚠️
+  > BWTA: *"False grip: Train yourself to hold the bar with this specific grip to make the transition easier"*
+
+**Häufige Fehler / Verletzungsrisiken:**
+- *"Pull not high enough"* – Ziel ist untere Brust, nicht Kinn ✅ (Calisthenics Corner)
+- *"Elbows flared out"* – Ellbogen nah am Körper für Effizienz ✅ (Calisthenics Corner)
+- *"Excessive swing"* – Kip vor Aufbau der Zugkraft unterminiert strikte Form ✅ (Calisthenics Corner)
+- *"Slow transition"* – Transition muss schnell sein um Pull-Impuls zu nutzen ✅ (Calisthenics Corner)
+- *"Chicken Winging"* – ein Arm transitiert vor dem anderen → Schulterasymmetrie ⚠️
+- Verletzungsrisiko: *"persistent pain in the shoulders or elbows"* als hartes Stopp-Signal ✅ (Calisthenics Corner)
+- Kipping-Einstieg ohne Kraftbasis: *"will be too much and likely cause overuse problems if not outright trauma"* ✅ (GMB)
+
+**Timeline (Intermediär, 10+ strikte Pull-ups als Basis):**
+> Calisthenics Corner: strukturiertes *"12-week progressive program"* in vier 3-Wochen-Phasen: Basiskraft → Explosivität → Transition → Vollbewegung ✅
+> Realistische Range: **6–16 Wochen** bei konsistentem spezifischem Training ⚠️
 
 **Unlock-Schwellen:**
 - ❌ **"3 Reps Muscle-up → Front Lever / Back Lever" NICHT verifiziert**
-> The Movement Athlete's Voraussetzungsseiten für Front Lever und Back Lever listen Muscle-up NICHT auf. Front Lever benötigt: 10 Pull-ups, 30s Dead Hang, 60s HBH, 15 gerade Beinstrecker. Back Lever benötigt: 30s Dead Hang, Skin the Cat, 5+ Pull-ups. Muscle-up und Levers sind **parallele fortgeschrittene Äste, keine lineare Kette** nach aktuellen Quellen.
+  > The Movement Athlete listet Muscle-up NICHT als Voraussetzung für Front Lever oder Back Lever. Beide sind parallele fortgeschrittene Äste.
 
-**Häufige Fehler / Verletzungsrisiken:**
-- Kinn statt Brust/Sternum als Pull-Ziel
-- Ellbogen ausgeflügelt während Pull
-- Exzessiver Kip vor Aufbau der Zugkraft
-- "Chicken Winging" (ein Arm transitiert vor dem anderen)
-
-**Timeline (Intermediär):** 6–12 Wochen mit spezifischem Transitionstraining bei 10+ strikten Pull-ups.
-
-**Quellen:** [Calisthenics Corner](https://www.calisthenics-corner.com/skills/muscle-up/), [BWTA](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/), [The Movement Athlete](https://themovementathlete.com/front-lever-progression/)
+**Quellen:** [Calisthenics Corner – Muscle-Up](https://www.calisthenics-corner.com/skills/muscle-up/), [BWTA – Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/), [GMB – Ring Muscle-Up](https://gmb.io/muscle-up/)
 
 ---
 
@@ -416,6 +500,84 @@ Fortschritt-Kriterium: 10 langsame, kontrollierte Reps.
 
 ---
 
+### Bar Muscle-Up (Strict)
+
+**Was es ist:** Pull-from-Hang Bewegung die von einem tiefen Pull-up (Brust zur Stange) durch eine Stangen-Transition in einen Dip übergeht. Drei Phasen: Pull (Chest-to-Bar), Transition (Ellbogen über Stange), Push (Dip hinauf). Strict: kein Swing, keine Kip.
+
+**Primäre Muskeln:** Pull: Lats, Bizeps, Unterarme · Transition: Pectorals, Trizeps, Lats · Push: Trizeps, anteriore Deltoids, Pectorals
+
+**Mindestvoraussetzungen:**
+- **Pull-ups: 10 strikte Reps (volles ROM)** ✅ – Calisthenics Corner: *"at least 10 strict pull-ups with good form"*
+- **Dips: 15–20 Parallel Bar Dips** ✅ – Calisthenics Corner: *"15 to 20 dips on parallel bars"*
+- **Chest-to-Bar: 5 strikte Reps** ✅ – BWTA: *"aim to complete at least five strict chest-to-bar pull-ups"*
+- Schulter-Mobilität: Ellbogen können hinter die Stange – ⚠️ kein Messwert
+- False Grip: empfohlen für Bar, kein Hard Gate – ⚠️
+
+**Häufige Fehler / Verletzungsrisiken:**
+- Kinn statt unterer Brust als Pull-Ziel
+- Ellbogen ausgeflügelt während Pull
+- Exzessiver Kip ohne Kraftbasis → Überlastungsverletzung (GMB: *"too much and likely cause overuse problems"*)
+- Langsame Transition (Momentum-Verlust)
+- Chicken Winging (ein Arm transitiert vor dem anderen)
+- Schmerz in Schulter/Ellbogen = hartes Stopp-Signal
+
+**Timeline (von 10 Pull-up Basis):** 6–16 Wochen mit spezifischem Transitionstraining ⚠️. Calisthenics Corner: strukturiertes 12-Wochen-Programm (4 Phasen) ✅
+
+**Quellen:** [Calisthenics Corner – Muscle-Up](https://www.calisthenics-corner.com/skills/muscle-up/), [BWTA – Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/), [GMB – Ring Muscle-Up](https://gmb.io/muscle-up/)
+
+---
+
+### Chest-to-Bar Pull-Up
+
+**Was es ist:** Pull-up Variation bei der die untere Brust die Stange berührt. Primäre Vorstufe zum Muscle-up: erzwingt maximale Zugamplitude und Explosivkraft.
+
+**Primäre Muskeln:** Lats, Bizeps, Unterarme, Rhomboiden, Teres major
+
+**Mindestvoraussetzung:**
+- 6–10 strikte Pull-ups (volles ROM) ✅ – impliziert durch BWTA 12-Step Progression
+
+**Unlock-Schwelle → Muscle-Up:** 5 explosive Chest-to-Bar Reps ✅
+> BWTA: *"Moving from the hang to pulling your chest to the bar is essential to the muscle-up."* und *"aim to complete at least five strict chest-to-bar pull-ups"*
+> Calisthenics Corner: 1 explosiver Chest-to-Bar als Readiness-Test vor Muscle-Up
+
+**Häufige Fehler:**
+- Kinn/Hals berührt Stange statt untere Brust
+- Kip statt kontrollierter Zug
+- Zu früh versuchen (< 8 strikte Pull-ups)
+
+**Timeline (Intermediär):** 2–6 Wochen nach solidem 10er Pull-up Set
+
+**Quellen:** [BWTA – Strict Bar Muscle-Up Progression](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/), [Calisthenics Corner – Muscle-Up](https://www.calisthenics-corner.com/skills/muscle-up/)
+
+---
+
+### False Grip
+
+**Was es ist:** Grifftechnik bei der das Handgelenk über der Stange/Ring liegt (~90° Flexion). Ermöglicht Transition vom Pull zum Push ohne Griffwechsel.
+
+**Primäre Muskeln:** Unterarmflexoren, Handgelenk-Stabilisatoren, Pronator teres
+
+**Kategorie:** Skills / Grip-Training (Technik + spezifische Kraftausdauer)
+
+**Relevanz:**
+- **Ring Muscle-Up:** Obligatorisch ✅ – GMB: *"For the strict muscle-up, we'll be using the false grip."*
+- **Bar Muscle-Up:** Empfohlen, kein Hard Gate ⚠️ – BWTA: *"Train yourself to hold the bar with this specific grip to make the transition easier"*
+
+**Als timed Hold trainierbar:** Ja ✅
+- Progression: 3×10–15s → 3×20–30s → 30–60s kontinuierlicher False Grip Hang
+- Implizite Voraussetzungen: grundlegende Dead Hang Kraft + 5 Pull-ups ⚠️ (kein expliziter Messwert in Primärquellen)
+
+**Häufige Fehler:**
+- Wrist zu weit über Ring/Stange → Handgelenk-Überlastung
+- False Grip aufgeben sobald müde (Training-Fehler: muss unter Ermüdung gehalten werden)
+- Bei Bar ohne Trainingshandschuhe: Haut-Schmerz normal, kein Verletzungssignal
+
+**Timeline:** 2–4 Wochen für 30s kontinuierlichen False Grip Hold
+
+**Quellen:** [GMB – Ring Muscle-Up](https://gmb.io/muscle-up/), [GymnasticBodies – False Grip](https://www.gymnasticbodies.com/want-a-muscle-up-remember-your-false-grip/), [BWTA – Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/)
+
+---
+
 ## Nicht verifizierte / strittige Thesen
 
 | These | Status | Erklärung |
@@ -423,6 +585,8 @@ Fortschritt-Kriterium: 10 langsame, kontrollierte Reps.
 | V-Sit 8s → Manna Hard Gate | ❌ Nicht verifiziert | Kein Primärquelle nennt 8s explizit als Gate |
 | Muscle-up 3 Reps → Front/Back Lever | ❌ Nicht verifiziert | TMA nennt Muscle-up nicht als Voraussetzung |
 | L-Sit 30s → Front Lever (hard gate) | ⚠️ Teilweise | Antranik impliziert, TMA nutzt andere Kriterien |
+| HBH 60s → Front Lever (crossReq) | ⚠️ Teilweise | TMA impliziert als Voraussetzung, kein explizites Hard Gate |
+| False Grip → Bar Muscle-Up (hard gate) | ⚠️ Teilweise | Empfohlen, aber kein hartes Gate (BWTA, GMB) |
 
 ---
 
@@ -447,6 +611,10 @@ Fortschritt-Kriterium: 10 langsame, kontrollierte Reps.
 - [Calisthenics Corner — Frog Stand](https://www.calisthenics-corner.com/skills/frog-stand/)
 - [Calisthenics Corner — Muscle-Up](https://www.calisthenics-corner.com/skills/muscle-up/)
 - [Calisthenics Corner — Dead Hang](https://www.calisthenics-corner.com/articles/dead-hang/)
+- [BWTA — How to Achieve a Strict Bar Muscle-Up](https://bodyweighttrainingarena.com/how-to-achieve-a-strict-bar-muscle-up/)
+- [BWTA — Strict Bar Muscle-Up Progression (12 Steps)](https://bodyweighttrainingarena.com/strict-bar-muscle-up-progression/)
+- [GMB Fitness — Ring Muscle-Up](https://gmb.io/muscle-up/)
+- [GymnasticBodies — Want A Muscle-Up? Remember Your False Grip](https://www.gymnasticbodies.com/want-a-muscle-up-remember-your-false-grip/)
 - [GymnasticBodies — Manna Forum](https://www.gymnasticbodies.com/forum/topic/281-manna-an-advanced-static-strength-element/)
 - [GymnasticBodies — Prerequisites](https://www.gymnasticbodies.com/forum/topic/3750-prerequisites/)
 - [PubMed — Biomechanics One-Arm Hang](https://pubmed.ncbi.nlm.nih.gov/32307465/)

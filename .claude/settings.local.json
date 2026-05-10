@@ -17,7 +17,21 @@
       "Bash(git commit -m 'fix: convert index.html from RTF to clean HTML *)",
       "Skill(update-config)",
       "Skill(update-config:*)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(git commit *)",
+      "WebSearch",
+      "WebFetch(domain:antranik.org)",
+      "WebFetch(domain:www.idoportal.com)",
+      "WebFetch(domain:gmb.io)",
+      "WebFetch(domain:handstandfactory.com)",
+      "WebFetch(domain:www.calisthenics-corner.com)",
+      "WebFetch(domain:themovementathlete.com)",
+      "WebFetch(domain:bodyweighttrainingarena.com)",
+      "WebFetch(domain:www.gymnasticbodies.com)",
+      "WebFetch(domain:calisthenicsnerd.com)",
+      "WebFetch(domain:www.allaboutcalisthenics.com)",
+      "WebFetch(domain:fitnessfaqs.com)",
+      "Bash(open /Users/tamir/Desktop/cyborg-kpi/index.html)"
     ]
   }
 }
