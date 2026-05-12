@@ -492,7 +492,7 @@ function vDash(){
     var ents=S.logs[s.id]||[];
     var lat=ents.length?ents.slice().sort(function(a,b){return b.date.localeCompare(a.date);})[0]:null;
     var mr=ring(sc,col,44,4.5);
-    h+='<div class="sc anim anim-d'+(i+1)+'" data-a="nav-sys" data-sys="'+s.id+'">'+
+    h+='<div id="st-'+s.id+'" class="sc anim anim-d'+(i+1)+'" data-a="nav-sys" data-sys="'+s.id+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">'+
       '<div style="width:38px;height:38px;border-radius:10px;background:'+col+'22;display:flex;align-items:center;justify-content:center">'+
       '<div style="width:14px;height:14px;border-radius:3px;background:'+col+'"></div></div>'+
@@ -831,20 +831,8 @@ function renderSheet(){
       '<button style="width:100%;background:none;border:none;padding:14px 0 0;font-size:14px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="sheet-dismiss">Abbrechen</button>'+
       '</div></div>';
   }
-  if(S.sheet==='recovery'){
-    return '<div class="ov" id="sheet-ov"><div class="ms" style="border-top:2px solid '+COL.recovery+'50"><div class="mh"></div>'+
-      '<p style="font-size:16px;font-weight:700;color:var(--txt);margin:0 0 4px">Training gespeichert 💪</p>'+
-      '<p style="font-size:13px;color:var(--sub);margin:0 0 16px">Wie fühlst du dich?</p>'+
-      '<div class="fld"><label class="lbl">Stress&nbsp;<span id="stressVal" style="color:var(--txt);font-weight:600">5</span>/10</label>'+
-      '<input type="range" min="1" max="10" value="5" style="width:100%;accent-color:'+COL.recovery+';height:28px" id="recStress"/></div>'+
-      '<div class="fld"><label class="lbl">Muskelkater&nbsp;<span id="mkVal" style="color:var(--txt);font-weight:600">3</span>/10</label>'+
-      '<input type="range" min="1" max="10" value="3" style="width:100%;accent-color:'+COL.recovery+';height:28px" id="recMk"/></div>'+
-      fld('Notizen (optional)','<textarea class="inp" id="recNotizen" placeholder="..."></textarea>')+
-      '<div style="display:flex;gap:8px;margin-top:4px">'+
-      '<button class="sbtn" style="background:'+COL.recovery+';flex:1;margin-top:0" data-a="recovery-sheet-save">Speichern</button>'+
-      '<button style="flex:1;border:none;border-radius:14px;padding:14px 0;font-size:15px;color:var(--sub);background:var(--card2);cursor:pointer;font-family:inherit" data-a="sheet-dismiss">Überspringen →</button>'+
-      '</div></div></div>';
-  }
+  // recovery sheet disabled
+  // if(S.sheet==='recovery'){ ... }
   return '';
 }
 function renderRestoreOverlay(){return '<div class="rsov"><div class="rsbox"><div style="font-size:40px;margin-bottom:12px">☁️</div><p style="font-size:18px;font-weight:700;color:var(--txt);margin:0 0 8px">Keine Daten gefunden</p><p style="font-size:14px;color:var(--sub2);margin:0 0 20px;line-height:1.5">Möchtest du ein iCloud-Backup wiederherstellen?</p><button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:10px" data-a="restore-pick">Backup laden</button><button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:16px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="restore-skip">Neu beginnen</button></div></div>';}
@@ -926,7 +914,7 @@ function addEntry(sysId,entry){
   haptic('light');
   render();
   setTimeout(showBanner,400);
-  if(sysId!=='recovery'){if(recovTimer)clearTimeout(recovTimer);setTimeout(function(){S.sheet='recovery';render();recovTimer=setTimeout(function(){S.sheet=null;render();},10000);},500);}
+
   if(isPR){
     var kpiDef=KPIS[sysId]&&KPIS[sysId].find(function(k){return k.k===kpiK;});
     setTimeout(function(){haptic('pr');showPRToast(kpiDef?kpiDef.label:kpiK);},500);
@@ -966,7 +954,7 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='pe-delete'){if(confirm('Eintrag löschen?')){SEC.logs=SEC.logs.filter(function(x){return x.id!==el.dataset.eid;});secSave();SEC.secModal=null;render();}return;}
   if(a==='show-info'){S.infoKey=el.dataset.info;render();return;}
   if(a==='close-info'){S.infoKey=null;render();return;}
-  if(a==='back'){S.stack.pop();S.period='all';S.editTarget=false;S.lauftypFilter=null;render();return;}
+  if(a==='back'){var lv=S.stack[S.stack.length-1];S.stack.pop();S.period='all';S.editTarget=false;S.lauftypFilter=null;render();if(lv.type==='sys'&&S.stack[S.stack.length-1].type==='dash'){var st=document.getElementById('st-'+lv.sysId);if(st)st.scrollIntoView({block:'center',behavior:'instant'});}return;}
   if(a==='nav-profil'){S.stack.push({type:'profil'});render();return;}
   if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.sheet='quicklog';S.modal=null;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
