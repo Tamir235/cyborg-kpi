@@ -504,6 +504,37 @@ function vDash(){
   return h+'</div>';
 }
 
+function getSkillBlockers(){
+  function sp(k){var kd=KPIS.skills.find(function(x){return x.k===k;});if(!kd)return 0;var e=getEnts('skills',k,S.logs);if(!e.length)return 0;return Math.min(prog(e[e.length-1].value,kd,S.targets,'skills')||0,1);}
+  function crThreshold(cr){var crKd=KPIS[cr.sys]&&KPIS[cr.sys].find(function(x){return x.k===cr.kpi;});return Math.max(cr.minVal,S.targets[cr.sys+'.'+cr.kpi]!=null?S.targets[cr.sys+'.'+cr.kpi]:(crKd&&crKd.target)||cr.minVal);}
+  var seen={},res=[];
+  SKILL_CHAINS.forEach(function(ch){
+    ch.nodes.forEach(function(nd){
+      if(seen[nd.k])return;
+      var kd=KPIS.skills.find(function(x){return x.k===nd.k;});
+      if(!kd)return;
+      if(sp(nd.k)>=1)return;
+      var blocker=null;
+      if(nd.req&&sp(nd.req)<(nd.reqMin||0)){
+        var reqKd=KPIS.skills.find(function(x){return x.k===nd.req;});
+        var reqP=sp(nd.req),needed=nd.reqMin||0;
+        blocker={skillLabel:kd.label,label:reqKd?reqKd.label:nd.req,sys:'Skills',color:COL.skills,current:Math.round(reqP*100),needed:Math.round(needed*100),unit:'%',progress:needed>0?reqP/needed:0};
+      }else if(nd.crossReq){
+        var t=crThreshold(nd.crossReq);
+        var ce=getEnts(nd.crossReq.sys,nd.crossReq.kpi,S.logs);
+        var cur=ce.length?Math.max.apply(null,ce.map(function(e){return e.value;})):0;
+        if(cur<t){
+          var crKd=KPIS[nd.crossReq.sys]&&KPIS[nd.crossReq.sys].find(function(x){return x.k===nd.crossReq.kpi;});
+          var sysDef=SM.find(function(s){return s.id===nd.crossReq.sys;});
+          blocker={skillLabel:kd.label,label:crKd?crKd.label:nd.crossReq.kpi,sys:sysDef?sysDef.label:nd.crossReq.sys,color:COL[nd.crossReq.sys]||COL.skills,current:cur,needed:t,unit:crKd?crKd.unit:'',progress:t>0?Math.min(cur/t,1):0};
+        }
+      }
+      if(blocker){seen[nd.k]=true;res.push(blocker);}
+    });
+  });
+  return res.sort(function(a,b){return b.progress-a.progress;});
+}
+
 function vSkillsHome(){
   var col=COL.skills;
   function sp(k){var kd=KPIS.skills.find(function(x){return x.k===k;});if(!kd)return 0;var e=getEnts('skills',k,S.logs);if(!e.length)return 0;return Math.min(prog(e[e.length-1].value,kd,S.targets,'skills')||0,1);}
@@ -528,6 +559,26 @@ function vSkillsHome(){
       '<p style="font-size:12px;color:'+col+';font-weight:600;margin:0">'+fPct+'%'+(fPct>=80?' · 🎯 Fast bereit!':'')+'</p></div>';
   }else{
     h+='<div class="card anim" style="margin-bottom:12px;text-align:center;padding:20px"><p style="font-size:14px;color:var(--card3);margin:0">Logge einen ersten Eintrag um den Fokus zu sehen</p></div>';
+  }
+  var blockers=getSkillBlockers();
+  if(blockers.length){
+    h+='<p class="sec">Skill Blocker</p>';
+    blockers.slice(0,3).forEach(function(b){
+      var pct=Math.round(b.progress*100),bc=b.color;
+      h+='<div class="card anim" style="margin-bottom:8px;padding:14px 16px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'+
+        '<div><p style="font-size:11px;color:var(--sub);margin:0 0 2px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.5px">'+escHtml(b.skillLabel)+' benötigt</p>'+
+        '<p style="font-size:15px;font-weight:600;color:var(--txt);margin:0">'+escHtml(b.label)+'</p></div>'+
+        '<span style="font-size:10px;background:'+bc+'22;color:'+bc+';border-radius:6px;padding:3px 8px;font-weight:700;font-family:var(--f-mono);flex-shrink:0">'+escHtml(b.sys.toUpperCase())+'</span>'+
+        '</div>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+        '<span style="font-size:12px;color:var(--sub);font-family:var(--f-mono)">'+b.current+' / '+b.needed+' '+escHtml(b.unit)+'</span>'+
+        '<span style="font-size:13px;font-weight:700;color:'+(pct>=80?'#30D158':bc)+'">'+pct+'%</span>'+
+        '</div>'+
+        '<div style="background:var(--card2);border-radius:4px;height:4px;overflow:hidden">'+
+        '<div style="width:'+pct+'%;height:100%;background:'+bc+';border-radius:4px"></div>'+
+        '</div></div>';
+    });
   }
   h+='<p class="sec">Skill Tree</p>';
   SKILL_CHAINS.forEach(function(ch){

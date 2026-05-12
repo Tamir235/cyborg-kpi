@@ -325,7 +325,7 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] AD-1/2/3: Adaptive Empfehlung (regelbasiert, 3 Zustände, pulsierender Dot, klickbar)
 - [ ] AD-4: Empfehlung-Schwellenwerte prüfen nach echter Nutzung (Bereit: stress≤4/mkat≤4, Moderat: >4, Erholen: stress>7/mkat>6, Pause >3d)
 - [x] WC-1/2/3/4: Weekly Challenge (schlechtestes System, 3 Sessions/Woche, Dashboard + Analyse)
-- [ ] DNA-1/2: Skill DNA Blocker-Anzeige
+- [x] DNA-1/2: Skill DNA Blocker-Anzeige (getSkillBlockers() + DNA-Sektion in vSkillsHome)
 - [ ] PRO-1/2: Badge-System + Profil-Screen
 - [ ] AN-1/2/3/4: Analyse-Screen (Radar, Unlocks, Streak, Filter)
 
@@ -443,3 +443,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.6 | Mai 2026 | AD-1/2/3 Adaptive Empfehlung (3 Zustände + pulsierender Dot), P6-1 Typografie (Bebas Neue + JetBrains Mono + DM Sans) |
 | 3.7 | Mai 2026 | P6-2 Y-Achse in Charts (min/mid/max + Grid-Lines) |
 | 3.8 | Mai 2026 | P6-4 Haptic Feedback (haptic() helper, Save/PR/Drag), WC-1/2/3/4 Weekly Challenge (Dashboard + Analyse) |
+| 3.9 | Mai 2026 | DNA-1/2 Skill Blocker-Anzeige (getSkillBlockers()), fix: Scroll-Restaurierung bei Zurück-Nav, Recovery Sheet deaktiviert |
