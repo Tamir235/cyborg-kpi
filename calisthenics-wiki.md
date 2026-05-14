@@ -590,6 +590,139 @@ Fortschritt-Kriterium: 10 langsame, kontrollierte Reps.
 
 ---
 
+## Hybrid-Athlete Tier 1/2 Progressionen
+
+> Diese Sektion dokumentiert die Skill-Ketten aus dem Cyborg KPI Skill Tree (SK-5/6).
+> Quellen: GymnasticBodies, GMB, The Movement Athlete, FitnessFAQs, Handstand Factory
+
+---
+
+### HSPU Wall (Handstand Push-Up)
+
+**Kette:** Handstand → HSPU Wall → HSPU Freestanding
+
+**Unlock-Schwelle:** 30s freestanding Handstand → HSPU Wall ✅
+> Handstand Factory: Handstand-Beherrschung (30s) ist explizite Voraussetzung für HSPU-Arbeit.
+
+**Progressionsstufen:**
+1. Wall Handstand (statisch, 30s)
+2. Negatives HSPU Wall (3–5s langsam absenken)
+3. Partial HSPU Wall (halbe Amplitude)
+4. Full HSPU Wall (Kopf berührt Boden)
+5. HSPU Freestanding (ohne Wand)
+
+**Häufige Fehler:**
+- HSPU versuchen vor stabilem 30s Handstand
+- Ellbogen zu weit außen öffnen
+- Lendenwirbelüberstreckung an der Wand
+
+**Timeline (Intermediär):** 3–6 Monate für erstes HSPU Wall nach stabilen 30s HS.
+
+---
+
+### Planche Tree
+
+**Kette:** Frog Stand → Tuck Planche → Advanced Tuck → Straddle → Full Planche
+
+**Basis-Voraussetzungen:** 30s Frog Stand ✅ (GymnasticBodies, GMB)
+
+**Stufenweise Unlock-Schwellen:**
+| Stufe | Ziel | Weiter zu |
+|---|---|---|
+| Frog Stand | 30s (50% von 60s Ziel) | Tuck Planche Entry |
+| Tuck Planche | 10s | Advanced Tuck |
+| Advanced Tuck | 10s | Straddle Entry |
+| Straddle Planche | 5s | Full Planche |
+| Full Planche | Beherrschung | Planche Push-Ups |
+
+**Wichtig:** Skapula-Protraktion (Schulterblätter auseinander schieben) ist die wichtigste technische Grundlage – ohne sie kein Planche. (GMB, TMA)
+
+**Verletzungsrisiken:**
+- Ellbogen Hyperextension (häufigste Planche-Verletzung)
+- Handgelenk-Tendinitis bei zu schneller Progression
+- Bizeps-Ansatz-Schmerz bei unzureichender Protraktion
+
+---
+
+### Dragon Flag
+
+**Kette:** Hollow Body Hold → Dragon Flag Negatives → Dragon Flag Hold
+
+**Unlock-Schwelle:** 30s HBH → Dragon Flag Training ✅ | 60s HBH → Dragon Flag Beherrschung ✅
+> BWTA: 30s = Einstiegsschwelle, 60s = Meisterschaftsniveau HBH vor Dragon Flag Hold
+
+**Progressionsstufen:**
+1. Hollow Body Hold 30s
+2. Tuck Dragon Flag Negatives
+3. Single-Leg Dragon Flag
+4. Straddle Dragon Flag
+5. Full Dragon Flag
+
+**Häufige Fehler:**
+- Hüfte absacken lassen (zerstört die Linie)
+- Lendenwirbel überstrecken
+- Zu früh für Full Dragon Flag ohne ausreichend HBH-Basis
+
+---
+
+### Pull Tree (Pulling Chain)
+
+**Kette:** Dead Hang → Pull-ups → Chest-to-Bar → Muscle-Up
+
+**Unlock-Schwellen (verifiziert):**
+| Voraussetzung | Schwelle | Schaltet frei | Status |
+|---|---|---|---|
+| Dead Hang | 60s | One-Arm Hang Entry | ✅ |
+| Pull-ups | 10 strikte Reps | Muscle-Up Entry | ✅ |
+| Chest-to-Bar | 5 explosive Reps | Muscle-Up aktiv | ✅ |
+| False Grip Hang | 10–30s | Ring Muscle-Up | ✅ (Ring) |
+
+**Chest-to-Bar Technik:**
+- Scapuläre Depression + Retraktion in der Zug-Phase
+- Brust muss die Stange berühren (nicht Kinn)
+- 5 explosive Reps = Readiness-Test für Muscle-Up (BWTA, Calisthenics Corner)
+
+**Muscle-Up Voraussetzungen (kumulativ):**
+- 10 strikte Pull-ups ✅
+- 5 explosive Chest-to-Bar ✅
+- 10 Dips (volles ROM) ✅
+- Scapuläre Kontrolle (aktive Einbindung im Hang)
+
+---
+
+### Nordic Curl Progression
+
+**Kette:** Assisted Nordic → Eccentric Nordic → Nordic Curl
+
+**Basis:** Keine Kraft-Voraussetzungen außer gesunden Knien.
+
+**Progression:**
+1. Assisted Nordic (Band oder Partner)
+2. Eccentric Nordic (nur absenken, 3–5s)
+3. Partial Nordic (Rückkehr aus 30° Winkel)
+4. Full Nordic Curl
+
+**Evidenz:** RCT-Studien zeigen 51% Reduktion des Hamstring-Verletzungsrisikos bei regelmäßigen Nordic Curls (PubMed). ✅
+
+---
+
+### Cossack Squat Progression
+
+**Kette:** Goblet Squat Stretch → Partial Cossack → Full Cossack → Weighted Cossack
+
+**Basis-Mobilität:** Hüftöffner + Adduktoren-Flexibilität nötig. Test: Breiter Stand, seitlich absenken ohne Schmerz.
+
+**Progression:**
+1. Goblet Squat mit Gehpause + seitliches Ausweichen
+2. Partial Cossack (nicht tief, gestützt)
+3. Full Cossack (Boden-Level, gestützt)
+4. Unsupported Cossack
+5. Weighted Cossack
+
+**Verletzungsrisiken:** Innenbandreizung bei zu aggressiver Tiefe ohne Mobilitätsbasis.
+
+---
+
 ## Alle Primärquellen
 
 - [Antranik — L-Sit Tutorial](https://antranik.org/l-sit-tutorial/)

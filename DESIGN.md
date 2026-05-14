@@ -382,3 +382,4 @@ iOS Safari unterstützt die API nicht (kein Workaround ohne native App).
 | 2.1 | Mai 2026 | Navigation final, Quick Log Sheet, Recovery Sheet, alle Component-Classes |
 | 2.2 | Mai 2026 | Haptic Patterns dokumentiert, Y-Achse erledigt, dotPulse Animation |
 | 2.3 | Mai 2026 | Skills Tier-Layout: Foundation-Chips, Tier-Labels, collapsible Chain-Cards, Kategorie-Labels, Zwei-Schritt-Form |
+| 2.4 | Mai 2026 | Design Overhaul: Dark Palette (#111113 bg, #1C1C1F card), Grid-Texture BG (32px), Card Rim-Border + Blue Top-Gradient, Nav Active-Glow (blue), Log-Button Glow (red), System-Farben auf Spec (EF4444/22C55E/F97316/A855F7/3B82F6/06B6D4) |

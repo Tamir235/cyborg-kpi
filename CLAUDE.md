@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 4.0
+> Stand: Mai 2026 | Version: 4.2
 
 ---
 
@@ -464,3 +464,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.9 | Mai 2026 | DNA-1/2 Skill Blocker-Anzeige (getSkillBlockers()), fix: Scroll-Restaurierung bei Zurück-Nav, Recovery Sheet deaktiviert |
 | 4.0 | Mai 2026 | SK-5/6/7 Hybrid-Athlete Skill Tree: Tier 1/2 Struktur, 37 KPIs (25 neu), 13 Chains, Zwei-Schritt-Form, Foundation-Chips, collapsible Tier-2, Analyse-Filter |
 | 4.1 | Mai 2026 | P6-6/7/8 Design Overhaul: Dark Palette, Grid-Texture, Card Glows, Nav-Glow, System-Farben, Foundation Chips tappbar; fix: Scroll-Bug Back-Nav + Coding-Regel |
+| 4.2 | Mai 2026 | docs: DESIGN.md v2.4 (Design Overhaul dokumentiert), calisthenics-wiki.md Tier 1/2 Progressionen (HSPU, Planche, Dragon Flag, Pull Tree, Nordic, Cossack); fix: #34C759 → #22C55E CSV-Button |
