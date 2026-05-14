@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 4.2
+> Stand: Mai 2026 | Version: 4.3
 
 ---
 
@@ -337,10 +337,13 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] P6-2: Y-Achse in Charts (min/mid/max Labels + Grid-Lines, JetBrains Mono)
 - [ ] P6-3: Long-Press für Private Section
 - [x] P6-4: Haptic Feedback – haptic() helper + Save (light) + PR (double-buzz) + Drag (medium)
-- [ ] P6-5: Empty-State / Onboarding
-- [x] P6-6: Design Overhaul – Dark Palette (#111113), Grid-Texture, Card Rim+Gradient, Nav Glow, System-Farben DESIGN.md-Spec
-- [x] P6-7: Alle #0A84FF → #3B82F6 (inkl. Charts, Radar, Kalender, Buttons)
+- [x] P6-5: Empty-State – KPI-Ansicht mit Teal-Ring + Mono-Label (Onboarding folgt Phase 2)
+- [x] P6-6: Design Overhaul v4.3 – Obsidian × Carbon Teal Palette (#090B0F bg, #10B981 accent), Teal Grid-Textur + Carbon-Weave, Score-Ring 100px, Mantra-Bar, 3-col System-Grid, Glow-System
+- [x] P6-7: Komplette Palette-Bereinigung – #3B82F6→#10B981, #30D158→#22C55E, #48484A→#4A5568, Chart-Labels, Tooltip, Toggle, Skills-Bars
 - [x] P6-8: Foundation Chips + Tier-1 Nodes in Skills tappbar (nav-kpi)
+- [x] P6-9: Animation Polish – cardIn 240ms, ringFade + scale, sheetIn + opacity, will-change auf dotPulse, :active auf alle tappbaren Elemente (.db/.pb/.tb/.npb/.back/.mcl)
+- [x] P6-10: Quick Log Tiles – System-Farbe Top-Border + Pointer-Press-Feedback
+- [x] P6-11: DM Sans weight 300 für Light-Body-Text hinzugefügt
 
 ### 🗃️ P7 – Daten & History
 - [ ] DATA-1: Ziel-Historisierung – S.targetHistory speichert alle Ziel-Änderungen mit Datum
@@ -465,6 +468,7 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 4.0 | Mai 2026 | SK-5/6/7 Hybrid-Athlete Skill Tree: Tier 1/2 Struktur, 37 KPIs (25 neu), 13 Chains, Zwei-Schritt-Form, Foundation-Chips, collapsible Tier-2, Analyse-Filter |
 | 4.1 | Mai 2026 | P6-6/7/8 Design Overhaul: Dark Palette, Grid-Texture, Card Glows, Nav-Glow, System-Farben, Foundation Chips tappbar; fix: Scroll-Bug Back-Nav + Coding-Regel |
 | 4.2 | Mai 2026 | docs: DESIGN.md v2.4 (Design Overhaul dokumentiert), calisthenics-wiki.md Tier 1/2 Progressionen (HSPU, Planche, Dragon Flag, Pull Tree, Nordic, Cossack); fix: #34C759 → #22C55E CSV-Button |
+| 4.3 | Mai 2026 | Design Overhaul v4.3: Obsidian × Carbon Teal Palette, Score-Ring 100px + Mantra-Bar, 3-col System-Grid mit Mini-Rings, komplette Palette-Bereinigung (blau→teal, iOS-Grays→Slate), Animation Polish (cardIn 240ms, sheetIn+opacity, :active auf alle Elemente), Empty-States, DM Sans 300, DESIGN.md v4.3 |
 
 ---
 
