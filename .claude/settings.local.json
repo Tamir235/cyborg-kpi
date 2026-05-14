@@ -37,7 +37,8 @@
       "Bash(node -e ':*)",
       "Bash(gh pr:*)",
       "Bash(open:*)",
-      "Bash(PATH=/Users/tamir/.nvm/versions/node/v24.15.0/bin:__TRACKED_VAR__ npx skills add pbakaus/impeccable)"
+      "Bash(PATH=/Users/tamir/.nvm/versions/node/v24.15.0/bin:__TRACKED_VAR__ npx skills add pbakaus/impeccable)",
+      "Bash(git -C /Users/tamir/Desktop/cyborg-kpi status)"
     ]
   }
 }

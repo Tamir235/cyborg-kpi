@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konzept 3 — Carbon Recovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0A1628;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+  }
+
+  .label-tag {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10B981;
+    color: #0C0C0F;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 6px 16px;
+    z-index: 100;
+    text-transform: uppercase;
+  }
+
+  .phone {
+    width: 390px;
+    min-height: 844px;
+    background: #0C0C0F;
+    border-radius: 48px;
+    border: 1px solid #1A1A20;
+    box-shadow:
+      0 0 0 5px #090909,
+      0 40px 80px rgba(0,0,0,0.9),
+      0 0 80px rgba(16,185,129,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Carbon fiber texture */
+  .phone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.008) 3px,
+      rgba(255,255,255,0.008) 4px
+    ), repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.008) 3px,
+      rgba(255,255,255,0.008) 4px
+    );
+    background-size: 8px 8px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .screen {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #2A2A35;
+    letter-spacing: 0.06em;
+  }
+
+  /* Header */
+  .header {
+    padding: 18px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left {}
+
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #10B981;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+  }
+
+  .header-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #2A2A35;
+    letter-spacing: 0.06em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hrv-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #10B981;
+    letter-spacing: 0.06em;
+  }
+
+  .hrv-dot {
+    width: 5px; height: 5px;
+    background: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(16,185,129,0.8);
+  }
+
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #141418;
+    border: 1.5px solid #10B981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #10B981;
+  }
+
+  /* Score Ring Block */
+  .score-block {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ring-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+  }
+
+  .ring-svg {
+    width: 100px;
+    height: 100px;
+    transform: rotate(-90deg);
+  }
+
+  .ring-track {
+    fill: none;
+    stroke: #1A1A20;
+    stroke-width: 8;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke: #10B981;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 70.4; /* 72% filled: 251.2 * 0.28 */
+    filter: drop-shadow(0 0 4px rgba(16,185,129,0.6));
+  }
+
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring-number {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
+    color: #CBD5E1;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .ring-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #10B981;
+    letter-spacing: 0.1em;
+  }
+
+  .score-right {}
+
+  .score-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #2A2A35;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .score-status {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: #CBD5E1;
+    font-weight: 300;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .score-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .score-stat {}
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: #2A2A35;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+  }
+
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #10B981;
+  }
+
+  /* Systems — ring grid */
+  .sys-section {
+    padding: 0 24px;
+  }
+
+  .sys-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .sys-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #2A2A35;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .sys-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .sys-card {
+    background: #141418;
+    border: 1px solid #1A1A20;
+    border-radius: 12px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sys-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    opacity: 0.5;
+  }
+
+  .sys-card.kraft::before { background: linear-gradient(90deg, transparent, #F59E0B, transparent); }
+  .sys-card.engine::before { background: linear-gradient(90deg, transparent, #60A5FA, transparent); }
+  .sys-card.skills::before { background: linear-gradient(90deg, transparent, #A78BFA, transparent); }
+  .sys-card.struktur::before { background: linear-gradient(90deg, transparent, #10B981, transparent); }
+  .sys-card.peak::before { background: linear-gradient(90deg, transparent, #F87171, transparent); }
+  .sys-card.recovery::before { background: linear-gradient(90deg, transparent, #6EE7B7, transparent); }
+
+  /* Mini ring for each sys */
+  .mini-ring-wrap {
+    position: relative;
+    width: 48px; height: 48px;
+  }
+
+  .mini-ring-svg {
+    width: 48px; height: 48px;
+    transform: rotate(-90deg);
+  }
+
+  .mini-ring-track {
+    fill: none;
+    stroke: #1A1A20;
+    stroke-width: 4;
+  }
+
+  .mini-ring-fill {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 113;
+  }
+
+  .kraft .mini-ring-fill { stroke: #F59E0B; stroke-dashoffset: 24.9; }
+  .engine .mini-ring-fill { stroke: #60A5FA; stroke-dashoffset: 39.6; }
+  .skills .mini-ring-fill { stroke: #A78BFA; stroke-dashoffset: 54.2; }
+  .struktur .mini-ring-fill { stroke: #10B981; stroke-dashoffset: 13.6; }
+  .peak .mini-ring-fill { stroke: #F87171; stroke-dashoffset: 32.8; }
+  .recovery .mini-ring-fill { stroke: #6EE7B7; stroke-dashoffset: 19.2; }
+
+  .mini-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 15px;
+    color: #CBD5E1;
+    line-height: 1;
+  }
+
+  .sys-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: #2A2A35;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* Recommendation */
+  .rec-block {
+    margin: 14px 24px 0;
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rec-left {}
+
+  .rec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: #10B981;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .rec-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: #CBD5E1;
+    font-weight: 300;
+  }
+
+  .rec-dot {
+    width: 8px; height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(16,185,129,0.8);
+    animation: teal-pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes teal-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(16,185,129,0.8); }
+    50% { opacity: 0.4; box-shadow: 0 0 16px rgba(16,185,129,0.2); }
+  }
+
+  /* Bottom Nav */
+  .bottom-nav {
+    background: #0C0C0F;
+    border-top: 1px solid #1A1A20;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 28px;
+    margin-top: 18px;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-item.active .nav-icon { color: #10B981; }
+  .nav-item.active .nav-label { color: #10B981; }
+  .nav-item:not(.active) .nav-icon { color: #2A2A35; }
+  .nav-item:not(.active) .nav-label { color: #2A2A35; }
+
+  .nav-fab {
+    width: 42px; height: 42px;
+    background: #10B981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #0C0C0F;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(16,185,129,0.3);
+    margin-top: -4px;
+  }
+</style>
+</head>
+<body>
+<div class="label-tag">Konzept 3 — Carbon Recovery</div>
+
+<div class="phone">
+  <div class="screen">
+
+    <div class="status-bar">
+      <span>09:41</span>
+      <span>▮▮▮▮ 100%</span>
+    </div>
+
+    <div class="header">
+      <div class="header-left">
+        <div class="header-label">Cyborg KPI</div>
+        <div class="header-date">Mi · 14. Mai 2026</div>
+      </div>
+      <div class="header-right">
+        <div class="hrv-chip">
+          <div class="hrv-dot"></div>
+          HRV 68
+        </div>
+        <div class="avatar">T</div>
+      </div>
+    </div>
+
+    <div class="score-block">
+      <div class="ring-container">
+        <svg class="ring-svg" viewBox="0 0 100 100">
+          <circle class="ring-track" cx="50" cy="50" r="40"/>
+          <circle class="ring-fill" cx="50" cy="50" r="40"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-number">72</div>
+          <div class="ring-pct">SCORE</div>
+        </div>
+      </div>
+      <div class="score-right">
+        <div class="score-title">Cyborg Score</div>
+        <div class="score-status">Bereit für<br>Training</div>
+        <div class="score-stats">
+          <div class="score-stat">
+            <div class="stat-label">Streak</div>
+            <div class="stat-value">🔥 12</div>
+          </div>
+          <div class="score-stat">
+            <div class="stat-label">Woche</div>
+            <div class="stat-value">+4%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sys-section">
+      <div class="sys-header">
+        <div class="sys-title">6 Systeme</div>
+      </div>
+      <div class="sys-grid">
+        <div class="sys-card kraft">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">78</div>
+          </div>
+          <div class="sys-name">Kraft</div>
+        </div>
+        <div class="sys-card engine">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">65</div>
+          </div>
+          <div class="sys-name">Engine</div>
+        </div>
+        <div class="sys-card skills">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">52</div>
+          </div>
+          <div class="sys-name">Skills</div>
+        </div>
+        <div class="sys-card struktur">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">88</div>
+          </div>
+          <div class="sys-name">Struktur</div>
+        </div>
+        <div class="sys-card peak">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">71</div>
+          </div>
+          <div class="sys-name">Peak</div>
+        </div>
+        <div class="sys-card recovery">
+          <div class="mini-ring-wrap">
+            <svg class="mini-ring-svg" viewBox="0 0 48 48">
+              <circle class="mini-ring-track" cx="24" cy="24" r="18"/>
+              <circle class="mini-ring-fill" cx="24" cy="24" r="18"/>
+            </svg>
+            <div class="mini-ring-center">83</div>
+          </div>
+          <div class="sys-name">Recovery</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-block">
+      <div class="rec-left">
+        <div class="rec-label">Empfehlung · Heute</div>
+        <div class="rec-text">Kraft-Training · 3 Tage Pause</div>
+      </div>
+      <div class="rec-dot"></div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <div class="nav-icon">⊞</div>
+        <div class="nav-label">Home</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-fab">+</div>
+        <div class="nav-label" style="color:#10B981; margin-top:2px;">Log</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">✦</div>
+        <div class="nav-label">Skills</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">◎</div>
+        <div class="nav-label">Analyse</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

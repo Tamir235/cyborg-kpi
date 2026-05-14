@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konzept 2 — Brutalist Runner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #D4CFC8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+  }
+
+  .label-tag {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #DC2626;
+    color: #F5F2ED;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 6px 16px;
+    z-index: 100;
+    text-transform: uppercase;
+  }
+
+  .phone {
+    width: 390px;
+    min-height: 844px;
+    background: #F5F2ED;
+    border-radius: 48px;
+    border: 2px solid #0A0A0A;
+    box-shadow:
+      6px 6px 0 #0A0A0A,
+      0 40px 80px rgba(0,0,0,0.25);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .screen {
+    height: 100%;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8A8480;
+    letter-spacing: 0.06em;
+  }
+
+  /* Header */
+  .header {
+    padding: 16px 24px 0;
+    border-bottom: 2px solid #0A0A0A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: #0A0A0A;
+    letter-spacing: 0.08em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .streak-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #DC2626;
+    border: 1.5px solid #DC2626;
+    padding: 3px 8px;
+    letter-spacing: 0.06em;
+  }
+
+  .avatar {
+    width: 32px; height: 32px;
+    background: #0A0A0A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 14px;
+    color: #F5F2ED;
+    letter-spacing: 0.05em;
+  }
+
+  /* Score block — massiv */
+  .score-block {
+    padding: 24px 24px 0;
+    border-bottom: 1.5px solid #D4CFC8;
+  }
+
+  .score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #8A8480;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 16px;
+  }
+
+  .score-left {}
+
+  .score-number {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 120px;
+    color: #0A0A0A;
+    line-height: 0.85;
+    letter-spacing: 0.01em;
+  }
+
+  .score-pct {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    color: #DC2626;
+    display: inline;
+  }
+
+  .score-right {
+    text-align: right;
+    padding-bottom: 8px;
+  }
+
+  .score-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #8A8480;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .score-delta {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    color: #22C55E;
+  }
+
+  /* Recommendation */
+  .rec-block {
+    padding: 14px 24px;
+    border-bottom: 1.5px solid #D4CFC8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rec-left {}
+
+  .rec-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #F5F2ED;
+    background: #0A0A0A;
+    padding: 2px 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .rec-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #0A0A0A;
+    font-weight: 500;
+  }
+
+  .rec-arrow {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 32px;
+    color: #DC2626;
+  }
+
+  /* Systems — list style, no cards */
+  .sys-list {
+    padding: 0;
+  }
+
+  .sys-row {
+    display: flex;
+    align-items: center;
+    padding: 11px 24px;
+    border-bottom: 1px solid #D4CFC8;
+    gap: 12px;
+  }
+
+  .sys-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #8A8480;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    width: 64px;
+    flex-shrink: 0;
+  }
+
+  .sys-bar-track {
+    flex: 1;
+    height: 3px;
+    background: #D4CFC8;
+    position: relative;
+  }
+
+  .sys-bar-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: #0A0A0A;
+  }
+
+  .sys-bar-fill.red { background: #DC2626; }
+  .sys-bar-fill.low { background: #D4CFC8; border: 1px solid #8A8480; }
+
+  .sys-score {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: #0A0A0A;
+    line-height: 1;
+    width: 42px;
+    text-align: right;
+  }
+
+  .sys-arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #D4CFC8;
+    width: 16px;
+    text-align: center;
+  }
+
+  .sys-arrow.up { color: #22C55E; }
+  .sys-arrow.down { color: #DC2626; }
+
+  /* Challenge */
+  .challenge-block {
+    margin: 0 24px 0;
+    border: 2px solid #0A0A0A;
+    padding: 14px;
+    background: #0A0A0A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .challenge-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #8A8480;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .challenge-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: #F5F2ED;
+    font-weight: 400;
+  }
+
+  .challenge-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 36px;
+    color: #DC2626;
+    line-height: 1;
+    text-align: right;
+  }
+
+  .challenge-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: #4A4438;
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  /* Bottom Nav */
+  .bottom-nav {
+    background: #F5F2ED;
+    border-top: 2px solid #0A0A0A;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 28px;
+    margin-top: 16px;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-item.active .nav-icon { color: #0A0A0A; }
+  .nav-item.active .nav-label { color: #0A0A0A; }
+  .nav-item:not(.active) .nav-icon { color: #C4BFB8; }
+  .nav-item:not(.active) .nav-label { color: #C4BFB8; }
+
+  .nav-item.fab .nav-icon {
+    color: #F5F2ED;
+    background: #DC2626;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-top: -4px;
+  }
+</style>
+</head>
+<body>
+<div class="label-tag">Konzept 2 — Brutalist Runner</div>
+
+<div class="phone">
+  <div class="screen">
+
+    <div class="status-bar">
+      <span>09:41</span>
+      <span>▮▮▮▮ 100%</span>
+    </div>
+
+    <div class="header">
+      <div class="header-title">CYBORG KPI</div>
+      <div class="header-right">
+        <div class="streak-badge">🔥 12</div>
+        <div class="avatar">T</div>
+      </div>
+    </div>
+
+    <div class="score-block">
+      <div class="score-label">Cyborg Score</div>
+      <div class="score-row">
+        <div class="score-left">
+          <span class="score-number">72</span><span class="score-pct">%</span>
+        </div>
+        <div class="score-right">
+          <div class="score-sub">Diese Woche</div>
+          <div class="score-delta">+4%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rec-block">
+      <div class="rec-left">
+        <div class="rec-tag">Jetzt</div>
+        <div class="rec-text">Kraft-Training · 3d Pause</div>
+      </div>
+      <div class="rec-arrow">→</div>
+    </div>
+
+    <div class="sys-list">
+      <div class="sys-row">
+        <div class="sys-name">Kraft</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill" style="width:78%"></div></div>
+        <div class="sys-score">78</div>
+        <div class="sys-arrow up">↑</div>
+      </div>
+      <div class="sys-row">
+        <div class="sys-name">Engine</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill" style="width:65%"></div></div>
+        <div class="sys-score">65</div>
+        <div class="sys-arrow down">↓</div>
+      </div>
+      <div class="sys-row">
+        <div class="sys-name">Skills</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill red" style="width:52%"></div></div>
+        <div class="sys-score" style="color:#DC2626">52</div>
+        <div class="sys-arrow">—</div>
+      </div>
+      <div class="sys-row">
+        <div class="sys-name">Struktur</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill" style="width:88%"></div></div>
+        <div class="sys-score">88</div>
+        <div class="sys-arrow up">↑</div>
+      </div>
+      <div class="sys-row">
+        <div class="sys-name">Peak</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill" style="width:71%"></div></div>
+        <div class="sys-score">71</div>
+        <div class="sys-arrow">—</div>
+      </div>
+      <div class="sys-row">
+        <div class="sys-name">Recovery</div>
+        <div class="sys-bar-track"><div class="sys-bar-fill" style="width:83%"></div></div>
+        <div class="sys-score">83</div>
+        <div class="sys-arrow up">↑</div>
+      </div>
+    </div>
+
+    <div style="padding: 14px 24px 14px;">
+      <div class="challenge-block">
+        <div>
+          <div class="challenge-label">Weekly Challenge</div>
+          <div class="challenge-text">Engine — Zone 2</div>
+        </div>
+        <div>
+          <div class="challenge-num">2</div>
+          <div class="challenge-denom">/ 3 SESSIONS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <div class="nav-icon">⊞</div>
+        <div class="nav-label">Home</div>
+      </div>
+      <div class="nav-item fab">
+        <div class="nav-icon">+</div>
+        <div class="nav-label" style="color:#DC2626">Log</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">✦</div>
+        <div class="nav-label">Skills</div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">◎</div>
+        <div class="nav-label">Analyse</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

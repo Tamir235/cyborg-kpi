@@ -471,13 +471,106 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 ## Agent skills
 
 ### Issue tracker
-
 Issues live in GitHub Issues (`gh` CLI). See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
-
 Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
 
 ### Domain docs
-
 Single-context layout — `CONTEXT.md` at repo root + `docs/adr/`. See `docs/agents/domain.md`.
+
+---
+
+## Slash Commands – Vollständige Übersicht
+
+Alle Skills liegen in `.claude/skills/<name>/SKILL.md`. Aufruf mit `/name`.
+
+### Session & Workflow
+
+| Command | Wann benutzen |
+|---|---|
+| `/start-session` | Jede neue Session – lädt Kontext, prüft Backup, zeigt Status |
+| `/end-session` | Sessionende – aktualisiert Docs, erinnert an Backup |
+| `/status` | Schnelle Backlog-Übersicht ohne Dateien zu öffnen |
+| `/git-push` | Sicher committen und pushen |
+| `/backup-check` | Backup-Datum + Empfehlung prüfen |
+| `/diff` | Alle Änderungen dieser Session an index.html |
+| `/changelog` | Versionshistorie aus CLAUDE.md chronologisch |
+| `/snapshot` | Stand-jetzt Kommentar in Code schreiben |
+| `/handoff` | Conversation komprimieren für nächsten Agenten |
+| `/caveman` | Ultrakurz-Modus: 75% weniger Tokens, voller Inhalt |
+
+### Implementierung
+
+| Command | Wann benutzen |
+|---|---|
+| `/implement [id]` | Backlog-Item umsetzen – immer Diff zuerst, dann Bestätigung |
+| `/add-kpi [sys] [name]` | Neuen KPI zu einem System hinzufügen |
+| `/unlock-chain [kpi]` | Progressionskette für einen KPI anzeigen |
+| `/migrate` | Datenmigration bei strukturellen Änderungen |
+| `/full-output-enforcement` | Vollständige Code-Ausgabe erzwingen, keine Platzhalter |
+| `/refactor [fn]` | Refactoring-Vorschlag ohne Verhaltensänderung |
+| `/tdd` | Test-first mit red-green-refactor Loop |
+
+### Analyse & Review
+
+| Command | Wann benutzen |
+|---|---|
+| `/review` | Code- oder PR-Review |
+| `/diagnose` | Systematische Fehlersuche: reproduzieren → minimieren → fixen |
+| `/debug [symptom]` | Fehlersuche für ein spezifisches Symptom |
+| `/risk [id]` | Risikobewertung für ein Backlog-Item |
+| `/estimate [id]` | Aufwandsschätzung für ein Backlog-Item |
+| `/explain [fn]` | Funktion in verständlichem Deutsch erklären |
+| `/test [bereich]` | Testing-Checkliste für einen Bereich ausgeben |
+| `/zoom-out` | Überblick über größere Code-Zusammenhänge |
+| `/improve-codebase-architecture` | Architektur-Schwachstellen + Refactoring-Chancen finden |
+
+### Planung & Entscheidung
+
+| Command | Wann benutzen |
+|---|---|
+| `/grill-me` | Plan durch relentloses Questioning stress-testen |
+| `/grill-with-docs` | Wie `/grill-me` aber updated CONTEXT.md + ADRs inline |
+| `/prototype` | Wegwerf-Prototyp für UI-Optionen oder State-Fragen |
+| `/to-prd` | Conversation → PRD → GitHub Issue |
+| `/to-issues` | Plan in einzelne GitHub Issues aufteilen |
+| `/triage` | Issues durch State-Machine triagen |
+| `/research` | Recherche (z.B. Calisthenics-Wiki, Ernährung) |
+
+### Design – Bestehendes verbessern
+
+| Command | Wann benutzen |
+|---|---|
+| `/impeccable` | **Einstiegspunkt** – audit, polish, kritisieren, verbessern jedes UI-Elements |
+| `/redesign-existing-projects` | Vollständiger Design-Audit + Upgrade nach Checkliste (Typo, Farben, States, Layout) |
+| `/ui-ux-pro-max` | UX-Regeln prüfen: Kontrast, Touch-Targets, Animation, A11y, 161 Produkt-Typen |
+| `/emil-design-eng` | Micro-Interactions + Animations nach Emil Kowalski – press-feedback, spring physics, easing |
+| `/design-taste-frontend` | Metrisch-basierte UI-Regeln, CSS Hardware Acceleration |
+
+### Design – Neu bauen
+
+| Command | Wann benutzen |
+|---|---|
+| `/frontend-design` | Neue Komponente / Seite mit starker ästhetischer Richtung (kein generischer AI-Look) |
+| `/high-end-visual-design` | Agency-Qualität: richtige Fonts, Shadows, Cards, Animationen |
+| `/minimalist-ui` | Editorial-Stil: warme Monochromatik, Bento-Grid, kein Gradient |
+| `/industrial-brutalist-ui` | Militär-Terminal-Ästhetik: Swiss-Grid, Mono, Degradation-Effekte |
+| `/gpt-taste` | GSAP-Motion: ScrollTrigger, Bento-Grid, breite Typografie |
+| `/stitch-design-taste` | DESIGN.md generieren für ein Design System |
+
+### Bilder generieren (kein Code)
+
+| Command | Wann benutzen |
+|---|---|
+| `/imagegen-frontend-web` | Website-Referenzbilder – **ein Bild pro Sektion**, nie komprimiert |
+| `/imagegen-frontend-mobile` | Mobile App Screens in iPhone-Mockup |
+| `/image-to-code` | Bild generieren → analysieren → als Code implementieren |
+| `/brandkit` | Brand Guidelines, Logo-System, Identity-Deck |
+| `/canvas-design` | Poster / visuelle Kunst als .png oder .pdf |
+
+### Meta
+
+| Command | Wann benutzen |
+|---|---|
+| `/write-a-skill` | Neuen Skill erstellen mit korrekter Struktur |
