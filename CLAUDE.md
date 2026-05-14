@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Cyborg KPI – Hybrid Athlete Operating System
-> Stand: Mai 2026 | Version: 3.4
+> Stand: Mai 2026 | Version: 4.0
 
 ---
 

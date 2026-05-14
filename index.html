@@ -145,40 +145,120 @@ const KPIS={
   kraft:[{k:'pullups',label:'Pull-ups',unit:'Reps',target:10,hb:1},{k:'pikeHSPU',label:'Pike / HSPU',unit:'Reps',target:10,hb:1},{k:'atgL',label:'ATG Split L',unit:'kg',hb:1},{k:'atgR',label:'ATG Split R',unit:'kg',hb:1},{k:'revNordic',label:'Reverse Nordic',unit:'Reps',target:5,hb:1},{k:'nordicCurl',label:'Nordic Curl',unit:'Reps',target:5,hb:1},{k:'dips',label:'Dips Max',unit:'Reps',target:20,hb:1},{k:'weightedDips',label:'Weighted Dips',unit:'kg',hb:1},{k:'pushupsMax',label:'Push-ups Max',unit:'Reps',target:30,hb:1},{k:'australianRows',label:'Australian Rows',unit:'Reps',target:15,hb:1},{k:'archerRows',label:'Archer Rows',unit:'Reps',hb:1},{k:'hbh',label:'Hollow Body Hold',unit:'s',target:30,hb:1},{k:'chestToBar',label:'Chest-to-Bar',unit:'Reps',target:5,hb:1},{k:'oneArmHang',label:'One-Arm Hang',unit:'s',target:10,hb:1}],
   engine:[{k:'pace',label:'Ø Pace',unit:'min/km',target:5.5,hb:0},{k:'hr',label:'Ø Puls',unit:'bpm',target:140,hb:0},{k:'drift',label:'HF-Drift',unit:'%',target:5,hb:0},{k:'rpe',label:'RPE',unit:'/10',target:6,hb:0},{k:'distanz',label:'Distanz',unit:'km',hb:1},{k:'kadenz',label:'Kadenz',unit:'spm',target:180,hb:1}],
   peak:[{k:'wattAvg',label:'Ø Watt',unit:'W',hb:1},{k:'wattMax',label:'Max Watt',unit:'W',hb:1},{k:'rpe',label:'RPE',unit:'/10',target:8,hb:0},{k:'dauer',label:'Dauer',unit:'min',hb:1}],
-  skills:[{k:'L-Sit',label:'L-Sit',unit:'s',target:60,hb:1},{k:'Handstand',label:'Handstand',unit:'s',target:30,hb:1},{k:'Frog Stand',label:'Frog Stand',unit:'s',target:60,hb:1},{k:'Pistol Squat L',label:'Pistol Squat L',unit:'Reps',target:5,hb:1},{k:'Pistol Squat R',label:'Pistol Squat R',unit:'Reps',target:5,hb:1},{k:'Muscle-up',label:'Muscle-up',unit:'Reps',target:5,hb:1},{k:'Front Lever',label:'Front Lever',unit:'s',target:10,hb:1},{k:'Back Lever',label:'Back Lever',unit:'s',target:30,hb:1},{k:'Dragon Flag',label:'Dragon Flag',unit:'Reps',target:10,hb:1},{k:'V-Sit',label:'V-Sit',unit:'s',target:30,hb:1},{k:'Planche Hold',label:'Planche Hold',unit:'s',target:10,hb:1},{k:'False Grip',label:'False Grip',unit:'s',target:30,hb:1}],
+  skills:[
+    // ── Bestehende Skills (Keys unveränderlich – keine Datenverlust) ──
+    {k:'L-Sit',label:'L-Sit',unit:'s',target:60,hb:1},{k:'Handstand',label:'Handstand',unit:'s',target:30,hb:1},{k:'Frog Stand',label:'Frog Stand',unit:'s',target:60,hb:1},{k:'Pistol Squat L',label:'Pistol Squat L',unit:'Reps',target:5,hb:1},{k:'Pistol Squat R',label:'Pistol Squat R',unit:'Reps',target:5,hb:1},{k:'Muscle-up',label:'Muscle-up',unit:'Reps',target:5,hb:1},{k:'Front Lever',label:'Front Lever',unit:'s',target:10,hb:1},{k:'Back Lever',label:'Back Lever',unit:'s',target:30,hb:1},{k:'Dragon Flag',label:'Dragon Flag',unit:'Reps',target:10,hb:1},{k:'V-Sit',label:'V-Sit',unit:'s',target:30,hb:1},{k:'Planche Hold',label:'Planche Hold',unit:'s',target:10,hb:1},{k:'False Grip',label:'False Grip',unit:'s',target:30,hb:1},
+    // ── Tier 1: Core Foundation ──
+    {k:'hangingKneeRaise',label:'Hanging Knee Raise',unit:'Reps',target:15,hb:1},
+    {k:'hangingLegRaise',label:'Hanging Leg Raise',unit:'Reps',target:15,hb:1},
+    {k:'toeToBar',label:'Toes to Bar',unit:'Reps',target:10,hb:1},
+    {k:'compressionHold',label:'Pike Compression Hold',unit:'s',target:30,hb:1},
+    {k:'tuckLSit',label:'Tuck L-Sit',unit:'s',target:30,hb:1},
+    // ── Push Tree ──
+    {k:'pikePushUp',label:'Pike Push-Up',unit:'Reps',target:15,hb:1},
+    {k:'pseudoPlanchePU',label:'Pseudo Planche PU',unit:'Reps',target:10,hb:1},
+    {k:'elevatedPikePU',label:'Elevated Pike PU',unit:'Reps',target:10,hb:1},
+    {k:'wallHandstand',label:'Wall Handstand Hold',unit:'s',target:60,hb:1},
+    {k:'chestWallHS',label:'Chest-to-Wall HS',unit:'s',target:60,hb:1},
+    {k:'wallHSPU',label:'Wall HSPU',unit:'Reps',target:5,hb:1},
+    {k:'hspu',label:'Freestanding HSPU',unit:'Reps',target:3,hb:1},
+    {k:'archerPushUp',label:'Archer Push-Up',unit:'Reps',target:5,hb:1},
+    {k:'plancheLean',label:'Planche Lean',unit:'s',target:30,hb:1},
+    {k:'tuckPlanche',label:'Tuck Planche Hold',unit:'s',target:20,hb:1},
+    {k:'advTuckPlanche',label:'Adv. Tuck Planche',unit:'s',target:10,hb:1},
+    {k:'straddlePlanche',label:'Straddle Planche',unit:'s',target:5,hb:1},
+    // ── Pull Tree ──
+    {k:'negPullUp',label:'Negative Pull-Up',unit:'Reps',target:5,hb:1},
+    {k:'highPullUp',label:'High Pull-Up',unit:'Reps',target:5,hb:1},
+    {k:'archerPullUp',label:'Archer Pull-Up',unit:'Reps',target:5,hb:1},
+    {k:'typewriterPU',label:'Typewriter Pull-Up',unit:'Reps',target:5,hb:1},
+    // ── Dragon Flag ──
+    {k:'candlestick',label:'Candlestick',unit:'s',target:30,hb:1},
+    {k:'dragonFlagNeg',label:'Dragon Flag Negative',unit:'Reps',target:5,hb:1},
+    {k:'singleLegDF',label:'Single Leg Dragon Flag',unit:'Reps',target:5,hb:1},
+    // ── Legs ──
+    {k:'cossackSquat',label:'Cossack Squat',unit:'Reps',target:10,hb:1},
+    {k:'nordicNeg',label:'Nordic Negative',unit:'Reps',target:5,hb:1},
+  ],
   struktur:[{k:'hang',label:'Active Dead Hang',unit:'s',target:60,hb:1},{k:'deepSquat',label:'Deep Squat Hold',unit:'s',target:120,hb:1},{k:'mobility',label:'Mobility',unit:'✓',target:1,hb:1},{k:'schulter',label:'Schulter-Schmerz',unit:'/10',target:2,hb:0},{k:'knie',label:'Knie-Schmerz',unit:'/10',target:2,hb:0},{k:'ruecken',label:'Rücken-Schmerz',unit:'/10',target:2,hb:0}],
   recovery:[{k:'hrv',label:'HRV',unit:'ms',target:60,hb:1},{k:'stress',label:'Stress',unit:'/10',target:3,hb:0},{k:'muskelkater',label:'Muskelkater',unit:'/10',target:3,hb:0}]
 };
 const SKILL_CHAINS=[
-  {id:'static',name:'Core Compression',nodes:[
+  // ═══ TIER 1: FUNDAMENT ═══════════════════════════════════════════
+  {id:'t1_core',name:'Core Foundation',tier:1,nodes:[
+    {k:'hangingKneeRaise',req:null},
+    {k:'hangingLegRaise',req:'hangingKneeRaise',reqMin:0.6},
+    {k:'toeToBar',req:'hangingLegRaise',reqMin:0.7},
+  ]},
+  {id:'t1_compression',name:'Compression',tier:1,nodes:[
+    {k:'compressionHold',req:null},
+    {k:'tuckLSit',req:'compressionHold',reqMin:0.6},
+  ]},
+  {id:'t1_balance',name:'Balance Foundation',tier:1,nodes:[
     {k:'Frog Stand',req:null},
-    {k:'L-Sit',req:'Frog Stand',reqMin:0.5},
-    {k:'V-Sit',req:'L-Sit',reqMin:0.5}
   ]},
-  {id:'hs',name:'Handstand',nodes:[
-    {k:'Handstand',req:null}
+  // ═══ TIER 2: PUSH ════════════════════════════════════════════════
+  {id:'hspu',name:'HSPU Tree',tier:2,cat:'PUSH',nodes:[
+    {k:'pikePushUp',req:null},
+    {k:'elevatedPikePU',req:'pikePushUp',reqMin:0.7},
+    {k:'wallHandstand',req:'elevatedPikePU',reqMin:0.7},
+    {k:'chestWallHS',req:'wallHandstand',reqMin:0.7},
+    {k:'wallHSPU',req:'chestWallHS',reqMin:0.8},
+    {k:'hspu',req:'wallHSPU',reqMin:0.8},
   ]},
-  {id:'planche',name:'Planche',nodes:[
-    {k:'Frog Stand',req:null},
-    {k:'Planche Hold',req:'Frog Stand',reqMin:0.5}
+  {id:'planche',name:'Planche Tree',tier:2,cat:'PUSH',nodes:[
+    {k:'pseudoPlanchePU',req:null},
+    {k:'plancheLean',req:'pseudoPlanchePU',reqMin:0.6},
+    {k:'tuckPlanche',req:'plancheLean',reqMin:0.7},
+    {k:'advTuckPlanche',req:'tuckPlanche',reqMin:0.7},
+    {k:'straddlePlanche',req:'advTuckPlanche',reqMin:0.7},
+    {k:'Planche Hold',req:'straddlePlanche',reqMin:0.7},
   ]},
-  {id:'pull',name:'Pulling',nodes:[
-    {k:'Muscle-up',req:null,crossReq:{sys:'kraft',kpi:'chestToBar',minVal:5,label:'Chest-to-Bar 5 Reps'}}
+  {id:'archer_push',name:'Archer Push-Up',tier:2,cat:'PUSH',nodes:[
+    {k:'archerPushUp',req:null,crossReq:{sys:'kraft',kpi:'pushupsMax',minVal:15,label:'Push-ups 15 Reps'}},
   ]},
-  {id:'lever',name:'Lever',nodes:[
+  // ═══ TIER 2: PULL ════════════════════════════════════════════════
+  {id:'pull',name:'Pull Tree',tier:2,cat:'PULL',nodes:[
+    {k:'negPullUp',req:null,crossReq:{sys:'kraft',kpi:'australianRows',minVal:10,label:'Australian Rows 10 Reps'}},
+    {k:'highPullUp',req:null,crossReq:{sys:'kraft',kpi:'pullups',minVal:8,label:'Pull-ups 8 Reps'}},
+    {k:'archerPullUp',req:'highPullUp',reqMin:0.7,crossReq:{sys:'kraft',kpi:'archerRows',minVal:3,label:'Archer Rows 3 Reps'}},
+    {k:'typewriterPU',req:'archerPullUp',reqMin:0.7},
+  ]},
+  {id:'muscleup',name:'Muscle-Up',tier:2,cat:'PULL',nodes:[
+    {k:'False Grip',req:null},
+    {k:'Muscle-up',req:'False Grip',reqMin:0.5,crossReq:{sys:'kraft',kpi:'chestToBar',minVal:5,label:'Chest-to-Bar 5 Reps'}},
+  ]},
+  // ═══ TIER 2: CORE ════════════════════════════════════════════════
+  {id:'lsit',name:'L-Sit → V-Sit',tier:2,cat:'CORE',nodes:[
+    {k:'tuckLSit',req:null,crossReq:{sys:'kraft',kpi:'hbh',minVal:20,label:'Hollow Body Hold 20s'}},
+    {k:'L-Sit',req:'tuckLSit',reqMin:0.7},
+    {k:'V-Sit',req:'L-Sit',reqMin:0.5},
+  ]},
+  {id:'dragonflag',name:'Dragon Flag',tier:2,cat:'CORE',nodes:[
+    {k:'candlestick',req:null},
+    {k:'dragonFlagNeg',req:'candlestick',reqMin:0.6,crossReq:{sys:'kraft',kpi:'hbh',minVal:30,label:'Hollow Body Hold 30s'}},
+    {k:'singleLegDF',req:'dragonFlagNeg',reqMin:0.7},
+    {k:'Dragon Flag',req:'singleLegDF',reqMin:0.7},
+  ]},
+  {id:'lever',name:'Lever',tier:2,cat:'CORE',nodes:[
     {k:'Front Lever',req:null,crossReq:{sys:'kraft',kpi:'hbh',minVal:60,label:'Hollow Body Hold 60s'}},
-    {k:'Back Lever',req:null}
+    {k:'Back Lever',req:null},
   ]},
-  {id:'core',name:'Core Dynamic',nodes:[
-    {k:'Dragon Flag',req:null,crossReq:{sys:'kraft',kpi:'hbh',minVal:30,label:'Hollow Body Hold 30s'}}
+  // ═══ TIER 2: LEGS ════════════════════════════════════════════════
+  {id:'pistol',name:'Pistol Squat',tier:2,cat:'LEGS',nodes:[
+    {k:'cossackSquat',req:null},
+    {k:'Pistol Squat L',req:'cossackSquat',reqMin:0.6},
+    {k:'Pistol Squat R',req:'cossackSquat',reqMin:0.6},
   ]},
-  {id:'legs',name:'Beine',nodes:[
-    {k:'Pistol Squat L',req:null},
-    {k:'Pistol Squat R',req:null}
+  {id:'nordic',name:'Nordic Tree',tier:2,cat:'LEGS',nodes:[
+    {k:'nordicNeg',req:null,crossReq:{sys:'kraft',kpi:'revNordic',minVal:5,label:'Reverse Nordic 5 Reps'}},
   ]},
-  {id:'grip',name:'Grip / Ring',nodes:[
-    {k:'False Grip',req:null}
-  ]}
+  // ═══ TIER 2: BALANCE ═════════════════════════════════════════════
+  {id:'hs',name:'Handstand Tree',tier:2,cat:'BALANCE',nodes:[
+    {k:'wallHandstand',req:null},
+    {k:'chestWallHS',req:'wallHandstand',reqMin:0.7},
+    {k:'Handstand',req:'chestWallHS',reqMin:0.7},
+  ]},
 ];
 const KRAFT_UNLOCKS={archerRows:{sys:'kraft',kpi:'australianRows',minProg:0.8,label:'Australian Rows 80%'},weightedDips:{sys:'kraft',kpi:'dips',minProg:0.7,label:'Dips 70%'},chestToBar:{sys:'kraft',kpi:'pullups',minProg:0.7,label:'Pull-ups 70%'},oneArmHang:{sys:'struktur',kpi:'hang',minProg:1.0,label:'Active Dead Hang 60s'}};
 const PE_FIELDS=[{k:'bpsfl',label:'BPSFL'},{k:'bpel',label:'BPEL'},{k:'nbel',label:'NBEL'},{k:'mseg',label:'MSEG'},{k:'beg',label:'BEG'}];
@@ -191,7 +271,7 @@ const DEFAULT_PW_HASH='afc71cb8';
 
 function escHtml(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,sheet:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fQual:'ruhig',fNase:false,fMobility:false,fLauftyp:'zone2',lauftypFilter:null,lastEntry:null,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark'};
+let S={logs:{},targets:{},kpiOrder:{},stack:[{type:'dash'}],modal:null,sheet:null,period:'all',editTarget:false,statsTab:'woche',statsOff:0,importMsg:'',fEx:'pullups',fSkill:'L-Sit',fChain:null,fQual:'ruhig',fNase:false,fMobility:false,fLauftyp:'zone2',lauftypFilter:null,lastEntry:null,showRestore:false,infoKey:null,driftMethod:'haelfte',theme:'dark',expandedChains:{}};
 let SEC={unlocked:false,pwHash:DEFAULT_PW_HASH,logs:[],showPwPrompt:false,pwErr:'',secModal:null,editId:null,peView:'charts'};
 let bannerTimer=null,secretTaps=0,secretTimer=null,recovTimer=null,undoTimer=null;
 let quotaWarn=false;
@@ -537,16 +617,68 @@ function getSkillBlockers(){
 
 function vSkillsHome(){
   var col=COL.skills;
+  // Helpers
   function sp(k){var kd=KPIS.skills.find(function(x){return x.k===k;});if(!kd)return 0;var e=getEnts('skills',k,S.logs);if(!e.length)return 0;return Math.min(prog(e[e.length-1].value,kd,S.targets,'skills')||0,1);}
   function crThreshold(cr){var crKd=KPIS[cr.sys]&&KPIS[cr.sys].find(function(x){return x.k===cr.kpi;});return Math.max(cr.minVal,S.targets[cr.sys+'.'+cr.kpi]!=null?S.targets[cr.sys+'.'+cr.kpi]:(crKd&&crKd.target)||cr.minVal);}
   function isUnl(nd){if(nd.req&&sp(nd.req)<(nd.reqMin||0))return false;if(nd.crossReq){var ce=getEnts(nd.crossReq.sys,nd.crossReq.kpi,S.logs);if(!ce.length||Math.max.apply(null,ce.map(function(e){return e.value;}))<crThreshold(nd.crossReq))return false;}return true;}
-  function lockReason(nd){if(nd.crossReq&&(!nd.req||sp(nd.req)>=(nd.reqMin||0))){var t=crThreshold(nd.crossReq);return nd.crossReq.label+' ('+t+'s)';}if(nd.req){var kd=KPIS.skills.find(function(x){return x.k===nd.req;});return (kd?kd.label:nd.req)+' '+Math.round((nd.reqMin||0)*100)+'%';}return 'gesperrt';}
+  function lockReason(nd){if(nd.crossReq&&(!nd.req||sp(nd.req)>=(nd.reqMin||0))){var t=crThreshold(nd.crossReq);return nd.crossReq.label;}if(nd.req){var kd=KPIS.skills.find(function(x){return x.k===nd.req;});return (kd?kd.label:nd.req)+' '+Math.round((nd.reqMin||0)*100)+'%';}return 'gesperrt';}
+  function chainProg(ch){var nodes=ch.nodes;if(!nodes.length)return 0;return nodes.reduce(function(s,nd){return s+sp(nd.k);},0)/nodes.length;}
+  function sysLatest(sys,kpi){var e=getEnts(sys,kpi,S.logs);return e.length?e[e.length-1].value:0;}
+
+  var h='';
+
+  // ── TIER 1: FUNDAMENT ───────────────────────────────────────────
+  h+='<p class="sec">Tier 1 · Fundament</p>';
+  // Foundation reference chips (crossRef other systems)
+  var foundRefs=[
+    {sys:'struktur',kpi:'hang',label:'Active Hang',unit:'s',target:60,col:COL.struktur},
+    {sys:'kraft',kpi:'hbh',label:'Hollow Body',unit:'s',target:30,col:COL.kraft},
+    {sys:'kraft',kpi:'pullups',label:'Pull-ups',unit:'Reps',target:10,col:COL.kraft},
+    {sys:'kraft',kpi:'australianRows',label:'Aus. Rows',unit:'Reps',target:15,col:COL.kraft},
+  ];
+  h+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">';
+  foundRefs.forEach(function(ref){
+    var val=sysLatest(ref.sys,ref.kpi);
+    var done=val>=ref.target;
+    h+='<div style="background:'+ref.col+'18;border:1px solid '+ref.col+'35;border-radius:10px;padding:7px 11px;flex:0 0 auto">'+
+      '<p style="font-size:9px;color:'+ref.col+';font-weight:700;margin:0 0 1px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.4px">'+escHtml(ref.label)+'</p>'+
+      '<p style="font-size:12px;font-weight:700;color:'+(done?'#30D158':'var(--txt)')+';margin:0;font-family:var(--f-mono)">'+(val>0?val:0)+' / '+ref.target+' '+ref.unit+'</p>'+
+      '</div>';
+  });
+  h+='</div>';
+  // Tier 1 chains (always expanded, compact)
+  var t1Chains=SKILL_CHAINS.filter(function(ch){return ch.tier===1;});
+  if(t1Chains.length){
+    h+='<div class="lcard" style="margin-bottom:12px">';
+    t1Chains.forEach(function(ch,ci){
+      var cpct=Math.round(chainProg(ch)*100);
+      var isLast=ci===t1Chains.length-1;
+      h+='<div style="padding:10px 14px;'+(isLast?'':'border-bottom:.5px solid var(--brd)')+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+        '<p style="font-size:11px;font-weight:700;color:var(--sub2);margin:0;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.5px">'+escHtml(ch.name)+'</p>'+
+        '<span style="font-size:11px;color:'+col+';font-weight:700;font-family:var(--f-mono)">'+cpct+'%</span>'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">';
+      ch.nodes.forEach(function(nd,ni){
+        var p=sp(nd.k),done=p>=1,locked=!isUnl(nd);
+        var kd=KPIS.skills.find(function(x){return x.k===nd.k;});
+        var lbl=kd?kd.label:nd.k;
+        var nodeCol=done?'#30D158':locked?'var(--card3)':p>0?col:'var(--sub2)';
+        if(ni>0)h+='<span style="color:var(--card3);font-size:10px">→</span>';
+        h+='<span style="font-size:11px;font-weight:'+(done||p>0?700:400)+';color:'+nodeCol+'">'+(done?'✓ ':locked?'🔒 ':p>0?'⬤ ':'○ ')+escHtml(lbl)+'</span>';
+      });
+      h+='</div></div>';
+    });
+    h+='</div>';
+  }
+
+  // ── FOKUS ────────────────────────────────────────────────────────
   var focusK=null,focusP=-1;
   SKILL_CHAINS.forEach(function(ch){ch.nodes.forEach(function(nd){if(!isUnl(nd))return;var p=sp(nd.k);if(p<1&&p>focusP){focusP=p;focusK=nd.k;}});});
   if(focusK===null)SKILL_CHAINS.some(function(ch){return ch.nodes.some(function(nd){if(isUnl(nd)){focusK=nd.k;focusP=0;return true;}return false;});});
   var fKd=focusK?KPIS.skills.find(function(x){return x.k===focusK;}):null;
   var fPct=Math.round(focusP*100);
-  var h='<p class="sec">Fokus</p>';
+  h+='<p class="sec">Fokus</p>';
   if(fKd){
     h+='<div class="card card22 anim" style="margin-bottom:12px;cursor:pointer" data-a="nav-kpi" data-sys="skills" data-kpi="'+escHtml(focusK)+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'+
@@ -560,6 +692,8 @@ function vSkillsHome(){
   }else{
     h+='<div class="card anim" style="margin-bottom:12px;text-align:center;padding:20px"><p style="font-size:14px;color:var(--card3);margin:0">Logge einen ersten Eintrag um den Fokus zu sehen</p></div>';
   }
+
+  // ── DNA BLOCKER ──────────────────────────────────────────────────
   var blockers=getSkillBlockers();
   if(blockers.length){
     h+='<p class="sec">Skill Blocker</p>';
@@ -580,35 +714,61 @@ function vSkillsHome(){
         '</div></div>';
     });
   }
-  h+='<p class="sec">Skill Tree</p>';
-  SKILL_CHAINS.forEach(function(ch){
-    h+='<p style="font-size:11px;color:var(--sub);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin:0 0 6px 2px">'+escHtml(ch.name)+'</p><div class="lcard" style="margin-bottom:12px">';
-    ch.nodes.forEach(function(nd,ni){
-      var p=sp(nd.k),pct=Math.round(p*100),locked=!isUnl(nd),done=p>=1;
-      var kd=KPIS.skills.find(function(x){return x.k===nd.k;});
-      var lbl=kd?kd.label:nd.k;
-      var isLast=ni===ch.nodes.length-1;
-      var borderSt=isLast?'border-bottom:none':'';
-      if(locked){
-        h+='<div class="li" style="opacity:0.35;'+borderSt+'">'+
-          '<div style="width:28px;height:28px;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px">🔒</div>'+
-          '<div style="flex:1;min-width:0"><p style="font-size:15px;color:var(--card3);margin:0">'+escHtml(lbl)+'</p>'+
-          '<p style="font-size:11px;color:var(--card3);margin:2px 0 0">'+escHtml(lockReason(nd))+'</p></div></div>';
-      }else{
-        h+='<div class="li" data-a="nav-kpi" data-sys="skills" data-kpi="'+escHtml(nd.k)+'" style="'+borderSt+'">'+
-          '<div style="width:28px;height:28px;border-radius:8px;background:'+(done?col+'33':p>0?col+'18':'var(--card2)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:'+col+';font-weight:700">'+(done?'✓':'●')+'</div>'+
-          '<div style="flex:1;min-width:0"><p style="font-size:15px;font-weight:'+(p>0?600:400)+';color:var(--txt);margin:0">'+escHtml(lbl)+'</p>'+
-          (!done&&p>0?'<div style="background:var(--card2);border-radius:3px;height:3px;margin-top:5px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+col+';border-radius:3px"></div></div>':'')+'</div>'+
-          '<span style="font-size:12px;color:'+(done?'#30D158':col)+';font-weight:600;flex-shrink:0;margin-right:4px">'+(done?'✓':p>0?pct+'%':'–')+'</span>'+
-          '<span class="chev">›</span></div>';
-        if(pct>=80&&pct<100){
-          h+='<div style="padding:8px 14px;background:'+col+'12;border-top:.5px solid '+col+'25'+(isLast?';border-radius:0 0 20px 20px':'')+'">'+
-            '<p style="font-size:12px;color:'+col+';font-weight:700;margin:0">🎯 '+escHtml(lbl)+' — fast bereit!</p></div>';
-        }
+
+  // ── TIER 2: STÄRKE ──────────────────────────────────────────────
+  h+='<p class="sec" style="margin-top:4px">Tier 2 · Stärke</p>';
+  var cats=['PUSH','PULL','CORE','LEGS','BALANCE'];
+  var t2Chains=SKILL_CHAINS.filter(function(ch){return ch.tier===2;});
+  cats.forEach(function(cat){
+    var catChains=t2Chains.filter(function(ch){return ch.cat===cat;});
+    if(!catChains.length)return;
+    h+='<p style="font-size:10px;color:var(--sub2);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px 2px;font-family:var(--f-mono)">'+cat+'</p>';
+    catChains.forEach(function(ch){
+      var cpct=Math.round(chainProg(ch)*100);
+      var expanded=!!S.expandedChains[ch.id];
+      h+='<div class="card anim" style="margin-bottom:8px;padding:0;overflow:hidden">'+
+        '<div style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px" data-a="toggle-chain" data-chain-id="'+ch.id+'">'+
+        '<div style="flex:1">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+        '<p style="font-size:14px;font-weight:600;color:var(--txt);margin:0">'+escHtml(ch.name)+'</p>'+
+        '<span style="font-size:12px;font-weight:700;color:'+(cpct>=80?'#30D158':cpct>0?col:'var(--sub)')+';font-family:var(--f-mono)">'+cpct+'%</span>'+
+        '</div>'+
+        '<div style="background:var(--card2);border-radius:4px;height:4px;overflow:hidden">'+
+        '<div style="width:'+cpct+'%;height:100%;background:'+col+';border-radius:4px"></div>'+
+        '</div></div>'+
+        '<span style="font-size:18px;color:var(--sub);transform:'+(expanded?'rotate(90deg)':'none')+';display:inline-block;flex-shrink:0">›</span>'+
+        '</div>';
+      if(expanded){
+        h+='<div style="border-top:.5px solid var(--brd)">';
+        ch.nodes.forEach(function(nd,ni){
+          var p=sp(nd.k),pct=Math.round(p*100),locked=!isUnl(nd),done=p>=1;
+          var kd=KPIS.skills.find(function(x){return x.k===nd.k;});
+          var lbl=kd?kd.label:nd.k;
+          var isLast=ni===ch.nodes.length-1;
+          if(locked){
+            h+='<div style="padding:10px 16px;opacity:0.35;display:flex;align-items:center;gap:10px;'+(isLast?'':'border-bottom:.5px solid var(--brd)')+' ">'+
+              '<div style="width:22px;height:22px;border-radius:6px;background:var(--card2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px">🔒</div>'+
+              '<div style="flex:1"><p style="font-size:13px;color:var(--card3);margin:0">'+escHtml(lbl)+'</p>'+
+              '<p style="font-size:10px;color:var(--card3);margin:2px 0 0">'+escHtml(lockReason(nd))+'</p></div></div>';
+          }else{
+            h+='<div class="li" data-a="nav-kpi" data-sys="skills" data-kpi="'+escHtml(nd.k)+'" style="padding:10px 16px;'+(isLast?'border-bottom:none':'')+'">'+
+              '<div style="width:22px;height:22px;border-radius:6px;background:'+(done?col+'33':p>0?col+'18':'var(--card2)')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:'+col+';font-weight:700">'+(done?'✓':'●')+'</div>'+
+              '<div style="flex:1;min-width:0"><p style="font-size:13px;font-weight:'+(p>0?600:400)+';color:var(--txt);margin:0">'+escHtml(lbl)+'</p>'+
+              (!done&&p>0?'<div style="background:var(--card2);border-radius:3px;height:3px;margin-top:4px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+col+';border-radius:3px"></div></div>':'')+'</div>'+
+              '<span style="font-size:11px;color:'+(done?'#30D158':col)+';font-weight:700;flex-shrink:0;margin-right:4px;font-family:var(--f-mono)">'+(done?'✓':p>0?pct+'%':'–')+'</span>'+
+              '<span class="chev">›</span></div>';
+            if(pct>=80&&pct<100){
+              h+='<div style="padding:6px 14px;background:'+col+'10;border-top:.5px solid '+col+'20">'+
+                '<p style="font-size:11px;color:'+col+';font-weight:700;margin:0">🎯 '+escHtml(lbl)+' — fast bereit!</p></div>';
+            }
+          }
+        });
+        h+='</div>';
       }
+      h+='</div>';
     });
-    h+='</div>';
   });
+
   return h;
 }
 function vSys(sysId){
@@ -748,7 +908,8 @@ function vAnalyse(){
   for(var i=0;i<56;i++){var d2=new Date(start);d2.setDate(start.getDate()+i);var ds=d2.toISOString().split('T')[0];var isFut=d2>today2;var hasLog=trainDates.has(ds);calCells+='<div style="aspect-ratio:1;border-radius:3px;background:'+(isFut?'transparent':hasLog?'#0A84FF':'var(--card2)')+'"></div>';}
   var cal='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">'+calHead+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">'+calCells+'</div>';
   var streak=calcStreak();
-  var skillBars=KPIS.skills.map(function(kpi){var ents=getEnts('skills',kpi.k,S.logs);var lat=ents.length?ents[ents.length-1]:null;var p=lat?Math.min(prog(lat.value,kpi,S.targets,'skills')||0,1):0;var pct=Math.round(p*100);return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><span style="font-size:12px;color:var(--txt2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+kpi.label+'</span><div style="flex:1.5;background:var(--card2);border-radius:3px;height:4px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+(p>=1?'#30D158':'#BF5AF2')+';border-radius:3px"></div></div><span style="font-size:11px;color:var(--sub);width:28px;text-align:right;flex-shrink:0">'+pct+'%</span></div>';}).join('');
+  var loggedSkillKeys=new Set((S.logs.skills||[]).map(function(e){return e.skill;}));
+  var skillBars=KPIS.skills.filter(function(kpi){return loggedSkillKeys.has(kpi.k);}).map(function(kpi){var ents=getEnts('skills',kpi.k,S.logs);var lat=ents.length?ents[ents.length-1]:null;var p=lat?Math.min(prog(lat.value,kpi,S.targets,'skills')||0,1):0;var pct=Math.round(p*100);return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px"><span style="font-size:12px;color:var(--txt2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+kpi.label+'</span><div style="flex:1.5;background:var(--card2);border-radius:3px;height:4px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+(p>=1?'#30D158':'#BF5AF2')+';border-radius:3px"></div></div><span style="font-size:11px;color:var(--sub);width:28px;text-align:right;flex-shrink:0">'+pct+'%</span></div>';}).join('')||'<p style="font-size:13px;color:var(--card3);margin:0">Noch keine Skills geloggt</p>';
   return wcCard()+'<p class="sec">Performance Radar</p>'+
     '<div class="card anim" style="margin-bottom:12px">'+radar+'</div>'+
     '<p class="sec">Konsistenz · 8 Wochen</p>'+
@@ -858,7 +1019,55 @@ function fEngine(col){
     sbtn('save-engine',col);
 }
 function fPeak(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fld('Protokoll (z.B. 4×4, Tabata)','<input class="inp" type="text" data-fk="protokoll" placeholder="z.B. 4×4 min Zone 4"/>')+'<div class="fw">'+fld('Dauer (min)',ni('dauer','20'),true)+fldI('RPE (1–10)','rpe',ni('rpe','8'),true)+'</div>'+'<div class="fw">'+fld('Ø Watt (optional)',ni('wattAvg',''),true)+fld('Max Watt (optional)',ni('wattMax',''),true)+'</div>'+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-peak',col);}
-function fSkills(col){var opts=KPIS.skills.map(function(o){return[o.k,o.label];});var kd=KPIS.skills.find(function(o){return o.k===S.fSkill;})||KPIS.skills[0];var imap={'Front Lever':'frontlever','Back Lever':'backlever','Dragon Flag':'dragonflag','V-Sit':'vsit','Planche Hold':'planche'};var ik=imap[S.fSkill];return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fld('Skill',selEl('fSkill',opts,S.fSkill))+'<div class="fld"><label class="lbl">'+kd.label+' ('+kd.unit+') — Ziel: '+kd.target+(ik?' '+ib(ik):'')+'</label>'+ni('ist','0')+'</div>'+fld('Qualität','<div style="display:flex;gap:8px">'+['ruhig','shaky'].map(function(q){return '<button class="qb" style="background:'+(S.fQual===q?col:'var(--card2)')+';font-weight:'+(S.fQual===q?600:400)+'" data-a="set-qual" data-qual="'+q+'">'+q+'</button>';}).join('')+'</div>')+fld('Abbruchgrund',ni('abbruch','z.B. Erschöpfung','text'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-skills',col);}
+function fSkills(col){
+  // ── Schritt 1: Kette wählen ──────────────────────────────────────
+  if(!S.fChain){
+    function cpct(ch){var s=ch.nodes.reduce(function(acc,nd){var kd=KPIS.skills.find(function(x){return x.k===nd.k;});if(!kd)return acc;var e=getEnts('skills',nd.k,S.logs);var p=e.length?Math.min(prog(e[e.length-1].value,kd,S.targets,'skills')||0,1):0;return acc+p;},0);return Math.round(s/Math.max(ch.nodes.length,1)*100);}
+    var h='<p style="font-size:13px;color:var(--sub2);margin:0 0 14px">Welche Progressionskette?</p>';
+    var t1=SKILL_CHAINS.filter(function(c){return c.tier===1;});
+    var t2=SKILL_CHAINS.filter(function(c){return c.tier===2;});
+    h+='<p style="font-size:10px;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin:0 0 8px;font-family:var(--f-mono)">Tier 1 · Fundament</p>';
+    t1.forEach(function(ch){
+      var pct=cpct(ch);
+      h+='<button style="width:100%;background:var(--card2);border:none;border-radius:12px;padding:12px 14px;margin-bottom:8px;text-align:left;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center" data-a="set-fchain" data-chain="'+ch.id+'">'+
+        '<span style="font-size:14px;font-weight:500;color:var(--txt)">'+escHtml(ch.name)+'</span>'+
+        '<span style="font-size:12px;color:'+col+';font-weight:700;font-family:var(--f-mono)">'+pct+'%</span>'+
+        '</button>';
+    });
+    h+='<p style="font-size:10px;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin:12px 0 8px;font-family:var(--f-mono)">Tier 2 · Stärke</p>';
+    var cats=['PUSH','PULL','CORE','LEGS','BALANCE'];
+    cats.forEach(function(cat){
+      var chs=t2.filter(function(c){return c.cat===cat;});
+      if(!chs.length)return;
+      h+='<p style="font-size:9px;color:var(--sub2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:6px 0 4px;font-family:var(--f-mono)">'+cat+'</p>';
+      chs.forEach(function(ch){
+        var pct=cpct(ch);
+        h+='<button style="width:100%;background:var(--card2);border:none;border-radius:12px;padding:12px 14px;margin-bottom:6px;text-align:left;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center" data-a="set-fchain" data-chain="'+ch.id+'">'+
+          '<span style="font-size:14px;font-weight:500;color:var(--txt)">'+escHtml(ch.name)+'</span>'+
+          '<span style="font-size:12px;color:'+(pct>0?col:'var(--sub)')+';font-weight:700;font-family:var(--f-mono)">'+(pct>0?pct+'%':'›')+'</span>'+
+          '</button>';
+      });
+    });
+    return h;
+  }
+  // ── Schritt 2: Skill + Wert eingeben ────────────────────────────
+  var chain=SKILL_CHAINS.find(function(c){return c.id===S.fChain;});
+  var chainKeys=chain?chain.nodes.map(function(nd){return nd.k;}):[KPIS.skills[0].k];
+  var chainSkills=KPIS.skills.filter(function(o){return chainKeys.indexOf(o.k)!==-1;});
+  chainSkills.sort(function(a,b){return chainKeys.indexOf(a.k)-chainKeys.indexOf(b.k);});
+  var opts=chainSkills.map(function(o){return[o.k,o.label];});
+  var kd=chainSkills.find(function(o){return o.k===S.fSkill;})||chainSkills[0]||KPIS.skills[0];
+  var imap={'Front Lever':'frontlever','Back Lever':'backlever','Dragon Flag':'dragonflag','V-Sit':'vsit','Planche Hold':'planche'};
+  var ik=imap[kd.k];
+  return '<button style="background:none;border:none;color:'+col+';font-size:13px;font-weight:600;cursor:pointer;padding:0 0 12px;font-family:inherit;display:flex;align-items:center;gap:3px" data-a="clear-fchain">‹ '+escHtml(chain?chain.name:'Zurück')+'</button>'+
+    fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+
+    fld('Skill',selEl('fSkill',opts,kd.k))+
+    '<div class="fld"><label class="lbl">'+escHtml(kd.label)+' ('+kd.unit+') — Ziel: '+kd.target+(ik?' '+ib(ik):'')+'</label>'+ni('ist','0')+'</div>'+
+    fld('Qualität','<div style="display:flex;gap:8px">'+['ruhig','shaky'].map(function(q){return '<button class="qb" style="background:'+(S.fQual===q?col:'var(--card2)')+';font-weight:'+(S.fQual===q?600:400)+'" data-a="set-qual" data-qual="'+q+'">'+q+'</button>';}).join('')+'</div>')+
+    fld('Abbruchgrund',ni('abbruch','z.B. Erschöpfung','text'))+
+    fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+
+    sbtn('save-skills',col);
+}
 function fStruktur(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fldI('Active Dead Hang (s)','hang',ni('hang','0'))+'<div class="fw">'+fld('Deep Squat Hold (s)',ni('deepSquat','0'),true)+fld('Schmerz Schulter',ni('schulter','0'),true)+'</div><div class="fw">'+fld('Schmerz Knie',ni('knie','0'),true)+fld('Schmerz Rücken',ni('ruecken','0'),true)+'</div>'+togEl('Mobility erledigt','fMobility')+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-struktur',col);}
 function fRecovery(col){return fld('Datum','<input class="inp" type="date" data-fk="date" value="'+todayISO()+'"/>')+fldI('HRV (ms) — Ziel: mind. 60 ms','hrv',ni('hrv','60'))+fld('Notizen','<textarea class="inp" data-fk="notizen" placeholder="..."></textarea>')+sbtn('save-recovery',col);}
 var FORMS={kraft:fKraft,engine:fEngine,peak:fPeak,skills:fSkills,struktur:fStruktur,recovery:fRecovery};
@@ -986,7 +1195,7 @@ document.getElementById('app').addEventListener('click',function(e){
   var a=el.dataset.a;
   if(a==='secret-tap'){handleSecretTap();return;}
   if(a==='sheet-dismiss'){S.sheet=null;if(recovTimer){clearTimeout(recovTimer);recovTimer=null;}render();return;}
-  if(a==='sheet-log'){S.sheet=null;S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';formErr='';render();return;}
+  if(a==='sheet-log'){S.sheet=null;S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fChain=null;formErr='';render();return;}
   if(a==='recovery-sheet-save'){var rs=parseInt(document.getElementById('recStress')?.value)||5;var rm=parseInt(document.getElementById('recMk')?.value)||3;var rn=document.getElementById('recNotizen')?.value||'';S.sheet=null;if(recovTimer){clearTimeout(recovTimer);recovTimer=null;}if(!S.logs.recovery)S.logs.recovery=[];S.logs.recovery.push({id:uid(),date:todayISO(),hrv:0,stress:rs,muskelkater:rm,notizen:rn});lsSave();render();return;}
   if(a==='toggle-theme'){S.theme=S.theme==='dark'?'light':'dark';lsSave();render();return;}
   if(a==='quota-dismiss'){quotaWarn=false;render();return;}
@@ -1010,7 +1219,10 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.sheet='quicklog';S.modal=null;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}
   if(a==='nav-kpi'){S.stack.push({type:'kpi',sysId:el.dataset.sys,kpiK:el.dataset.kpi});S.period='all';S.editTarget=false;render();return;}
-  if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';formErr='';if(el.dataset.kpi){if(el.dataset.sys==='kraft')S.fEx=el.dataset.kpi;else if(el.dataset.sys==='skills')S.fSkill=el.dataset.kpi;}render();return;}
+  if(a==='toggle-chain'){S.expandedChains[el.dataset.chainId]=!S.expandedChains[el.dataset.chainId];render();return;}
+  if(a==='set-fchain'){S.fChain=el.dataset.chain;var _ch=SKILL_CHAINS.find(function(c){return c.id===S.fChain;});if(_ch&&_ch.nodes.length&&!_ch.nodes.some(function(nd){return nd.k===S.fSkill;}))S.fSkill=_ch.nodes[0].k;rerenderMs();return;}
+  if(a==='clear-fchain'){S.fChain=null;rerenderMs();return;}
+  if(a==='open-modal'){S.modal=el.dataset.sys;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';S.fChain=null;formErr='';if(el.dataset.kpi){if(el.dataset.sys==='kraft')S.fEx=el.dataset.kpi;else if(el.dataset.sys==='skills')S.fSkill=el.dataset.kpi;}render();return;}
   if(a==='close-modal'){S.modal=null;render();return;}
   if(a==='modal-sys'){S.modal=el.dataset.sys;formErr='';rerenderMs();return;}
   if(a==='tog'){S[el.dataset.key]=!S[el.dataset.key];rerenderMs();setTimeout(setupDriftCalc,50);return;}

@@ -32,7 +32,9 @@
       "WebFetch(domain:www.allaboutcalisthenics.com)",
       "WebFetch(domain:fitnessfaqs.com)",
       "Bash(open /Users/tamir/Desktop/cyborg-kpi/index.html)",
-      "Bash(sort -k6,7)"
+      "Bash(sort -k6,7)",
+      "Bash(node --input-type=module)",
+      "Bash(node -e ':*)"
     ]
   }
 }
