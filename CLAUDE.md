@@ -338,6 +338,16 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [ ] P6-3: Long-Press für Private Section
 - [x] P6-4: Haptic Feedback – haptic() helper + Save (light) + PR (double-buzz) + Drag (medium)
 - [ ] P6-5: Empty-State / Onboarding
+- [x] P6-6: Design Overhaul – Dark Palette (#111113), Grid-Texture, Card Rim+Gradient, Nav Glow, System-Farben DESIGN.md-Spec
+- [x] P6-7: Alle #0A84FF → #3B82F6 (inkl. Charts, Radar, Kalender, Buttons)
+- [x] P6-8: Foundation Chips + Tier-1 Nodes in Skills tappbar (nav-kpi)
+
+### 🗃️ P7 – Daten & History
+- [ ] DATA-1: Ziel-Historisierung – S.targetHistory speichert alle Ziel-Änderungen mit Datum
+
+### 🏗️ P8 – Modul-UX
+- [ ] K-7: Kraft kategorisiert (PUSH / PULL / HINGE / HOLDS) + Kachel-Tap → KPI-Detail
+- [ ] UX-1: Gleiche kategorisierte Ansicht für Engine (ZONE 2 / TEMPO / INTERVALL) + Struktur (MOBILITÄT / SCHMERZ / STABILITÄT)
 
 ### ⚪ Phase 2 (Hetzner)
 - Node.js, Ollama Mistral 7B, Claude Haiku API
@@ -453,3 +463,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.8 | Mai 2026 | P6-4 Haptic Feedback (haptic() helper, Save/PR/Drag), WC-1/2/3/4 Weekly Challenge (Dashboard + Analyse) |
 | 3.9 | Mai 2026 | DNA-1/2 Skill Blocker-Anzeige (getSkillBlockers()), fix: Scroll-Restaurierung bei Zurück-Nav, Recovery Sheet deaktiviert |
 | 4.0 | Mai 2026 | SK-5/6/7 Hybrid-Athlete Skill Tree: Tier 1/2 Struktur, 37 KPIs (25 neu), 13 Chains, Zwei-Schritt-Form, Foundation-Chips, collapsible Tier-2, Analyse-Filter |
+| 4.1 | Mai 2026 | P6-6/7/8 Design Overhaul: Dark Palette, Grid-Texture, Card Glows, Nav-Glow, System-Farben, Foundation Chips tappbar; fix: Scroll-Bug Back-Nav + Coding-Regel |
