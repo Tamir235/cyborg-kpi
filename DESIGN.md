@@ -291,6 +291,14 @@ Nav Bar: ⊞ + ✦ ◎
 .milestone-banner     80%-Unlock Hinweis
 .dna-card             Skill DNA Blocker-Anzeige
 .cross-unlock-toast   Cross-Unlock Toast
+.tier-label           Tier 1 / Tier 2 Abschnittsheader
+.foundation-chip      Referenz-Chip (crossRef zu anderen Systemen)
+.chain-card           Collapsible Tier-2 Chain Card
+.chain-header         Chain Name + Progress-Bar + Expand-Pfeil
+.chain-nodes-flow     Horizontaler Node-Flow (nur expanded)
+.cat-label            Kategorie-Label (PUSH / PULL / CORE / LEGS / BALANCE)
+.fchain-step          Zwei-Schritt-Form: Step 1 (Kette wählen)
+.fchain-skill-step    Zwei-Schritt-Form: Step 2 (Skill wählen)
 ```
 
 ---
@@ -373,3 +381,4 @@ iOS Safari unterstützt die API nicht (kein Workaround ohne native App).
 | 2.0 | Mai 2026 | Premium-Redesign, neue Typo, alle Screens |
 | 2.1 | Mai 2026 | Navigation final, Quick Log Sheet, Recovery Sheet, alle Component-Classes |
 | 2.2 | Mai 2026 | Haptic Patterns dokumentiert, Y-Achse erledigt, dotPulse Animation |
+| 2.3 | Mai 2026 | Skills Tier-Layout: Foundation-Chips, Tier-Labels, collapsible Chain-Cards, Kategorie-Labels, Zwei-Schritt-Form |

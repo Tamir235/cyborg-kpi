@@ -307,6 +307,9 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 - [x] SK-2: 8 Ketten (Core Compression, Handstand, Planche, Pulling, Lever, Core Dynamic, Beine, Grip/Ring) + crossReqs + neue Skills chestToBar/falseGrip
 - [x] SK-3: Cross-Unlock HBH→Dragon Flag (crossReq, crThreshold mit User-Ziel + minVal-Boden)
 - [x] SK-4: Milestone-Banner 80% (inline in SK-1)
+- [x] SK-5: Hybrid-Athlete Skill Tree Tier 1/2 Struktur (13 Chains: 3×Tier-1 + 10×Tier-2)
+- [x] SK-6: 25 neue Skills-KPIs (37 gesamt, alle alten Keys erhalten, keine Migration nötig)
+- [x] SK-7: Zwei-Schritt-Form (Kette → Skill), collapsible Tier-2 Chains, Foundation-Chips, Analyse-Filter
 
 #### Engine ✅ Review
 - [x] E-1: Formular (Lauftyp, Distanz, Dauer, Pace auto, Kadenz)
@@ -354,7 +357,7 @@ Quick Log: 6 Kacheln Bottom Sheet → direkt Formular
 |---|---|---|
 | Kraft | ✅ | K-1 bis K-6 |
 | Struktur | ✅ | S-1, S-2 |
-| Skills | ✅ | SK-1 bis SK-4 |
+| Skills | ✅ | SK-1 bis SK-7 |
 | Engine | ✅ | E-1 bis E-4 |
 | Peak | ✅ | PK-1 |
 | Recovery | ✅ | R-1 |
@@ -444,3 +447,4 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 | 3.7 | Mai 2026 | P6-2 Y-Achse in Charts (min/mid/max + Grid-Lines) |
 | 3.8 | Mai 2026 | P6-4 Haptic Feedback (haptic() helper, Save/PR/Drag), WC-1/2/3/4 Weekly Challenge (Dashboard + Analyse) |
 | 3.9 | Mai 2026 | DNA-1/2 Skill Blocker-Anzeige (getSkillBlockers()), fix: Scroll-Restaurierung bei Zurück-Nav, Recovery Sheet deaktiviert |
+| 4.0 | Mai 2026 | SK-5/6/7 Hybrid-Athlete Skill Tree: Tier 1/2 Struktur, 37 KPIs (25 neu), 13 Chains, Zwei-Schritt-Form, Foundation-Chips, collapsible Tier-2, Analyse-Filter |
