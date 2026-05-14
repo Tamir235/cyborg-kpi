@@ -34,7 +34,9 @@
       "Bash(open /Users/tamir/Desktop/cyborg-kpi/index.html)",
       "Bash(sort -k6,7)",
       "Bash(node --input-type=module)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(gh pr:*)",
+      "Bash(open:*)"
     ]
   }
 }

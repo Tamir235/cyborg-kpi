@@ -14,16 +14,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-:root{--bg:#1C1C1E;--card:#2C2C2E;--card2:#3A3A3C;--card3:#48484A;--txt:#fff;--txt2:#ebebf5;--sub:#636366;--sub2:#8E8E93;--brd:rgba(84,84,88,.5);--brd2:rgba(84,84,88,.3);--brd3:rgba(84,84,88,.4);--brd4:rgba(120,120,128,.22);--nav:rgba(28,28,30,.96);--inp:#3A3A3C;--f-display:'Bebas Neue',sans-serif;--f-mono:'JetBrains Mono',monospace;--f-body:'DM Sans',-apple-system,sans-serif}
-body.light{--bg:#F2F2F7;--card:#fff;--card2:#E5E5EA;--card3:#C7C7CC;--txt:#000;--txt2:#1C1C1E;--sub:#6C6C70;--sub2:#8E8E93;--brd:rgba(198,198,200,.8);--brd2:rgba(198,198,200,.4);--brd3:rgba(198,198,200,.6);--brd4:rgba(120,120,128,.15);--nav:rgba(242,242,247,.96);--inp:#E5E5EA}
-body{background:var(--bg);font-family:var(--f-body);color:var(--txt);overscroll-behavior:none;transition:background .2s,color .2s}
+:root{--bg:#111113;--card:#1C1C1F;--card2:#232327;--card3:#2A2A2F;--rim:rgba(255,255,255,.06);--txt:#F2F2F7;--txt2:#ebebf5;--sub:#98989F;--sub2:#8E8E93;--brd:rgba(255,255,255,.08);--brd2:rgba(255,255,255,.05);--brd3:rgba(255,255,255,.06);--brd4:rgba(120,120,128,.22);--nav:rgba(17,17,19,.96);--inp:#232327;--blue:#3B82F6;--blue2:#60A5FA;--f-display:'Bebas Neue',sans-serif;--f-mono:'JetBrains Mono',monospace;--f-body:'DM Sans',-apple-system,sans-serif}
+body.light{--bg:#F2F2F7;--card:#fff;--card2:#E5E5EA;--card3:#C7C7CC;--txt:#000;--txt2:#1C1C1E;--sub:#6C6C70;--sub2:#8E8E93;--brd:rgba(198,198,200,.8);--brd2:rgba(198,198,200,.4);--brd3:rgba(198,198,200,.6);--brd4:rgba(120,120,128,.15);--nav:rgba(242,242,247,.96);--inp:#E5E5EA;background-image:none}
+body{background:var(--bg);background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:32px 32px;font-family:var(--f-body);color:var(--txt);overscroll-behavior:none;transition:background .2s,color .2s}
 input,textarea,select{-webkit-user-select:auto;user-select:auto;font-family:inherit}
 ::-webkit-scrollbar{display:none}
 input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
 select option{background:var(--card)}
 #app{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
 .hdr{padding:52px 20px 0;flex-shrink:0}
-.back{background:none;border:none;color:#0A84FF;font-size:16px;padding:0 0 6px;cursor:pointer;display:block;font-family:inherit}
+.back{background:none;border:none;color:#3B82F6;font-size:16px;padding:0 0 6px;cursor:pointer;display:block;font-family:inherit}
 .hdr-row{display:flex;justify-content:space-between;align-items:flex-start}
 .pg-sub{font-size:12px;color:var(--sub);font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin:0 0 2px;font-family:var(--f-mono)}
 .pg-title{font-size:34px;font-weight:400;color:var(--txt);margin:0 0 4px;font-family:var(--f-display);letter-spacing:.5px}
@@ -33,7 +33,7 @@ select option{background:var(--card)}
 .nb{flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 0;font-family:inherit}
 .ni{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
 .nl{font-size:10px;font-weight:500;color:var(--sub)}
-.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px}
+.card{background:var(--card);background-image:linear-gradient(to bottom,rgba(59,130,246,.1) 0px,rgba(59,130,246,0) 1px);border:1px solid var(--rim);border-radius:20px;padding:16px;margin-bottom:12px}
 .card22{border-radius:22px;padding:18px}
 .sec{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.7px;font-weight:600;margin:0 0 8px 2px;font-family:var(--f-mono)}
 .lcard{background:var(--card);border-radius:20px;overflow:hidden;margin-bottom:12px}
@@ -46,7 +46,7 @@ select option{background:var(--card)}
 .bar{background:var(--brd2);border-radius:3px;height:4px;overflow:hidden;margin-top:7px}
 .barf{height:100%;border-radius:3px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sc{background:var(--card);border-radius:20px;padding:16px;cursor:pointer}
+.sc{background:var(--card);border:1px solid var(--rim);border-radius:20px;padding:16px;cursor:pointer}
 .inp{width:100%;background:var(--inp);border:none;border-radius:10px;padding:10px 12px;font-size:16px;color:var(--txt);outline:none}
 .sel{width:100%;background:var(--inp);border:none;border-radius:10px;padding:10px 12px;font-size:16px;color:var(--txt);outline:none;appearance:none;-webkit-appearance:none}
 textarea.inp{resize:none;height:52px;font-size:14px}
@@ -88,7 +88,7 @@ textarea.inp{resize:none;height:52px;font-size:14px}
 .bkbanner{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:300;padding:12px 16px;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:.5px solid var(--brd);display:flex;align-items:center;gap:10px;animation:slideDown .3s ease}
 @keyframes slideDown{from{transform:translateX(-50%) translateY(-100%)}to{transform:translateX(-50%) translateY(0)}}
 .bkbanner-txt{flex:1;font-size:13px;color:var(--sub2)}
-.bkbanner-btn{background:#0A84FF;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap}
+.bkbanner-btn{background:#3B82F6;border:none;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap}
 .bkbanner-cl{background:none;border:none;color:var(--card3);font-size:20px;cursor:pointer;padding:0 2px;font-family:inherit;line-height:1}
 .rsov{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px}
 .rsbox{background:var(--bg);border-radius:22px;padding:24px;width:100%;max-width:360px;text-align:center}
@@ -138,7 +138,7 @@ textarea.inp{resize:none;height:52px;font-size:14px}
 (function(){
 'use strict';
 
-const COL={kraft:'#FF3B30',engine:'#34C759',peak:'#FF9500',skills:'#BF5AF2',struktur:'#0A84FF',recovery:'#32ADE6'};
+const COL={kraft:'#EF4444',engine:'#22C55E',peak:'#F97316',skills:'#A855F7',struktur:'#3B82F6',recovery:'#06B6D4'};
 const SEC_COL={bpsfl:'#5E5CE6',bpel:'#0A84FF',nbel:'#32ADE6',mseg:'#34C759',beg:'#30D158'};
 const SM=[{id:'kraft',label:'Kraft',desc:'Relative Strength'},{id:'engine',label:'Engine',desc:'Aerobe Kapazität'},{id:'peak',label:'Peak',desc:'Intervalle'},{id:'skills',label:'Skills',desc:'Nervensystem'},{id:'struktur',label:'Struktur',desc:'Robustheit'},{id:'recovery',label:'Recovery',desc:'Systemstatus'}];
 const KPIS={
@@ -539,14 +539,14 @@ function getRecommendation(ctx){
 // ── Main views ──────────────────────────────────────────────────
 function vDash(){
   var ov=SM.reduce(function(s,sys){return s+sysSc(sys.id,S.logs,S.targets);},0)/6;
-  var bigR=ring(ov,'#0A84FF',90,9);
+  var bigR=ring(ov,'#3B82F6',90,9);
   var scoreData=getScoreHistory(8);
-  var scoreChart=scoreData.length>=2?chart(scoreData,'#0A84FF',null):'';
+  var scoreChart=scoreData.length>=2?chart(scoreData,'#3B82F6',null):'';
   var streak=calcStreak();
   var ctx=getRecCtx();var rec=getRecommendation(ctx);
   var rcol=rec.readiness==='bereit'?'#22C55E':rec.readiness==='moderat'?'#F97316':'#EF4444';
   var rlabel=rec.readiness==='bereit'?'BEREIT':rec.readiness==='moderat'?'MODERAT':'ERHOLEN';
-  var recSysCol=COL[rec.type]||'#0A84FF';
+  var recSysCol=COL[rec.type]||'#3B82F6';
   var recH='<div class="card card22 anim" style="margin-bottom:12px;cursor:pointer" data-a="nav-sys" data-sys="'+rec.type+'">'+
     '<p style="font-size:10px;color:var(--sub);font-weight:600;text-transform:uppercase;letter-spacing:.7px;margin:0 0 10px">Heute trainieren</p>'+
     '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
@@ -558,7 +558,7 @@ function vDash(){
     '<p style="font-size:28px;font-weight:400;color:var(--txt);margin:0 0 4px;font-family:var(--f-display);letter-spacing:.5px">'+escHtml(rec.text)+'</p>'+
     '<p style="font-size:13px;color:var(--sub);margin:0">'+escHtml(rec.detail)+'</p></div>';
   var h='<div class="card card22 anim" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:18px">'+
-    '<div data-a="secret-tap" style="cursor:pointer">'+ringWrap(bigR,'<span style="font-size:32px;font-weight:400;color:#0A84FF;line-height:1;font-family:var(--f-display)">'+Math.round(ov*100)+'</span><br><span style="font-size:10px;color:#0A84FF;font-family:var(--f-mono);font-weight:600">%</span>',90)+'</div>'+
+    '<div data-a="secret-tap" style="cursor:pointer">'+ringWrap(bigR,'<span style="font-size:32px;font-weight:400;color:#3B82F6;line-height:1;font-family:var(--f-display)">'+Math.round(ov*100)+'</span><br><span style="font-size:10px;color:#3B82F6;font-family:var(--f-mono);font-weight:600">%</span>',90)+'</div>'+
     '<div><p style="font-size:11px;color:var(--sub);margin:0 0 2px;font-weight:500">Cyborg Score</p>'+
     '<p style="font-size:26px;font-weight:700;color:var(--txt);margin:0 0 2px">'+gradeOf(ov)+'</p>'+
     '<p style="font-size:11px;color:var(--card3);margin:0;font-style:italic">Outrun the lifters. Outlift the runners.</p></div></div>'+
@@ -572,7 +572,7 @@ function vDash(){
     var ents=S.logs[s.id]||[];
     var lat=ents.length?ents.slice().sort(function(a,b){return b.date.localeCompare(a.date);})[0]:null;
     var mr=ring(sc,col,44,4.5);
-    h+='<div id="st-'+s.id+'" class="sc anim anim-d'+(i+1)+'" data-a="nav-sys" data-sys="'+s.id+'">'+
+    h+='<div id="st-'+s.id+'" class="sc anim anim-d'+(i+1)+'" style="background-image:linear-gradient(to bottom,'+col+'18 0px,'+col+'00 3px)" data-a="nav-sys" data-sys="'+s.id+'">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">'+
       '<div style="width:38px;height:38px;border-radius:10px;background:'+col+'22;display:flex;align-items:center;justify-content:center">'+
       '<div style="width:14px;height:14px;border-radius:3px;background:'+col+'"></div></div>'+
@@ -640,7 +640,7 @@ function vSkillsHome(){
   foundRefs.forEach(function(ref){
     var val=sysLatest(ref.sys,ref.kpi);
     var done=val>=ref.target;
-    h+='<div style="background:'+ref.col+'18;border:1px solid '+ref.col+'35;border-radius:10px;padding:7px 11px;flex:0 0 auto">'+
+    h+='<div style="background:'+ref.col+'18;border:1px solid '+ref.col+'35;border-radius:10px;padding:7px 11px;flex:0 0 auto;cursor:pointer" data-a="nav-kpi" data-sys="'+ref.sys+'" data-kpi="'+ref.kpi+'">'+
       '<p style="font-size:9px;color:'+ref.col+';font-weight:700;margin:0 0 1px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.4px">'+escHtml(ref.label)+'</p>'+
       '<p style="font-size:12px;font-weight:700;color:'+(done?'#30D158':'var(--txt)')+';margin:0;font-family:var(--f-mono)">'+(val>0?val:0)+' / '+ref.target+' '+ref.unit+'</p>'+
       '</div>';
@@ -665,7 +665,9 @@ function vSkillsHome(){
         var lbl=kd?kd.label:nd.k;
         var nodeCol=done?'#30D158':locked?'var(--card3)':p>0?col:'var(--sub2)';
         if(ni>0)h+='<span style="color:var(--card3);font-size:10px">→</span>';
-        h+='<span style="font-size:11px;font-weight:'+(done||p>0?700:400)+';color:'+nodeCol+'">'+(done?'✓ ':locked?'🔒 ':p>0?'⬤ ':'○ ')+escHtml(lbl)+'</span>';
+        var kd2=KPIS.skills.find(function(x){return x.k===nd.k;});
+        var tapAttr=kd2&&!locked?' data-a="nav-kpi" data-sys="skills" data-kpi="'+nd.k+'" style="cursor:pointer;font-size:11px;font-weight:'+(done||p>0?700:400)+';color:'+nodeCol+'"':' style="font-size:11px;font-weight:'+(done||p>0?700:400)+';color:'+nodeCol+'"';
+        h+='<span'+tapAttr+'>'+(done?'✓ ':locked?'🔒 ':p>0?'⬤ ':'○ ')+escHtml(lbl)+'</span>';
       });
       h+='</div></div>';
     });
@@ -854,17 +856,17 @@ function vStats(){
   var scoreData=getScoreHistory(8);
   var period=S.statsTab==='woche'?getWeek(S.statsOff):mRange(S.statsOff);
   var prevP=S.statsTab==='woche'?getWeek(S.statsOff-1):mRange(S.statsOff-1);
-  var sr=ring(ov,'#0A84FF',52,5.5);
+  var sr=ring(ov,'#3B82F6',52,5.5);
   var h='<div class="card anim" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">'+
-    ringWrap(sr,'<span style="font-size:11px;font-weight:800;color:#0A84FF">'+Math.round(ov*100)+'</span>',52)+
+    ringWrap(sr,'<span style="font-size:11px;font-weight:800;color:#3B82F6">'+Math.round(ov*100)+'</span>',52)+
     '<div><p style="font-size:11px;color:var(--sub);margin:0 0 2px">Cyborg Score</p>'+
     '<p style="font-size:18px;font-weight:700;color:var(--txt);margin:0">'+gradeOf(ov)+'</p></div></div>'+
-    (scoreData.length>=2?chart(scoreData,'#0A84FF',null):'<p style="font-size:12px;color:var(--card3);text-align:center;padding:12px 0">Score-Verlauf ab 2 Wochen</p>')+'</div>';
+    (scoreData.length>=2?chart(scoreData,'#3B82F6',null):'<p style="font-size:12px;color:var(--card3);text-align:center;padding:12px 0">Score-Verlauf ab 2 Wochen</p>')+'</div>';
   h+='<div class="tbar">'+[['woche','Woche'],['monat','Monat']].map(function(t){return '<button class="tb" style="background:'+(S.statsTab===t[0]?'var(--card2)':'transparent')+';color:'+(S.statsTab===t[0]?'var(--txt)':'var(--sub)')+';font-weight:'+(S.statsTab===t[0]?500:400)+'" data-a="stats-tab" data-tab="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';
-  h+='<div class="np"><button class="npb" style="color:#0A84FF" data-a="stats-off" data-dir="-1">‹</button>'+
+  h+='<div class="np"><button class="npb" style="color:#3B82F6" data-a="stats-off" data-dir="-1">‹</button>'+
     '<div style="text-align:center"><p style="font-size:13px;font-weight:600;color:var(--txt);margin:0 0 1px">'+period.label+'</p>'+
     '<p style="font-size:11px;color:var(--card3);margin:0">vs. '+prevP.label+'</p></div>'+
-    '<button class="npb" style="color:'+(S.statsOff<0?'#0A84FF':'var(--card3)')+'" data-a="stats-off" data-dir="1">›</button></div>';
+    '<button class="npb" style="color:'+(S.statsOff<0?'#3B82F6':'var(--card3)')+'" data-a="stats-off" data-dir="1">›</button></div>';
   SM.forEach(function(s){
     var col=COL[s.id],sc=sysSc(s.id,S.logs,S.targets);
     var rows=(KPIS[s.id]||[]).map(function(kpi){var all=getEnts(s.id,kpi.k,S.logs);var cur=all.filter(function(e){return inR(e.date,period.start,period.end);});var prv=all.filter(function(e){return inR(e.date,prevP.start,prevP.end);});var cv=cur.length?cur[cur.length-1].value:null,pv=prv.length?prv[prv.length-1].value:null;if(cv==null&&pv==null)return null;var delta=cv!=null&&pv!=null?cv-pv:null,pos=delta==null?null:(kpi.hb?delta:-delta);return{kpi:kpi,cv:cv,pv:pv,pos:pos};}).filter(Boolean);
@@ -897,7 +899,7 @@ function vAnalyse(){
   var dataPts=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;return (cx+r*scores[i]*Math.cos(a)).toFixed(1)+','+(cy+r*scores[i]*Math.sin(a)).toFixed(1);}).join(' ');
   var dataCircles=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;var px=(cx+r*scores[i]*Math.cos(a)).toFixed(1),py=(cy+r*scores[i]*Math.sin(a)).toFixed(1);return '<circle cx="'+px+'" cy="'+py+'" r="3.5" fill="'+COL[s.id]+'"/>';}).join('');
   var labels=SM.map(function(s,i){var a=-Math.PI/2+i*2*Math.PI/n;var lx=(cx+(r+20)*Math.cos(a)).toFixed(1),ly=((cy+(r+20)*Math.sin(a))+4).toFixed(1);var anchor=Math.cos(a)>0.15?'start':Math.cos(a)<-0.15?'end':'middle';return '<text x="'+lx+'" y="'+ly+'" font-size="10" fill="'+COL[s.id]+'" text-anchor="'+anchor+'" font-weight="700">'+s.label+'</text>';}).join('');
-  var radar='<svg viewBox="0 0 '+W+' 232" width="100%" height="232">'+rings+axes+'<polygon points="'+dataPts+'" fill="rgba(10,132,255,.12)" stroke="#0A84FF" stroke-width="2" stroke-linejoin="round"/>'+dataCircles+labels+'</svg>';
+  var radar='<svg viewBox="0 0 '+W+' 232" width="100%" height="232">'+rings+axes+'<polygon points="'+dataPts+'" fill="rgba(59,130,246,.12)" stroke="#3B82F6" stroke-width="2" stroke-linejoin="round"/>'+dataCircles+labels+'</svg>';
   var trainDates=new Set();
   Object.values(S.logs).forEach(function(ents){ents.forEach(function(e){trainDates.add(e.date);});});
   var today2=new Date(),dow2=(today2.getDay()||7)-1;
@@ -905,7 +907,7 @@ function vAnalyse(){
   var dayLbls=['Mo','Di','Mi','Do','Fr','Sa','So'];
   var calHead=dayLbls.map(function(l){return '<div style="font-size:9px;color:var(--sub);text-align:center;font-weight:600">'+l+'</div>';}).join('');
   var calCells='';
-  for(var i=0;i<56;i++){var d2=new Date(start);d2.setDate(start.getDate()+i);var ds=d2.toISOString().split('T')[0];var isFut=d2>today2;var hasLog=trainDates.has(ds);calCells+='<div style="aspect-ratio:1;border-radius:3px;background:'+(isFut?'transparent':hasLog?'#0A84FF':'var(--card2)')+'"></div>';}
+  for(var i=0;i<56;i++){var d2=new Date(start);d2.setDate(start.getDate()+i);var ds=d2.toISOString().split('T')[0];var isFut=d2>today2;var hasLog=trainDates.has(ds);calCells+='<div style="aspect-ratio:1;border-radius:3px;background:'+(isFut?'transparent':hasLog?'#3B82F6':'var(--card2)')+'"></div>';}
   var cal='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">'+calHead+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">'+calCells+'</div>';
   var streak=calcStreak();
   var loggedSkillKeys=new Set((S.logs.skills||[]).map(function(e){return e.skill;}));
@@ -938,12 +940,12 @@ function vDaten(){
     '<p class="sec">☁️ iCloud Backup</p>'+
     '<div class="card anim" style="margin-bottom:12px">'+
     '<p style="font-size:13px;color:var(--sub2);margin:0 0 12px;line-height:1.5">Teilen → „In Dateien sichern" → iCloud Drive. Privater Bereich wird mitgesichert.</p>'+
-    '<button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  Jetzt in iCloud sichern</button>'+
+    '<button style="width:100%;background:#3B82F6;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  Jetzt in iCloud sichern</button>'+
     '<button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:15px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="imp-json">📂  Backup wiederherstellen</button>'+
     (S.importMsg?'<p style="font-size:13px;color:'+(S.importMsg.startsWith('✓')?'#30D158':'#FF453A')+';margin:10px 0 0;text-align:center">'+S.importMsg+'</p>':'')+
     '</div>'+
     '<p class="sec">Export</p><div class="lcard anim" style="margin-bottom:12px">'+
-    '<div class="er" data-a="exp-json"><span style="font-size:15px;font-weight:500;color:#0A84FF">JSON exportieren</span><span style="font-size:18px;color:var(--card3)">↓</span></div>'+
+    '<div class="er" data-a="exp-json"><span style="font-size:15px;font-weight:500;color:#3B82F6">JSON exportieren</span><span style="font-size:18px;color:var(--card3)">↓</span></div>'+
     '<div class="er" data-a="exp-csv"><span style="font-size:15px;font-weight:500;color:#34C759">CSV exportieren</span><span style="font-size:18px;color:var(--card3)">↓</span></div></div>'+
     '<p style="font-size:11px;color:var(--card3);text-align:center;line-height:1.5">Daten lokal gespeichert. Regelmäßig sichern.</p>';
 }
@@ -958,9 +960,9 @@ function vProfil(){
   var h='<p class="sec">Score Verlauf</p>'+
     '<div class="card anim" style="margin-bottom:12px">'+
     '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">'+
-    '<span style="font-size:32px;font-weight:700;color:#0A84FF">'+Math.round(ov*100)+'%</span>'+
+    '<span style="font-size:32px;font-weight:700;color:#3B82F6">'+Math.round(ov*100)+'%</span>'+
     '<span style="font-size:14px;color:var(--sub)">'+gradeOf(ov)+'</span></div>'+
-    (scoreData.length>=2?chart(scoreData,'#0A84FF',null):'<p style="font-size:13px;color:var(--card3);text-align:center;padding:16px 0">Noch zu wenig Daten</p>')+
+    (scoreData.length>=2?chart(scoreData,'#3B82F6',null):'<p style="font-size:13px;color:var(--card3);text-align:center;padding:16px 0">Noch zu wenig Daten</p>')+
     '</div>';
   h+='<p class="sec">Persönliche Rekorde</p>'+
     '<div class="lcard anim" style="margin-bottom:12px">';
@@ -983,10 +985,10 @@ function vProfil(){
     '<div class="th" style="transform:'+(isDark?'translateX(20px)':'translateX(0)')+'"></div></div></div></div>'+
     '<p class="sec">☁️ Backup & Export</p>'+
     '<div class="card anim" style="margin-bottom:12px">'+
-    '<button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  In iCloud sichern</button>'+
+    '<button style="width:100%;background:#3B82F6;border:none;border-radius:14px;padding:13px 0;font-size:15px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="share-backup">☁️  In iCloud sichern</button>'+
     '<button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:15px;color:var(--sub);cursor:pointer;font-family:inherit;margin-bottom:8px" data-a="imp-json">📂  Backup laden</button>'+
     '<div style="display:flex;gap:8px">'+
-    '<button style="flex:1;background:var(--card2);border:none;border-radius:12px;padding:11px 0;font-size:13px;font-weight:500;color:#0A84FF;cursor:pointer;font-family:inherit" data-a="exp-json">JSON ↓</button>'+
+    '<button style="flex:1;background:var(--card2);border:none;border-radius:12px;padding:11px 0;font-size:13px;font-weight:500;color:#3B82F6;cursor:pointer;font-family:inherit" data-a="exp-json">JSON ↓</button>'+
     '<button style="flex:1;background:var(--card2);border:none;border-radius:12px;padding:11px 0;font-size:13px;font-weight:500;color:#34C759;cursor:pointer;font-family:inherit" data-a="exp-csv">CSV ↓</button>'+
     '</div>'+
     (S.importMsg?'<p style="font-size:13px;color:'+(S.importMsg.startsWith('✓')?'#30D158':'#FF453A')+';margin:10px 0 0;text-align:center">'+S.importMsg+'</p>':'')+
@@ -1095,7 +1097,7 @@ function renderSheet(){
   // if(S.sheet==='recovery'){ ... }
   return '';
 }
-function renderRestoreOverlay(){return '<div class="rsov"><div class="rsbox"><div style="font-size:40px;margin-bottom:12px">☁️</div><p style="font-size:18px;font-weight:700;color:var(--txt);margin:0 0 8px">Keine Daten gefunden</p><p style="font-size:14px;color:var(--sub2);margin:0 0 20px;line-height:1.5">Möchtest du ein iCloud-Backup wiederherstellen?</p><button style="width:100%;background:#0A84FF;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:10px" data-a="restore-pick">Backup laden</button><button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:16px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="restore-skip">Neu beginnen</button></div></div>';}
+function renderRestoreOverlay(){return '<div class="rsov"><div class="rsbox"><div style="font-size:40px;margin-bottom:12px">☁️</div><p style="font-size:18px;font-weight:700;color:var(--txt);margin:0 0 8px">Keine Daten gefunden</p><p style="font-size:14px;color:var(--sub2);margin:0 0 20px;line-height:1.5">Möchtest du ein iCloud-Backup wiederherstellen?</p><button style="width:100%;background:#3B82F6;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;margin-bottom:10px" data-a="restore-pick">Backup laden</button><button style="width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 0;font-size:16px;color:var(--sub);cursor:pointer;font-family:inherit" data-a="restore-skip">Neu beginnen</button></div></div>';}
 function renderInfoOverlay(){var info=INFO[S.infoKey];if(!info)return '';return '<div class="infov" id="infov"><div class="infobox"><h3>'+info.title+'</h3><p>'+info.text+'</p><button class="infocl" data-a="close-info">Verstanden</button></div></div>';}
 
 function getVals(){var v={};document.querySelectorAll('[data-fk]').forEach(function(el){v[el.dataset.fk]=el.value;});return v;}
@@ -1114,11 +1116,11 @@ function render(){
   var isPrivate=cur.type==='private';
   var title=cur.type==='dash'?'Dashboard':cur.type==='stats'?'Statistik':cur.type==='analyse'?'Analyse':cur.type==='daten'?'Daten':cur.type==='profil'?'Profil':isPrivate?'Privat':cur.type==='sys'?(curSys&&curSys.label)||'':curKpi?curKpi.label:'';
   var sub=cur.type==='sys'&&curSys?curSys.desc:cur.type==='kpi'&&curSys?curSys.label:'';
-  var addCol=isPrivate?'#5E5CE6':(cur.sysId?COL[cur.sysId]:'#0A84FF');
+  var addCol=isPrivate?'#5E5CE6':(cur.sysId?COL[cur.sysId]:'#3B82F6');
   var showAdd=isPrivate||(cur.type==='sys'||cur.type==='kpi')&&cur.sysId;
   var addAction=isPrivate?'pe-add-open':'open-modal';
   var addSys=isPrivate?'':'data-sys="'+cur.sysId+'"'+(cur.kpiK?' data-kpi="'+cur.kpiK+'"':'');
-  var backColor=isPrivate?'#5E5CE6':'#0A84FF';
+  var backColor=isPrivate?'#5E5CE6':'#3B82F6';
   var view='';
   if(cur.type==='dash')view=vDash();
   else if(cur.type==='sys')view=(cur.sysId==='skills'?vSkillsHome():vSys(cur.sysId));
@@ -1138,7 +1140,7 @@ function render(){
     (showAdd?'<button class="add-btn" style="background:'+addCol+'" data-a="'+addAction+'" '+addSys+'>+ Eintrag</button>':'')+
     '</div></div>'+
     '<div class="content">'+view+'</div>'+
-    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='analyse'&&cur.type==='analyse')||(t.id==='profil'&&cur.type==='profil');return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+(active?'#0A84FF':t.id==='add'?'rgba(255,59,48,.85)':'rgba(84,84,88,.3)')+';font-size:'+(t.id==='add'?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#0A84FF':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
+    '<div class="nav">'+TABS.map(function(t){var active=(t.id==='dash'&&cur.type==='dash')||(t.id==='analyse'&&cur.type==='analyse')||(t.id==='profil'&&cur.type==='profil');var isAdd=t.id==='add';var niBg=active?'#3B82F6':isAdd?'#EF4444':'rgba(255,255,255,.08)';var niGlow=active?'box-shadow:0 0 12px rgba(59,130,246,.5);':isAdd?'box-shadow:0 0 14px rgba(239,68,68,.4);':'';var niSize=isAdd?'32px':'28px';return '<button class="nb" data-a="nav-tab" data-tab="'+t.id+'"><div class="ni" style="background:'+niBg+';'+niGlow+'width:'+niSize+';height:'+niSize+';font-size:'+(isAdd?'20px':'14px')+'">'+t.icon+'</div><span class="nl" style="color:'+(active?'#60A5FA':'var(--sub)')+'">'+t.l+'</span></button>';}).join('')+'</div>'+
     (S.lastEntry?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">✓</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1">Eintrag gespeichert</p><button style="background:none;border:none;font-size:13px;color:#FF453A;cursor:pointer;font-family:inherit;font-weight:600;padding:4px 8px;border-radius:8px;background:rgba(255,69,58,.12)" data-a="undo-entry">Rückgängig</button></div>':'')+
     (quotaWarn?'<div style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:rgba(255,149,0,.12);border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:11px 14px;z-index:99;display:flex;align-items:center;gap:10px"><span style="font-size:18px">⚠️</span><p style="font-size:13px;color:var(--txt);margin:0;flex:1;line-height:1.4">Speicher fast voll &middot; <span style="color:#FF9500;font-weight:600">Backup erstellen</span></p><button style="background:none;border:none;font-size:20px;color:var(--sub2);cursor:pointer;padding:0;line-height:1;font-family:inherit" data-a="quota-dismiss">×</button></div>':'')+
     (isPrivate?'<div style="position:fixed;bottom:115px;right:16px;left:auto;display:flex;gap:8px;z-index:101">'+
@@ -1214,7 +1216,7 @@ document.getElementById('app').addEventListener('click',function(e){
   if(a==='pe-delete'){if(confirm('Eintrag löschen?')){SEC.logs=SEC.logs.filter(function(x){return x.id!==el.dataset.eid;});secSave();SEC.secModal=null;render();}return;}
   if(a==='show-info'){S.infoKey=el.dataset.info;render();return;}
   if(a==='close-info'){S.infoKey=null;render();return;}
-  if(a==='back'){var lv=S.stack[S.stack.length-1];S.stack.pop();S.period='all';S.editTarget=false;S.lauftypFilter=null;render();if(lv.type==='sys'&&S.stack[S.stack.length-1].type==='dash'){var st=document.getElementById('st-'+lv.sysId);if(st)st.scrollIntoView({block:'center',behavior:'instant'});}return;}
+  if(a==='back'){var lv=S.stack[S.stack.length-1];var prevScroll=document.querySelector('.content')?document.querySelector('.content').scrollTop:0;S.stack.pop();S.period='all';S.editTarget=false;S.lauftypFilter=null;render();var ct=document.querySelector('.content');if(ct)ct.scrollTop=prevScroll;if(lv.type==='sys'&&S.stack[S.stack.length-1].type==='dash'){var st=document.getElementById('st-'+lv.sysId);if(st)st.scrollIntoView({block:'center',behavior:'instant'});}return;}
   if(a==='nav-profil'){S.stack.push({type:'profil'});render();return;}
   if(a==='nav-tab'){var tab=el.dataset.tab;if(tab==='add'){S.sheet='quicklog';S.modal=null;S.fNase=false;S.fMobility=false;S.fQual='ruhig';S.fLauftyp='zone2';formErr='';render();}else{S.stack=[{type:tab}];render();}return;}
   if(a==='nav-sys'){S.stack.push({type:'sys',sysId:el.dataset.sys});render();return;}

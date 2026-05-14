@@ -404,6 +404,11 @@ const res = await fetch('api.anthropic.com/...');     // ❌ nie direkt
 ⚠️  Engine: Pace auto-berechnet (nie manuell eingeben)
 ⚠️  Badges: nie doppelt vergeben (ID-Check vor awardBadge)
 ⚠️  KI: immer AIProvider.getX() – nie direkter API-Call
+⚠️  SCROLL-BUG: render() setzt .content scrollTop auf 0!
+    Bei Back-Nav IMMER vor render() speichern + danach restaurieren:
+    var prevScroll=document.querySelector('.content')?.scrollTop||0;
+    render();
+    document.querySelector('.content').scrollTop=prevScroll;
 ```
 
 ---
